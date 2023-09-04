@@ -31,14 +31,6 @@
               </mat-form-field>
             </div>
 
-            <div class="organizacion-container">
-              <mat-form-field appearance="outline">
-                <mat-label>Organizacion</mat-label>
-                <input  matInput
-                        formControlName="organization"
-                        required="false">
-              </mat-form-field>
-            </div>
 
             <div class="afiliaciones-container">
               <mat-form-field appearance="outline">
@@ -46,6 +38,25 @@
                 <input  matInput
                         formControlName="affiliations"
                         required="false">
+              </mat-form-field>
+            </div>
+
+            <div class="reivindicaciones-container">
+              <mat-form-field appearance="outline">
+                <mat-label>Reivindicaciones</mat-label>
+                <button mat-icon-button matPrefix (click)="f_inputR.click()">
+                  <mat-icon>attach_file</mat-icon>
+                </button>
+                <input type="text" readonly matInput [formControl]="displayR" />
+                <input
+                  type="file"
+                  multiple
+                  hidden
+                  style="display: none"
+                  #f_inputR
+                  (change)="handleFileInputChangeR(f_inputR.files)"
+                />
+                <mat-error>this field is required</mat-error>
               </mat-form-field>
             </div>
 

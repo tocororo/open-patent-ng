@@ -3,7 +3,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { PatentService } from '../../services/patent.service';
-import { OpenPatent } from '../../interfaces/open-patent.interface';
+import { Patent } from '../../interfaces/patent.entity';
 import { MatDialog } from '@angular/material/dialog';
 import { PdfViewerModalComponent } from './pdf-viewer-modal/pdf-viewer-modal.component';
 
@@ -17,14 +17,14 @@ export class OpenPatentDetailComponent implements OnInit{
 
   @ViewChild('content') popupview !: ElementRef;
 
-  patent!: OpenPatent;
+  patent!: Patent;
 
-  patent1: OpenPatent = {
+  patent1: Patent = {
     title: 'Iphone XS',
-    author: 'Steve Jobs',
-    organization: 'Apple',
+    authors: ['Steve Jobs'],
     affiliations: ["Samsung", "Xiaomi"],
-    summary: 'Nuevo Iphone lanzado al mercado'
+    summary: 'Nuevo Iphone lanzado al mercado',
+    id: ''
   }
 
   documents = [
@@ -42,7 +42,7 @@ export class OpenPatentDetailComponent implements OnInit{
   ngOnInit() {
     // this.activatedRoute.params
     //   .pipe(
-    //     switchMap( ( {title} ) =>  this.patentService.getPatentById(title))
+    //     switchMap( ( {id} ) =>  this.patentService.getPatentById(id))
     //   )
     //   .subscribe( patent =>  this.patent = patent);
   }

@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Permission } from 'src/app/permission.service';
 // import { OAuthStorage } from 'angular-oauth2-oidc';
 import { HitList, MessageHandler, Organization, StatusCode } from 'toco-lib';
-import { OpenPatent } from '../../interfaces/open-patent.interface';
+import { Patent } from '../../interfaces/patent.entity';
 import { Person } from '../../people/person.entity';
 import { ConfirmComponent } from '../confirm/confirm.component';
 import { PatentService } from '../../services/patent.service';
@@ -20,7 +20,7 @@ export class SearchListComponent implements OnInit
 
 	@Input()
 	// public hitList: HitList<Person>;
-  public patents: OpenPatent[];
+  public patents: Patent[];
   public pdfType: 'list' | 'single' =  'list';
 
   m = new MessageHandler(this._snackBar);
@@ -47,7 +47,7 @@ export class SearchListComponent implements OnInit
 		return false;
 	}
 
-  eliminar(patent: OpenPatent){
+  eliminar(patent: Patent){
     const dialog = this.dialog.open(ConfirmComponent, {
       width: '350px',
       data: { ...patent },

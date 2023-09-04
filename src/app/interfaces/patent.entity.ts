@@ -1,14 +1,14 @@
 import { Entity, Role } from 'toco-lib';
 
 
-export class OpenPatent{
+export class Patent{
+  id: string;
   title: string;
-  author?: string;
-  co_author?: Array<string>;
+  authors?: Array<string>;
   affiliations: Array<string>;
-  organization?: string;
   summary: string;
   estado_tecnica?: File;
-  documentos_asociados?: Array<File>;
+  country? : string;
+  claims?: File;
   dibujo?: File;
 }

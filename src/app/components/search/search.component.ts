@@ -6,9 +6,7 @@ import { MatDrawer } from "@angular/material/sidenav";
 import { ActivatedRoute, NavigationExtras, Params, Router } from "@angular/router";
 
 import { AggregationsSelection, SearchResponse } from "toco-lib";
-import { PeopleService } from '../../people/people.service';
-import { Person } from "../../people/person.entity";
-import { OpenPatent } from '../../interfaces/open-patent.interface';
+import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from "../../services/patent.service";
 
 
@@ -40,29 +38,6 @@ export class SearchComponent implements OnInit {
      */
     public aggrKeys: Array<any>;
 
-    patents: OpenPatent[] = [
-      {
-        title: "Iphone 14",
-        author: "Steve Jobs",
-        organization: "Apple",
-        affiliations: ["Samsung", "Xiaomi"],
-        summary: "Nuevo Iphone en el mercado con nuevas funcionalidades"
-      },
-      {
-        title: "Samsung Galaxy 6",
-        author: "",
-        organization: "Samsung",
-        affiliations: ["Apple"],
-        summary: "Nuevo Samsung en el mercado con nuevas funcionalidades"
-      },
-      {
-        title: "Televisor Apple",
-        author: "Steve Jobs",
-        organization: "Apple",
-        affiliations: ["Samsung"],
-        summary: "Nuevo televisor en el mercado con nuevas funcionalidades"
-      }
-    ];
 
     public pageSize: number;
     public pageIndex: number;
@@ -79,7 +54,7 @@ export class SearchComponent implements OnInit {
      * Represents the response of the search.
      */
     // public sr: SearchResponse<OpenPatent>;
-    public sr: SearchResponse<Person>;
+    public sr: SearchResponse<Patent>;
     private navigationExtras: NavigationExtras;
 
     public loading: boolean;
@@ -90,7 +65,6 @@ export class SearchComponent implements OnInit {
 
     public constructor(
         private patentService: PatentService,
-        private peopleService: PeopleService,
         private activatedRoute: ActivatedRoute,
         private router: Router) {
 
@@ -177,37 +151,19 @@ export class SearchComponent implements OnInit {
      * Fetches the search that was requested using the `_params`.
      */
     private fetchSearchRequested(): void {
-        this.peopleService.getPeople(this.params).subscribe(
-            (response: SearchResponse<Person>) => {
-                console.log('fetchSearchRequested', response);
 
-                // this.pageEvent.length = response.hits.total;
-                this.sr = response;
+        this.patentService.getPatents(this.params).subscribe((response: SearchResponse<Patent>) => {
+          console.log('Busqueda realizada');
+          this.sr = response;
 
+                //   this.aggrKeys = [
+                //     { value: this.sr.aggregations.country, key: 'País' },
+                //     { value: this.sr.aggregations.state, key: 'Provincia' },
+                //     { value: this.sr.aggregations.status, key: 'Estado' },
+                //     { value: this.sr.aggregations.types, key: 'Tipo' },
+                // ]
+        });
 
-                // Los valores 'País', 'Provincia', etc. deben ser obtenidos genéricamente.
-                this.aggrKeys = [
-                    { value: this.sr.aggregations.country, key: 'País' },
-                    { value: this.sr.aggregations.state, key: 'Provincia' },
-                    { value: this.sr.aggregations.status, key: 'Estado' },
-                    { value: this.sr.aggregations.types, key: 'Tipo' },
-                ]
-            },
-
-            (error: any) => {
-                console.log("Error in `_fetchSearchRequested` method.");
-            },
-
-            () => {
-                console.log("Finish the `_fetchSearchRequested` method.");
-                this.loading = false;
-            }
-        );
-
-        // this.patentService.getPatents(this.params).subscribe((response: SearchResponse<OpenPatent>) => {
-        //   console.log('Busqueda realizada');
-        //   this.sr = response;
-        // });
 
     }
 

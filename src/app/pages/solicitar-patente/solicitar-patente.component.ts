@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { IdentifierSchemas, MessageHandler, StatusCode } from 'toco-lib';
-import { OpenPatent } from '../../interfaces/open-patent.interface';
+import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from '../../services/patent.service';
 
 @Component({
@@ -18,6 +18,7 @@ import { PatentService } from '../../services/patent.service';
 export class SolicitarPatenteComponent implements OnInit{
 
   display       : FormControl = new FormControl("", Validators.required);
+  displayR      : FormControl = new FormControl("", Validators.required);
   displayDrawing: FormControl = new FormControl("");
   file_store: FileList;
   file_list : FileList;
@@ -28,8 +29,9 @@ export class SolicitarPatenteComponent implements OnInit{
     author         : [''],
     coauthor       : [''],
     affiliations   : ['', Validators.required],
-    organization   : [''],
+    reivindicaciones: [''],
     display        : [this.display, Validators.required],
+    displayR       : [this.displayR, Validators.required],
     displayDrawing : [this.displayDrawing],
     summary        : ['', Validators.required],
 
@@ -75,6 +77,17 @@ export class SolicitarPatenteComponent implements OnInit{
     }
   }
 
+  handleFileInputChangeR(l: FileList): void {
+    this.file_store = l;
+    if (l.length) {
+      const f = l[0];
+      const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
+      this.displayR.patchValue(`${f.name}${count}`);
+    } else {
+      this.displayR.patchValue("");
+    }
+  }
+
 
   enviarFormulario(){
     console.log('Enviar formulario');
@@ -82,9 +95,10 @@ export class SolicitarPatenteComponent implements OnInit{
     console.log(this.openPatentFormGroup.valid);
 
     if(this.openPatentFormGroup.valid){
-      this.patentService.patentToReview.emit({
-        data: this.openPatentFormGroup
-      });
+      this.patentService.createPatents(this.openPatentFormGroup).subscribe(dta => {
+        console.log('ok');
+
+      })
     }
     else{
       this.m.showMessage(StatusCode.OK, "Por favor rellene todos los campos");

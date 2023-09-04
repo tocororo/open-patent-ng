@@ -35,7 +35,7 @@
             </toco-search-query-input>
         </div>
 
-        <search-list [patents]="patents"></search-list>
+        <search-list></search-list>
 
         <mat-paginator [length]="sr.hits.total" [pageSize]="pageSize" [pageIndex]="pageIndex"
             [pageSizeOptions]="pageSizeOptions" (page)="pageChange($event)"

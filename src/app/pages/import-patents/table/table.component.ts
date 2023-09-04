@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
@@ -6,7 +6,8 @@ import { MatPaginator } from '@angular/material/paginator';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent {
+export class TableComponent implements OnInit{
+
   @Input() dataSource
   private paginator: MatPaginator;
 
@@ -19,14 +20,16 @@ export class TableComponent {
 
   displayedColumns: string[] = [
     "titulo",
-    "autor",
-    "organizacion",
+    "autores",
     "afiliaciones",
     "resumen",
+    "fecha_publicacion"
   ];
-
 
   pageSize: number = 5;
   pageIndex: number = 0;
+
+  ngOnInit(){
+  }
 
 }

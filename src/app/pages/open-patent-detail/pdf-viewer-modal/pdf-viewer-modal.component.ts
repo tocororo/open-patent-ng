@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OpenPatent } from 'src/app/interfaces/open-patent.interface';
+import { Patent } from 'src/app/interfaces/patent.entity';
 
 @Component({
   selector: 'app-pdf-viewer-modal',
@@ -14,7 +14,7 @@ export class PdfViewerModalComponent {
   pdfUrl = '../../../../assets/example.pdf';
 
   constructor(public dialogRef: MatDialogRef<PdfViewerModalComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: OpenPatent){}
+              @Inject(MAT_DIALOG_DATA) public data: Patent){}
 
 
   close(): void {

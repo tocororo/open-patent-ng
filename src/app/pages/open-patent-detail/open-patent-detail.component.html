@@ -7,32 +7,24 @@
         <span class="data-elements">{{patent1.title}}</span>
       </div>
 
-      <div class="row" fxLayout.xs="column" *ngIf="patent1.author">
-        <span class="title">Autor</span>
-        <span class="data-elements">{{patent1.author}}</span>
-      </div>
-
-      <div  class="row" fxLayout.xs="column" *ngIf="patent1.co_author">
+      <div class="row" fxLayout.xs="column">
         <mat-accordion>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <span class="title">Coautores</span>
+                <span class="title">Autores</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-list role="list" *ngFor="let coautor of patent1.co_author">
+            <mat-list role="list" *ngFor="let author of patent1.authors">
               <mat-list-item role="listitem">
-                <span  class="data-elements">{{coautor}}</span>
+                <span  style="opacity: 0.6; margin-right: 10px">{{author}}</span>
+                <span  class="data-elements"></span>
               </mat-list-item>
             </mat-list>
           </mat-expansion-panel>
         </mat-accordion>
       </div>
 
-      <div class="row" fxLayout.xs="column" *ngIf="patent1.organization">
-        <span class="title">Organizacion</span>
-        <span class="data-elements">{{patent1.organization}}</span>
-      </div>
 
     <!--  accordion -->
       <div class="row" fxLayout.xs="column">

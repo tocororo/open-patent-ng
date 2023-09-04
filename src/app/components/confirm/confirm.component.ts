@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OpenPatent } from '../../interfaces/open-patent.interface';
+import { Patent } from '../../interfaces/patent.entity';
 
 @Component({
   selector: 'app-confirm',
@@ -10,7 +10,7 @@ import { OpenPatent } from '../../interfaces/open-patent.interface';
 export class ConfirmComponent {
 
   constructor(private dialagRef: MatDialogRef<ConfirmComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: OpenPatent) {
+              @Inject(MAT_DIALOG_DATA) public data: Patent) {
 
 }
   borrar() {

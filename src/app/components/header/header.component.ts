@@ -9,7 +9,7 @@ import {
   Environment, OauthAuthenticationService, OauthInfo, Response, User
 } from 'toco-lib';
 import { menuHelp } from "./constants";
-import { OpenPatent } from '../../interfaces/open-patent.interface';
+import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from '../../services/patent.service';
 
 @Component({
@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit {
   public _menuApps: MenuElement[]
   public staticMenuOptions: MenuElement[]
 
-  patents: OpenPatent[] = [];
+  patents: Patent[] = [];
 
   public sceibaHost: string;
 
@@ -420,18 +420,6 @@ export class HeaderComponent implements OnInit {
 
       complete: () => { },
     });
-  }
-
-  showPatents() {
-    // this.patentService.patentToReview.subscribe(data => {
-    //     console.log('Recibiendo data');
-    //     this.patents = data.data.value;
-    //     console.log("patents: ", this.patents);
-    //   });
-
-    this.patentService.getPatentsToReview().subscribe(data =>{
-      this.patents = data;
-    })
   }
 
 }

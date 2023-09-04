@@ -12,7 +12,7 @@
     </ngx-dropzone-preview>
   </ngx-dropzone>
 
-  <app-table *ngIf="patents && patents.length > 0" [dataSource]="dataSource"></app-table>
+  <app-table *ngIf="table" [dataSource]="dataSource"></app-table>
 
   <div class="button-container">
     <button
@@ -23,7 +23,7 @@
     >
       Mostrar
     </button>
-    <button mat-raised-button  color="primary">
+    <button mat-raised-button  color="primary" (click)="saveData()">
       Guardar
     </button>
   </div>

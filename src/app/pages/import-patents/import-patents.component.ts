@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
-import { OpenPatent } from 'src/app/interfaces/open-patent.interface';
+import { Patent } from 'src/app/interfaces/patent.entity';
 import { MessageHandler, StatusCode } from 'toco-lib';
+import { PatentService } from '../../services/patent.service';
 
 @Component({
   selector: 'app-import-patents',
@@ -12,24 +13,29 @@ import { MessageHandler, StatusCode } from 'toco-lib';
 })
 export class ImportPatentsComponent {
 
-  patents: any[] = [];
+  patents: any;
 
   file: File[] = [];
+  table = false;
   dataSource = new MatTableDataSource<any>([]);
+  formData = new FormData();
   m = new MessageHandler(this._snackBar);
 
-  requiredJSONKyes = [
-    "_id",
+  requiredCSVKyes = [
     "identifiers",
-    "name",
-    "lastName",
-    "gender",
-    "country",
-    "institutional_email",
-    "emails",
+    "title",
+    "assignee",
+    "inventor/author",
+    "priority date",
+    "filing/creation date",
+    "publication date",
+    "grant date",
+    "result link",
+    "representative figure link"
   ];
 
   constructor(
+    private patentService: PatentService,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
@@ -45,8 +51,6 @@ export class ImportPatentsComponent {
       if (this.file[0].type !== "application/json") {
         const jsonFile = this.csvToJson(fileContents);
         this.patents = JSON.parse(jsonFile);
-
-
 
       } else {
         this.patents = JSON.parse(fileContents);
@@ -67,6 +71,7 @@ export class ImportPatentsComponent {
 
         }
         // const eliminado = this.people.shift();
+        this.table = true;
         this.dataSource.data =
           this.patents.length > 800 ? this.patents.slice(0, 800) : this.patents;
           console.log("🚀 ~ file: import-patents.component.ts:130 ~ this.readFile ~ this.dataSource.data", this.dataSource.data)
@@ -118,17 +123,20 @@ export class ImportPatentsComponent {
     return JSON.stringify(result);
   }
 
-  // saveData() {
-  //   if (this.file.length === 0) {
-  //     this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
-  //   } else {
-  //     this.peopleService
-  //       .saveImport(this.org.id, this.file[0])
-  //       .subscribe((response) => {
-  //         console.log(response);
-  //         // this.formData.delete("peopleFile");
-  //       });
-  //   }
-  // }
+  saveData() {
+    if (this.file.length === 0) {
+      this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
+    } else {
+      this.formData = this.patents
+      console.log(this.formData);
+
+      this.patentService
+        .importPatents(this.formData)
+        .subscribe((response) => {
+          console.log(response);
+          // this.formData.delete("peopleFile");
+        });
+    }
+  }
 
 }

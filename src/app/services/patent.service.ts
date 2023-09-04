@@ -3,7 +3,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
 import { Environment, SearchResponse } from 'toco-lib';
-import { OpenPatent } from '../interfaces/open-patent.interface';
+import { Patent } from '../interfaces/patent.entity';
 import { FormGroup } from '@angular/forms';
 
 @Injectable({
@@ -11,9 +11,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class PatentService {
 
-  patents: OpenPatent[] = [];
-
-  @Output() patentToReview: EventEmitter<any> = new EventEmitter();
+  patents: Patent[] = [];
 
 
   constructor(    private _env: Environment,
@@ -21,26 +19,24 @@ export class PatentService {
                   private oAuthStorage: OAuthStorage,
                   private _http: HttpClient) { }
 
-  getPatents(params: HttpParams): Observable<OpenPatent[]>{
-    return this._http.get<OpenPatent[]>('', {params});
+  getPatents(params: HttpParams): Observable<SearchResponse<Patent>>{
+    return this._http.get<SearchResponse<Patent>>('', {params});
   }
 
-  getPatentById(id: string): Observable<OpenPatent>{
-    return this._http.get<OpenPatent>(`/${id}`);
+  getPatentById(id: string): Observable<Patent>{
+    return this._http.get<Patent>(`/${id}`);
   }
 
-  getPatentsToReview(): Observable<OpenPatent[]>{
-    return this._http.get<OpenPatent[]>('');
+  createPatents(formData){
+    return this._http.post('', formData)
   }
 
   deletePatent(id: string){
     return this._http.delete<any>(`/${id}`);
   }
 
-  GenerateInvoicePDF(invoiceno:any){
-    return this._http.get('https://localhost:7118/Invoice/generatepdf?InvoiceNo='+invoiceno,{observe:'response',responseType:'blob'});
-  }
-
-  savePatents(){
+  importPatents(formData: FormData){
+    // const url = this._env.cuorHost + "import";
+    return this._http.post<any>('', formData);
   }
 }

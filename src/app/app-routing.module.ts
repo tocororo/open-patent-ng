@@ -43,7 +43,7 @@ const routes: Routes = [
         component: OpenPatentDetailComponent
       },
       {
-        path: 'patent/:title',
+        path: 'patent/:id',
         component: OpenPatentDetailComponent
       },
       {
@@ -69,7 +69,7 @@ const routes: Routes = [
     // },
     children: [
       {
-        path: ':author',
+        path: ':id',
         component: ProfileComponent,
         // data: { layout: Layouts.People },
 
