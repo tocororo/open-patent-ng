@@ -1,0 +1,53 @@
+<mat-menu #childMenu="matMenu" [overlapTrigger]="false">
+
+  <ng-container *ngIf="isMenuApps; else simpleMenu">
+    <div  fxLayout="row wrap" fxLayoutAlign="space-around flex-end">
+      <ng-container  *ngFor="let item of subMenuElements">
+        <a
+          [href]="item.href"
+          [target]="item.target"
+          class="apps mat-caption"
+          matTooltip="{{ item.nameTranslate | translate }}"
+        >
+          <img
+            [src]="item.img.src"
+            [alt]="item.nameTranslate | translate"
+            style="width: 55px; height: 55px"
+          />
+          <span>{{ item.nameTranslate | translate }}</span>
+        </a>
+        <mat-divider *ngIf="item.divider" class="w-90 my-10"></mat-divider>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-template #simpleMenu>
+    <ng-container *ngFor="let child of subMenuElements">
+      <!-- Handle branch node menu items -->
+        <span *ngIf="child.childrenMenu && child.childrenMenu.length > 0">
+          <button mat-menu-item color="primary" [matMenuTriggerFor]="menu.childMenu">
+            <mat-icon>{{child.icon}}</mat-icon>
+            <span>{{ child.nameTranslate | translate }}</span>
+          </button>
+          <app-menu-item #menu [subMenuElements]="child.childrenMenu"></app-menu-item>
+        </span>
+
+
+        <!-- Handle leaf node menu items -->
+        <ng-container *ngIf="!child.childrenMenu || child.childrenMenu.length === 0">
+          <span *ngIf="child.useRouterLink; else useHrefMenu">
+            <button mat-menu-item [routerLink]="child.href" (click)="child.click()">
+              <mat-icon>{{child.icon}}</mat-icon>
+              <span>{{ child.nameTranslate | translate }}</span>
+            </button>
+          </span>
+          <ng-template #useHrefMenu>
+            <a mat-menu-item [target]="child.target" [href]="child.href" (click)="child.click()">
+              <mat-icon>{{child.icon}}</mat-icon>
+              <span>{{child.nameTranslate | translate}}</span>
+            </a>
+          </ng-template>
+        </ng-container>
+    </ng-container>
+  </ng-template>
+</mat-menu>

@@ -1,0 +1,113 @@
+<form [formGroup]="openPatentFormGroup">
+
+  <section class="grid-container">
+
+          <div class="column-left">
+
+            <div class="titulo-container">
+              <mat-form-field appearance="outline">
+                <mat-label>Titulo</mat-label>
+                <input  matInput
+                        formControlName="title"
+                        required>
+              </mat-form-field>
+            </div>
+
+            <div class="autor-container">
+              <mat-form-field class="form-field-autor" appearance="outline">
+                <mat-label>Autor</mat-label>
+                <input  matInput
+                        formControlName="author"
+                        required="false">
+              </mat-form-field>
+            </div>
+
+            <div class="coautores-container">
+              <mat-form-field appearance="outline">
+                <mat-label>Coautores</mat-label>
+                <input  matInput
+                        formControlName="coauthor"
+                        required="false">
+              </mat-form-field>
+            </div>
+
+            <div class="organizacion-container">
+              <mat-form-field appearance="outline">
+                <mat-label>Organizacion</mat-label>
+                <input  matInput
+                        formControlName="organization"
+                        required="false">
+              </mat-form-field>
+            </div>
+
+            <div class="afiliaciones-container">
+              <mat-form-field appearance="outline">
+                <mat-label>Afiliaciones</mat-label>
+                <input  matInput
+                        formControlName="affiliations"
+                        required="false">
+              </mat-form-field>
+            </div>
+
+          </div>
+
+          <div class="column-right">
+
+            <div class="estado-tecnica-container">
+              <mat-form-field appearance="outline">
+                <mat-label>Estado de la tecnica</mat-label>
+                <button mat-icon-button matPrefix (click)="f_input.click()">
+                  <mat-icon>attach_file</mat-icon>
+                </button>
+                <input type="text" readonly matInput [formControl]="display" />
+                <input
+                  type="file"
+                  multiple
+                  hidden
+                  style="display: none"
+                  #f_input
+                  (change)="handleFileInputChange(f_input.files)"
+                />
+                <mat-error>this field is required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="documentos-container">
+              <mat-form-field appearance="outline">
+                <mat-label>Dibujo</mat-label>
+                <button mat-icon-button matPrefix (click)="f_input1.click()">
+                  <mat-icon>attach_file</mat-icon>
+                </button>
+                <input type="text" readonly matInput [formControl]="displayDrawing" />
+                <input
+                  type="file"
+                  multiple
+                  hidden
+                  style="display: none"
+                  #f_input1
+                  (change)="handleFileInputChange1(f_input1.files)"
+                />
+              </mat-form-field>
+            </div>
+
+
+            <div class="resumen-container">
+              <mat-form-field class="form-field-resumen" appearance="outline">
+                <mat-label>Resumen</mat-label>
+                <input  matInput
+                        formControlName="summary"
+                        required>
+              </mat-form-field>
+            </div>
+
+          </div>
+
+  </section>
+
+  <div class="button-container">
+            <button mat-button color="primary" (click)="enviarFormulario()">Enviar</button>
+  </div>
+
+</form>
+
+

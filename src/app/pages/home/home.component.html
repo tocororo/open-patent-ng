@@ -1,0 +1,17 @@
+
+<div fxLayout="column" fxLayoutAlign="center center">
+
+    <div class="w-100 bg-primary-color" fxLayoutAlign="center center">
+        <div class="pt-2em pb-2em ph-10">
+            <h1 class="mat-display-2" style="margin: 0; text-align: center; color: white;">{{ 'SCEIBA_PATENTES' | translate }}</h1>
+
+
+        </div>
+    </div>
+    <div class="w-100" fxLayout="row" fxLayoutAlign="center center">
+        <div class="w-80" style="margin: 1em 0;">
+            <toco-search-query-input [buttonColor]="'primary'" [query]="''" (queryChange)="queryChange($event)"></toco-search-query-input>
+        </div>
+    </div>
+
+</div>

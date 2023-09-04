@@ -1,0 +1,39 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  padding-left: 50px;
+  padding-top: 20px;
+}
+
+.row {
+  display: flex;
+  margin-bottom: 30px;
+
+  .title, .data-elements {
+    font-size: 18px;
+  }
+
+  .title {
+    opacity: 0.6;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.icons-container{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 50px;
+  margin-bottom: 20px;
+
+  .icon-message{
+    margin-left: 25px;
+  }
+}
+
+
+@media screen and (max-width: 599px) {
+  .wrapper {
+    padding: 30px 20px;
+  }
+}

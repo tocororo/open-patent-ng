@@ -1,0 +1,3 @@
+This tool has been developed within the framework of the national collaboration project [VLIR JOINT 2019-01-27 (SCEIBA)](https://www.vliruos.be/en/projects/project/22?pid=4202) and the branch project [TOCORORO](https://tocororo.upr.edu.cu) entitled “Quality control and monitoring of scientific research output on national and institutional level”.
+
+The people system manages the profiles of researchers as well as other people related to scientific research, uniquely identifying each one of them and promoting the disambiguation of profiles through the use of internationally recognized persistent identifiers.

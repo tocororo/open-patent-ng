@@ -1,0 +1,30 @@
+<toco-header  [showMenuLang]="'true'" [icon]="'/assets/images/logo.sceiba.letras.svg'" [iconLabel]="'SCEIBA_PERSONAS'" [iconAlt]="'PERSONAS'"></toco-header>
+<!-- <mat-menu #menuNetwork="matMenu">
+  <a mat-menu-item href="https://www.facebook.com/sceiba/" target="_blank">
+      Facebook
+  </a>
+  <a mat-menu-item href="https://twitter.com/SceibaCu" target="_blank">
+      Twitter
+  </a>
+  <a mat-menu-item href="https://github.com/tocororo" target="_blank">
+      GitHub
+  </a>
+</mat-menu> -->
+
+
+
+<!-- <ng-container [ngSwitch]="layout">
+  <app-mainlayout *ngSwitchCase="Layouts.Main"></app-mainlayout>
+  <app-people-layout *ngSwitchCase="Layouts.People"></app-people-layout>
+</ng-container> -->
+
+
+<router-outlet></router-outlet>
+
+<!--<div [ngStyle]="{'margin-top': '2em'}"> -->
+<app-footer
+  [sites]="footerSites"
+  [information]="footerInformation"
+>
+</app-footer>
+<!-- </div> -->

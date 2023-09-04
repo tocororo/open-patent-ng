@@ -1,0 +1,16 @@
+<section #content>
+  <div mat-dialog-content>
+    <pdf-viewer [src]="pdfUrl"
+                [render-text]="true"
+                [original-size]="false"
+                style="width: 100%; height: 700px"
+    >
+    </pdf-viewer>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="close()">Cerrar</button>
+  </div>
+</section>
+
+
+

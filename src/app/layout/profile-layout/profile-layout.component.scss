@@ -1,0 +1,88 @@
+.wrapper {
+  height: 580px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    mat-icon {
+      width: 150px;
+      height: 150px;
+      font-size: 150px;
+    }
+
+  }
+
+  .status {
+    margin-top: 20px;
+    .matChipStatus {
+      background-color: white;
+      box-shadow: rgb(255 255 255 / 50%) 1px 3px 12px 4px;
+      font-weight: 550;
+      padding: 25px;
+    }
+    mat-icon {
+      margin-bottom: 2px;
+      margin-right: 5px;
+    }
+  }
+}
+
+.person-primary-info {
+    text-align: center;
+
+  .title, .sub-title {
+    color: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+    .title {
+      font-size: 40px;
+      font-weight: 800;
+    }
+
+    .sub-title {
+      font-size: 26px;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+}
+
+@media screen and (max-width: 768px){
+  :host ::ng-deep .mdc-evolution-chip-set__chips {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 599px){
+  :host ::ng-deep .mat-chip-list-wrapper {
+    justify-content: center;
+  }
+  .wrapper {
+    height: 680px;
+    justify-content: flex-start;
+    padding-top: 30px;
+
+    .status {
+      margin-top: 0 !important;
+      padding: 30px 40px !important;
+    }
+  }
+
+  .person-primary-info {
+    padding-left: 40px;
+  }
+}

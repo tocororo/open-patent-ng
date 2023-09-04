@@ -1,0 +1,68 @@
+.grid-container{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 50px 0 0 30px;
+}
+
+mat-form-field{
+  width: 50%;
+}
+
+.form-field-resumen{
+  height: 230px;
+}
+
+
+.column-right{
+
+  div{
+
+    mat-form-field{
+      margin-left: 40%;
+    }
+
+  }
+}
+
+
+.button-container{
+  display: flex;
+  justify-content: end;
+  margin-right: 60px;
+}
+
+.mat-mdc-button{
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.file-name {
+  margin-left: 1rem; /* or whatever margin you require */
+}
+
+@media(max-width: 800px){
+  .grid-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div{
+      width: 90%;
+    }
+  }
+
+  mat-form-field{
+    width: 100%;
+  }
+
+  .column-right{
+
+    div{
+
+      mat-form-field{
+        margin-left: 0;
+      }
+
+    }
+  }
+}

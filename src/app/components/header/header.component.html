@@ -1,0 +1,90 @@
+<mat-toolbar class="mat-elevation-z8" style="position: relative; z-index: 2">
+  <mat-toolbar-row
+    fxLayout="row wrap"
+    fxLayout.xs="column"
+    fxLayoutAlign="space-between center"
+    fxLayoutAlign.xs="space-between stretch"
+    style="height: auto !important; min-height: 80px"
+  >
+    <div style="width: 330px; display: flex; align-items: center" class="icon-header">
+      <a
+        mat-button
+        [routerLink]="['/']"
+        style="white-space: normal; display: flex; align-items: center"
+
+      >
+        <img
+          class="icon-header-sceiba"
+          src="{{icon}}"
+          [alt]="iconAlt | translate"
+          style="height: 50px; margin-right: 6px"
+        />
+        <!-- <span class="mat-h3">{{ iconLabel | translate }}</span> -->
+      </a>
+    </div>
+
+    <div
+      class="center-elements"
+      appearance="legacy"
+      aria-label="'MENU_INICIO' | translate"
+      fxLayout="row wrap"
+      fxLayoutAlign="center"
+      fxLayoutGap="15px"
+    >
+      <button *ngIf="showMenuLang"
+        mat-icon-button
+        [matMenuTriggerFor]="menuLanguages"
+        matTooltip="{{ 'IDIOMA' | translate }}"
+      >
+        <mat-icon class="mat-18">translate</mat-icon>
+      </button>
+
+      <app-menu [menuItems]="_menuOptions" ></app-menu>
+
+      <toco-authentication *ngIf="!user"
+        [oauthInfo]="oauthInfo"
+        [isButtonLogin]="'true'"
+        [isButtonLoginIcon]="'true'"
+        [isButtonLoginText]="'AUTENTICARSE' | translate"
+      >
+      </toco-authentication>
+    </div>
+
+    <div class="menu-full">
+        <a mat-button [routerLink]="['/']">Inicio</a>
+        <a mat-button routerLink="./import">Importar patentes</a>
+        <a mat-button [matMenuTriggerFor]="menu" (click)="showPatents()">Solicitudes de patentes abiertas</a>
+        <mat-menu #menu="matMenu">
+          <ul *ngFor="let patent of patents">
+            <button mat-menu-item>{{patent.title}}</button>
+          </ul>
+        </mat-menu>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-menu #menuLanguages="matMenu">
+  <a *ngFor="let lang of languageTexts; let i=index" mat-menu-item (click)="setLanguage(i)">
+    <mat-icon *ngIf="i == currentLang; else elseTemplate_radio_button_unchecked">radio_button_checked</mat-icon>
+    {{ lang }}
+  </a>
+
+  <ng-template #elseTemplate_radio_button_unchecked>
+    <mat-icon>radio_button_unchecked</mat-icon>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #menuHeader="matMenu">
+<ng-container *ngFor="let item of menuElements">
+  <a mat-menu-item [routerLink]="item.href" *ngIf="item.useRouterLink; else useHrefMenu">
+    <!-- <mat-icon>dialpad</mat-icon> -->
+    <span>{{item.nameTranslate |translate}}</span>
+  </a>
+  <ng-template #useHrefMenu>
+    <a mat-menu-item [href]="item.href" [target]="item.target">
+      <!-- <mat-icon>dialpad</mat-icon> -->
+      <span>{{item.nameTranslate |translate}}</span>
+    </a>
+  </ng-template>
+</ng-container>
+</mat-menu>

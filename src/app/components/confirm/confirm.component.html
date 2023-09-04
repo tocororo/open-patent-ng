@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Estas a punto de borrar {{data.title}}</h1>
+<div mat-dialog-content>
+  <p>Estas seguro?</p>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="borrar()" color="warn" (click)="borrar()" cdkFocusInitial>Si, borrar!</button>
+  <button mat-button (click)="cerrar()">Cancelar</button>
+</div>

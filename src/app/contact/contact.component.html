@@ -1,0 +1,26 @@
+
+<form [formGroup]="formGroup" [ngStyle]="{'width': width}">
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>{{ 'CORREO' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'ESCRIBA_CORREO' | translate }}" formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>{{ 'ASUNTO' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'ESCRIBA_ASUNTO' | translate }}" formControlName="topic">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>{{ 'CUERPO' | translate }}</mat-label>
+        <textarea matInput placeholder="{{ 'ESCRIBA_CUERPO' | translate  }}" rows="{{ rows }}" formControlName="body"></textarea>
+    </mat-form-field>
+
+    <!-- <re-captcha (resolved)="resolved($event)" siteKey="{{ siteKey }}"></re-captcha> -->
+
+    <button mat-raised-button class="mt-1" style="color: white;" color="primary" (click)="send()">
+        <mat-icon matPrefix>send</mat-icon>
+        {{ 'ENVIAR' | translate }}
+    </button>
+
+</form>

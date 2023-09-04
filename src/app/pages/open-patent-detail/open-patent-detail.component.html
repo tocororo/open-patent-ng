@@ -1,0 +1,90 @@
+<div class="grid-container">
+    <!--  text row-->
+
+    <div class="column-left">
+      <div class="row" fxLayout.xs="column">
+        <span class="title">Titulo</span>
+        <span class="data-elements">{{patent1.title}}</span>
+      </div>
+
+      <div class="row" fxLayout.xs="column" *ngIf="patent1.author">
+        <span class="title">Autor</span>
+        <span class="data-elements">{{patent1.author}}</span>
+      </div>
+
+      <div  class="row" fxLayout.xs="column" *ngIf="patent1.co_author">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="title">Coautores</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list role="list" *ngFor="let coautor of patent1.co_author">
+              <mat-list-item role="listitem">
+                <span  class="data-elements">{{coautor}}</span>
+              </mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="row" fxLayout.xs="column" *ngIf="patent1.organization">
+        <span class="title">Organizacion</span>
+        <span class="data-elements">{{patent1.organization}}</span>
+      </div>
+
+    <!--  accordion -->
+      <div class="row" fxLayout.xs="column">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="title">Afiliaciones</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list role="list" *ngFor="let affiliation of patent1.affiliations">
+              <mat-list-item role="listitem">
+                <span  style="opacity: 0.6; margin-right: 10px">{{affiliation}}</span>
+                <span  class="data-elements"></span>
+              </mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="row" fxLayout.xs="column">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="title">Documentos</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list role="list" *ngFor="let document of documents">
+              <mat-list-item role="listitem">
+                <span  style="opacity: 0.6; margin-right: 10px"></span>
+                <span  class="data-elements" style="cursor: pointer" (click)="showPdf()">{{document}}</span>
+
+              </mat-list-item>
+            </mat-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+
+    <div class="column-right">
+      <div class="row" fxLayout.xs="column">
+        <span class="title">Resumen</span>
+        <span class="data-elements">{{patent1.summary}}</span>
+      </div>
+    </div>
+
+</div>
+
+  <div class="icons-container">
+    <div class="icon-view">
+      <p></p>
+      <mat-icon color="primary">visibility</mat-icon>
+    </div>
+  </div>

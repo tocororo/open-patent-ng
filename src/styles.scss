@@ -1,0 +1,420 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+/* You can add global styles to this file, and also import other style files */
+
+@import '@angular/material/theming';
+
+@import './styles/typography';
+@import './styles/app-theme';
+
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-blue: (
+    50 : #e1edf0,
+    100 : #b5d1db,
+    200 : #84b3c3,
+    300 : #5295aa,
+    400 : #2d7e98,
+    500 : #086786,
+    600 : #075f7e,
+    700 : #065473,
+    800 : #044a69,
+    900 : #023956,
+    A100 : #88ceff,
+    A200 : #55b9ff,
+    A400 : #22a3ff,
+    A700 : #0899ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
+    )
+);
+
+$md-green: (
+    50 : #e0f0e8,
+    100 : #b3d8c5,
+    200 : #80bf9f,
+    300 : #4da578,
+    400 : #26915b,
+    500 : #007e3e,
+    600 : #007638,
+    700 : #006b30,
+    800 : #006128,
+    900 : #004e1b,
+    A100 : #81ffa0,
+    A200 : #4eff79,
+    A400 : #1bff52,
+    A700 : #02ff3f,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-grey: (
+    50 : #e7e6e6,
+    100 : #c3c1c1,
+    200 : #9b9898,
+    300 : #736f6f,
+    400 : #555050,
+    500 : #373131,
+    600 : #312c2c,
+    700 : #2a2525,
+    800 : #231f1f,
+    900 : #161313,
+    A100 : #f66767,
+    A200 : #f33737,
+    A400 : #f60000,
+    A700 : #dd0000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+$md-azul: (
+    50 : #e1e5ea,
+    100 : #b4bdcb,
+    200 : #8292a9,
+    300 : #506687,
+    400 : #2b456d,
+    500 : #052453,
+    600 : #04204c,
+    700 : #041b42,
+    800 : #031639,
+    900 : #010d29,
+    A100 : #6380ff,
+    A200 : #3057ff,
+    A400 : #002ffc,
+    A700 : #002ae3,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$md-azullight: (
+    50 : #ecf3fa,
+    100 : #cfe1f2,
+    200 : #afcde9,
+    300 : #8fb9e0,
+    400 : #77aad9,
+    500 : #5f9bd2,
+    600 : #5793cd,
+    700 : #4d89c7,
+    800 : #437fc1,
+    900 : #326db6,
+    A100 : #fcfeff,
+    A200 : #c9e1ff,
+    A400 : #96c3ff,
+    A700 : #7db5ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-greylight: (
+    50 : #faf9fa,
+    100 : #f2f1f2,
+    200 : #e9e8ea,
+    300 : #e0dfe1,
+    400 : #d9d8da,
+    500 : #d2d1d4,
+    600 : #cdcccf,
+    700 : #c7c6c9,
+    800 : #c1c0c3,
+    900 : #b6b5b9,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #f6f4ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+$md-green: (
+    50 : #e0f0e8,
+    100 : #b3d8c5,
+    200 : #80bf9f,
+    300 : #4da578,
+    400 : #26915b,
+    500 : #007e3e,
+    600 : #007638,
+    700 : #006b30,
+    800 : #006128,
+    900 : #004e1b,
+    A100 : #81ffa0,
+    A200 : #4eff79,
+    A400 : #1bff52,
+    A700 : #02ff3f,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-grey: (
+    50 : #e7e6e6,
+    100 : #c3c1c1,
+    200 : #9b9898,
+    300 : #736f6f,
+    400 : #555050,
+    500 : #373131,
+    600 : #312c2c,
+    700 : #2a2525,
+    800 : #231f1f,
+    900 : #161313,
+    A100 : #f66767,
+    A200 : #f33737,
+    A400 : #f60000,
+    A700 : #dd0000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+
+
+/* - colors - */
+$toco-primary: mat.define-palette($md-green);
+$toco-accent: mat.define-palette($md-grey);
+//$toco-warn: mat-palette($mat-grey, 200, 100, 900);
+$toco-warn: mat.define-palette(mat.$deep-orange-palette);
+
+$toco-theme: mat.define-light-theme($toco-primary, $toco-accent, $toco-warn);
+
+@include mat.all-component-themes($toco-theme);
+@include toco-app-theme($toco-theme);
+
+// .alternate-theme {
+//     $alternate-primary: mat-palette($md-grey);
+//     $alternate-accent:  mat-palette($md-azullight);
+//     $toco-warn: mat-palette($md-greylight);
+
+//     $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent, $toco-warn);
+
+//     @include angular-material-theme($alternate-theme);
+//     @include toco-app-theme($toco-theme);
+// }
+
+.alternate-theme-footer {
+    $alternate-primary: mat.define-palette(mat.$grey-palette, 800);
+    $alternate-accent:  mat.define-palette($md-blue);
+    $toco-warn: mat.define-palette(mat.$deep-orange-palette);
+
+    $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent, $toco-warn);
+
+    @include mat.all-component-themes($alternate-theme);
+    // @include toco-app-theme($toco-theme);
+}
+
+.alternate-theme-userProfile {
+    $alternate-primary: mat.define-palette($md-azullight/*md-green*/);
+    $alternate-accent:  mat.define-palette($md-grey);
+    $toco-warn: mat.define-palette(mat.$deep-orange-palette);
+
+    $alternate-theme: mat.define-light-theme($alternate-primary, $alternate-accent, $toco-warn);
+
+    @include mat.all-component-themes($alternate-theme);
+    @include toco-app-theme($toco-theme);
+}
+
+.color-primary
+{
+    color: mat.get-color-from-palette($toco-primary);
+}
+
+.custom
+{
+    a
+    {
+        color: mat.get-color-from-palette($toco-primary);
+    }
+}
+/* autoprefixer grid: autoplace */
+
+html, body { height: 100%; }
+body { margin: 0; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.m-1{
+    margin: 1em;
+}
+.mb-1{
+    margin-bottom: 2em;
+}
+.m-2{
+    margin: 2em;
+}
+.mt-2{
+    margin-top: 2em;
+}
+.p-1{
+    padding: 16px;
+}
+.pt-1{
+    padding-top: 8px;
+}
+.query-input .mat-form-field-wrapper{
+    padding-bottom: 0 !important;
+}
+.my-outline{
+    border: 2px solid mat.get-color-from-palette($toco-primary, 50);
+    border-radius: 4px;
+    padding: 8px;
+    padding-bottom: 0px;
+    margin-bottom: 24px;
+ }
+ .my-outline:hover{
+    border: 2px solid mat.get-color-from-palette($toco-primary);
+ }
+ .tooltip-red{
+    // background: #b71c1c !important;
+     background: mat.get-color-from-palette($toco-warn, A700);
+ }
+
+ .tooltip-beta-red{
+    background: mat.get-color-from-palette($toco-warn, A700);
+    font-size: larger;
+ }
+ .triangle{
+    border-left: 80px solid mat.get-color-from-palette($toco-warn, A700) !important;
+ }
+ .primary-color{
+     background-color: mat.get-color-from-palette($toco-primary);
+     color: #fff;
+     padding: 16px;
+     margin: 16px;
+     border-radius: 4px;
+ }
+ .mch-bg-primary-color
+ {
+    background-color: mat.get-color-from-palette($toco-primary);
+    color: #fff;
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 4px;
+    text-align: center;
+}
+ .bg-primary-color {
+    background-color: mat.get-color-from-palette($toco-primary);
+}
+
+ .ligth-green {
+    //background-color: mat-color($toco-primary, 50);
+    background-color: rgba(0,0,0,0.1);
+    color: white;
+    max-width: 400px;
+    border: 1px solid;
+    border-color: mat.get-color-from-palette($toco-primary);
+ }
+
+ .ligth-green-card {
+    //background-color: mat-color($toco-primary, 50);
+    background-color: rgba(0,127,63,0.1);
+    color: black;
+    border: 1px solid;
+    border-color: mat.get-color-from-palette($toco-primary);
+ }

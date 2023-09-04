@@ -1,0 +1,250 @@
+<div
+  class="pt-2em"
+  ngClass.xs="pt-20 pb-20"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <h3 class="mat-display-1" style="margin: 0;">{{ 'PARTICIPANTES' | translate }}</h3>
+  <!-- <mat-divider [ngStyle.xs]="{ width: '100%'}" [ngStyle]="{ width: '100%'}"></mat-divider> -->
+  <div class="partners">
+    <a href="https://www.upr.edu.cu/home/index" target="_blank">
+      <img
+        src="/assets/images/upr.png"
+        width="93"
+        height="108"
+        style="margin: 1em;"
+    /></a>
+    <a href="http://www.uh.cu/" target="_blank">
+      <img
+        src="/assets/images/uh.png"
+        width="93"
+        height="108"
+        style="margin: 1em"
+    /></a>
+    <a href="http://www.lamolina.edu.pe/" target="_blank">
+      <img
+        src="/assets/images/lamolina.jpg"
+        width="93"
+        height="108"
+        style="margin: 1em"
+    /></a>
+    <a href="https://www.usil.edu.pe/?verified=true" target="_blank">
+      <img
+        src="/assets/images/usil.png"
+        width="93"
+        height="108"
+        style="margin: 1em"
+    /></a>
+    <a href="https://www.uhasselt.be/en" target="_blank">
+      <img
+        src="/assets/images/hasselt.png"
+        width="140"
+        height="108"
+        style="margin: 1em"
+    /></a>
+    <a href="https://www.uantwerpen.be/en/" target="_blank">
+      <img
+        src="/assets/images/antwerpent.png"
+        width="93"
+        height="108"
+        style="margin: 1em"
+    /></a>
+    <a href="https://www.mes.gob.cu/" target="_blank">
+      <img
+        src="/assets/images/mes.png"
+        width="209"
+        height="68"
+        style="margin: 1em"
+    /></a>
+    <a
+      href="https://www.vliruos.be/en/projects/project/22?pid=4202"
+      target="_blank"
+      style="
+        margin: 0;
+        text-align: right;
+        color: rgb(0, 0, 0, 0.87);
+        text-decoration: none;
+      "
+    >
+      <img
+        src="/assets/images/vliruos.svg"
+        [alt]="'PROYECTO_VLIR' | translate"
+        width="240"
+        height="61.96"
+      />
+    </a>
+  </div>
+  <mat-divider
+    [ngStyle.xs]="{ width: '100%' }"
+    [ngStyle]="{ width: '100%' }"
+  ></mat-divider>
+</div>
+
+<div class="bg-primary-color footer-wrapper">
+  <div class="footer" color="primary">
+    <div class="section about-section">
+      <a
+        href="https://sceiba.cu"
+        style="color: rgb(0, 0, 0, 0.87); text-decoration: none"
+      >
+        <img
+          src="/assets/icons/sceiba_white.svg"
+          [alt]="'SCEIBA' | translate"
+          width="150"
+        />
+      </a>
+
+      <p >
+        {{ "FOOTER_TEXT" | translate }}
+      </p>
+    </div>
+
+    <!-- <div class="divider"> </div> -->
+
+    <div class="section links-section">
+      <h2 style="margin-top: 0px">
+        {{ "FOOTER_TEXT_INFORMACION" | translate }}
+      </h2>
+      <div class="grid-links">
+        <ng-container *ngFor="let item of information">
+          <a
+            [routerLink]="[item.url]"
+            *ngIf="item.useRouterLink"
+            [ngStyle]="{ 'line-height': 'initial', padding: '10px 16px' }"
+            [ngStyle.xs]="{ width: 'inherit' }"
+          >
+            {{ item.name | translate }}
+          </a>
+          <a
+            *ngIf="!item.useRouterLink"
+            href="{{ item.url }}"
+            target="_blank"
+            [ngStyle]="{ 'line-height': 'initial', padding: '10px 16px' }"
+            [ngStyle.xs]="{ width: 'inherit' }"
+          >
+            {{ item.name | translate }}
+          </a>
+        </ng-container>
+      </div>
+      <div class="grid-links">
+        <ng-container *ngFor="let item of sites">
+          <a
+            *ngIf="item.useRouterLink"
+            [routerLink]="[item.url]"
+            [ngStyle]="{ 'line-height': 'initial', padding: '10px 16px' }"
+            [ngStyle.xs]="{ width: 'inherit' }"
+          >
+            <!-- It is not necessary to translate. -->
+            {{ item.name }}
+          </a>
+          <a
+            *ngIf="!item.useRouterLink"
+            href="{{ item.url }}"
+            target="_blank"
+            [ngStyle]="{ 'line-height': 'initial', padding: '10px 16px' }"
+            [ngStyle.xs]="{ width: 'inherit' }"
+          >
+            <!-- It is not necessary to translate. -->
+            {{ item.name }}
+          </a>
+        </ng-container>
+      </div>
+    </div>
+
+
+
+    <div class="section links-section">
+      <h2 style="margin-top: 0px">{{ "APLICACIONES" | translate }}</h2>
+      <div class="grid-links" style="margin-bottom: 30px">
+        <ng-container *ngFor="let item of menuApps">
+          <div>
+            <a
+              [routerLink]="[item.url]"
+              *ngIf="item.useRouterLink"
+              [ngStyle]="{ 'line-height': 'initial', padding: '10px 16px' }"
+              [ngStyle.xs]="{ width: 'inherit' }"
+            >
+              {{ item.name | translate }}
+            </a>
+            <a
+              *ngIf="!item.useRouterLink"
+              href="{{ item.url }}"
+              target="_blank"
+              [ngStyle]="{ 'line-height': 'initial', padding: '10px 16px' }"
+              [ngStyle.xs]="{ width: 'inherit' }"
+            >
+              {{ item.name | translate }}
+            </a>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- <div class="divider"> </div> -->
+
+    <div class="section follow-section">
+      <!-- <span style="width: 16%;"></span> -->
+      <h2 style="margin-top: 0px">{{ "SIGUENOS" | translate }}</h2>
+      <div>
+        <a
+          mat-icon-button
+          href="https://www.facebook.com/sceiba/"
+          target="_blank"
+          matTooltip="Facebook"
+        >
+          <mat-icon svgIcon="facebook" class="mat-18"></mat-icon>
+        </a>
+        <a
+          mat-icon-button
+          href="https://twitter.com/SceibaCu"
+          target="_blank"
+          matTooltip="Twitter"
+        >
+          <mat-icon svgIcon="twitter" class="mat-18"></mat-icon>
+        </a>
+        <a
+          mat-icon-button
+          href="https://github.com/tocororo"
+          target="_blank"
+          matTooltip="GitHub"
+        >
+          <mat-icon svgIcon="github" class="mat-18">home</mat-icon>
+        </a>
+      </div>
+      <iframe
+        src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fsceiba%2F&tabs=friends&width=300&height=130&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=true&appId"
+        class="iframe"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+      ></iframe>
+    </div>
+  </div>
+</div>
+<div
+  style="
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.5em;
+    font-size: xx-small;
+  "
+>
+  <span style="margin: 0 10px"
+    >{{ "PORTAL_PUB" | translate }}, {{ "FOOTER_TEXT_DEVELOP" | translate }}
+    <a href="https://inveniosoftware.org/">Invenio</a>
+    {{ "FOOTER_TEXT_AND" | translate }}
+    <a href="https://angular.io/">Angular</a>, 2021-2022
+  </span>
+  <a
+    rel="license"
+    href="http://creativecommons.org/licenses/by/4.0/"
+    style="height: 31px !important"
+    ><img
+      alt="Licencia de Creative Commons"
+      style="border-width: 0"
+      src="https://i.creativecommons.org/l/by/4.0/88x31.png"
+  /></a>
+</div>

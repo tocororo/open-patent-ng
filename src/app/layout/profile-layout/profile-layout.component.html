@@ -1,0 +1,29 @@
+<div class="bg-primary-color wrapper">
+  <div class="header" fxLayout.xs="column">
+    <mat-icon> account_circle</mat-icon>
+    <div class="person-primary-info">
+      <p class="title">Laura</p>
+      <p class="sub-title">mesa@gmail.com</p>
+      <p class="sub-title">Cuba</p>
+    </div>
+  </div>
+</div>
+
+<div
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  style="border-radius: 40px 40px 0 0"
+>
+  <div
+    [ngStyle.xs]="{ width: '95%' }"
+    style="
+      margin-top: -100px;
+      width: 90%;
+      background-color: white;
+      border-radius: 40px 40px 0 0;
+      box-shadow: 0px 5px 15px rgb(0, 0, 0, 0.088);
+    "
+  >
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<mat-card class="mat-elevation-z0" *ngIf="patents && patents.length > 0; else templateNotInfo">
+
+
+    <mat-card-content>
+      <div *ngFor="let patent of patents; let pos = index" [ngStyle]="{'margin': '1em 8px'}">
+
+        <!-- Titulo de la patente -->
+        <h2>
+          <!-- <span mat-icon-button *ngIf="hasPermission" routerLink="/{{hit.metadata.id}}/edit" matTooltip="Editar la Organización">
+            <mat-icon class="mat-18">mode_edit</mat-icon>
+          </span> -->
+          <span [routerLink]="['/patent', patent.title]"
+                style="cursor: pointer;">
+            {{patent.title}}
+          </span>
+        </h2>
+
+        <h4 class="p-40"
+              *ngIf="patent.author"
+              [routerLink]="['/profile', patent.author]"
+              style="cursor: pointer;">
+          Autor: {{patent.author}}
+        </h4>
+
+        <ul fxLayout="row wrap" *ngIf="patent.coco_author">
+          <h4>Coautores:</h4>
+          <li *ngFor="let affiliation of patent.affiliations; let i = index" class="li-margin-style">
+            {{affiliation}}
+            <!-- <ng-container *ngIf="i < hit.metadata.types.length - 1"> | </ng-container> -->
+          </li>
+        </ul>
+
+        <h4 class="p-40"
+              *ngIf="patent.organization"
+              [routerLink]="['/profile', patent.organization]"
+              style="cursor: pointer;">
+          Organizacion: {{patent.organization}}
+        </h4>
+
+        <ul fxLayout="row wrap" >
+          <span>Afiliaciones:</span>
+          <li *ngFor="let affiliation of patent.affiliations; let i = index" class="li-margin-style">
+            {{affiliation}}
+            <!-- <ng-container *ngIf="i < hit.metadata.types.length - 1"> | </ng-container> -->
+          </li>
+        </ul>
+
+
+
+        <!-- <ul fxLayout="row wrap" *ngIf="hit.metadata.acronyms && hit.metadata.acronyms.length > 0">
+          <span>Acrónimos:</span>
+          <li *ngFor="let acronym of hit.metadata.acronyms; let i = index" class="li-margin-style">
+            {{acronym}}
+            <ng-container *ngIf="i < hit.metadata.acronyms.length - 1"> | </ng-container>
+          </li>
+        </ul> -->
+
+        <!-- <ul fxLayout="row wrap" *ngIf="hit.metadata.aliases && hit.metadata.aliases.length > 0">
+          <span>Conocida como:</span>
+          <li *ngFor="let alias of hit.metadata.aliases; let i = index" class="li-margin-style">
+            {{alias}}
+            <ng-container *ngIf="i < hit.metadata.aliases.length - 1"> | </ng-container>
+          </li>
+        </ul> -->
+
+        <!-- <ul fxLayout="row wrap" *ngIf="hit.metadata.identifiers && hit.metadata.identifiers.length > 0">
+          <span>Identificadores:</span>
+          <li *ngFor="let identifier of hit.metadata.identifiers; let i = index" class="li-margin-style">
+            {{identifier.idtype}}: {{identifier.value}}
+            <ng-container *ngIf="i < hit.metadata.identifiers.length - 1"> | </ng-container>
+          </li>
+        </ul>
+        <hr class="hr-grey-ligth" *ngIf="pos < hitList.hits.length - 1"> -->
+
+        <section class="button-container">
+
+          <div class="button-edit-container">
+            <button mat-fab color="accent"  matTooltip="Editar" [routerLink]="['/patents/editar', patent.id]">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+
+          <div class="button-delete-container">
+            <button mat-fab color="warn"  matTooltip="Eliminar" (click)="eliminar(patent)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+        </section>
+      </div>
+    </mat-card-content>
+
+</mat-card>
+
+<ng-template #templateNotInfo>
+  <mat-card>
+    <mat-card-content>
+      <h2>No hay resultados para su búsqueda...</h2>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

@@ -1,0 +1,91 @@
+.menu-icon-button {
+  border: inherit;
+  background-color: inherit;
+}
+
+.color-white {
+  color: white !important;
+  text-emphasis: white;
+  text-decoration: none !important;
+}
+
+.mat-toolbar-single-row {
+  height: auto !important;
+  min-height: 64px;
+}
+.w-90 {
+  width: 90%;
+}
+.apps {
+  margin: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  font-size: smaller;
+  img {
+    width: 55px;
+    height: 55px;
+  }
+}
+.MES {
+  width: 190px !important;
+}
+.menu-full {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.show-menu {
+  display: inline-block;
+}
+
+.hide-menu {
+  display: none;
+}
+
+.show-menu-elements {
+  display: flex;
+}
+
+.center-elements {
+  width: auto;
+}
+
+a {
+  color: black ;
+  text-decoration: none ;
+  font-weight: bold;
+}
+
+a:hover{
+  color: #007E3E !important;
+}
+
+
+@media screen and (max-width: 664px) {
+  .icon-header-sceiba{
+    margin-top: 50px;
+  }
+  .center-elements {
+    margin-top: 50px;
+  }
+}
+
+@media screen and (max-width: 490px) {
+  .icon-header-sceiba{
+    text-align: center;
+  }
+  .center-elements {
+    width: 100%;
+  }
+}

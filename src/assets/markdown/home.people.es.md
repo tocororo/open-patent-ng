@@ -1,0 +1,3 @@
+Esta herramienta ha sido desarrollada en el marco del proyecto de colaboración nacional [VLIR JOINT 2019-01-27 (SCEIBA)](https://www.vliruos.be/en/projects/project/22?pid=4202) y el proyecto ramal [TOCORORO](https://tocororo.upr.edu.cu) titulado “Control de calidad y monitoreo de las publicaciones científicas a nivel nacional e institucional”.
+
+El sistema de personas gestiona los perfiles de los investigadores así como de otras personas relacionados con la investigación científica, identificando a cada una de ellas de manera unívoca y promoviendo la desambiguación de perfiles mediante el uso de identificadores persistentes internacionalmente reconocidos.

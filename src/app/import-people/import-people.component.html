@@ -1,0 +1,80 @@
+<!--
+<app-select-org
+fxLayout="row wrap"
+fxLayout.xs="column wrap"
+fxLayoutAlign="start center"
+fxLayoutAlign.xs="center center"
+fxLayoutGap="1em"
+(paramsChange)="filtersChange($event)"
+>
+</app-select-org> -->
+
+<div class="container">
+  <h1 style="padding-bottom: 20px">Importar personas</h1>
+  <div class="instructions">
+    <div>
+      <p>
+        El archivo (.json / .csv) de importación para personas debe cumplir con
+        las siguientes estructuras/campos
+      </p>
+    </div>
+    <div
+      class="instructions-markdown"
+      style="margin: 0"
+      markdown
+      [src]="'/assets/markdown/import.instructions.es.md'"
+    ></div>
+  </div>
+
+  <ngx-dropzone (change)="onSelect($event)" accept=".csv,.json">
+    <ngx-dropzone-label>
+      <mat-icon style="font-size: 100px; width: 0; height: 0;">person_add</mat-icon>
+    </ngx-dropzone-label>
+    <ngx-dropzone-preview
+      *ngFor="let f of file"
+      [removable]="true"
+      (removed)="onRemove(f)"
+    >
+      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+    </ngx-dropzone-preview>
+  </ngx-dropzone>
+</div>
+
+<div *ngIf="people && people.length > 0" class="button-container">
+  <button mat-raised-button (click)="saveData()" color="primary">
+    Guardar
+  </button>
+</div>
+
+<div
+  class="mat-elevation-z4"
+  *ngIf="people && people.length > 0"
+  style="margin: 0 30px"
+>
+  <h2 style="padding: 20px">{{ org.name }}</h2>
+
+  <ng-container  *ngIf="isJsonFile; else csvTable">
+    <app-json-table [dataSource]="dataSource"></app-json-table>
+  </ng-container>
+
+  <ng-template  #csvTable>
+    <app-csv-table [dataSource]="dataSource"></app-csv-table>
+  </ng-template>
+</div>
+
+<div class="button-container">
+  <button
+    *ngIf="!people || people.length === 0"
+    mat-raised-button
+    (click)="showData()"
+    color="primary"
+    style="margin-right: 10px;"
+  >
+    Mostrar
+  </button>
+  <button mat-raised-button (click)="saveData()" color="primary">
+    Guardar
+  </button>
+</div>
+
+<!-- <org-search-dialog [open]="isOpenDialog" (afterClosed)="afterClosed($event)"></org-search-dialog> -->
