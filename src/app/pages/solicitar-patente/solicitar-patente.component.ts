@@ -27,7 +27,6 @@ export class SolicitarPatenteComponent implements OnInit{
   openPatentFormGroup: FormGroup = this._formBuilder.group({
     title          : ['', Validators.required],
     author         : [''],
-    coauthor       : [''],
     affiliations   : ['', Validators.required],
     reivindicaciones: [''],
     display        : [this.display, Validators.required],
@@ -104,6 +103,7 @@ export class SolicitarPatenteComponent implements OnInit{
       this.m.showMessage(StatusCode.OK, "Por favor rellene todos los campos");
     }
   }
+
 
 }
 

@@ -17,7 +17,7 @@ export class ImportPatentsComponent {
 
   file: File[] = [];
   table = false;
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<Patent>([]);
   formData = new FormData();
   m = new MessageHandler(this._snackBar);
 
@@ -25,7 +25,7 @@ export class ImportPatentsComponent {
     "identifiers",
     "title",
     "assignee",
-    "inventor/author",
+    "author",
     "priority date",
     "filing/creation date",
     "publication date",
@@ -45,17 +45,6 @@ export class ImportPatentsComponent {
   onSelect(event: any) {
     // const file = [...event.addedFiles];
     this.file.push(...event.addedFiles);
-
-    this.readFile(this.file[0]).then((fileContents: string) => {
-
-      if (this.file[0].type !== "application/json") {
-        const jsonFile = this.csvToJson(fileContents);
-        this.patents = JSON.parse(jsonFile);
-
-      } else {
-        this.patents = JSON.parse(fileContents);
-      }
-    });
   }
 
   showData() {
@@ -64,13 +53,11 @@ export class ImportPatentsComponent {
     } else {
       this.readFile(this.file[0]).then((fileContents: string) => {
         if (this.file[0].type !== "application/json") {
-          const jsonFile = this.csvToJson(fileContents);
-          this.patents = JSON.parse(jsonFile);
+          const jsonFile = this.csvJson(fileContents);
+          this.patents = jsonFile;
         } else {
           this.patents = JSON.parse(fileContents);
-
         }
-        // const eliminado = this.people.shift();
         this.table = true;
         this.dataSource.data =
           this.patents.length > 800 ? this.patents.slice(0, 800) : this.patents;
@@ -107,36 +94,45 @@ export class ImportPatentsComponent {
     this.patents = [];
   }
 
-  csvToJson(csv: any) {
-    let lines = csv.split("\n");
-    let result = [];
-    let headers = lines[0].split(",");
-    for (let i = 0; i < lines.length; i++) {
-      const obj = {};
-      const currentLine = lines[i].split(",");
+  csvJson(text, quoteChar = '"', delimiter = ',') {
+    let rows=text.split("\n");
+    let headers=rows[0].split(",");
 
-      for (let j = 0; j < headers.length; j++) {
-        obj[headers[j]] = currentLine[j];
-      }
-      result.push(obj);
-    }
-    return JSON.stringify(result);
+    const regex = new RegExp(`\\s*(${quoteChar})?(.*?)\\1\\s*(?:${delimiter}|$)`, 'gs');
+
+    const match = line => [...line.matchAll(regex)]
+      .map(m => m[2])
+      .slice(0, -1);
+
+    let lines = text.split('\n');
+    const heads = headers ?? match(lines.shift());
+    lines = lines.slice(1);
+
+    return lines.map(line => {
+      return match(line).reduce((acc, cur, i) => {
+        // replace blank matches with `null`
+        const val = cur.length <= 0 ? null : Number(cur) || cur;
+        const key = heads[i] ?? `{i}`;
+        return { ...acc, [key]: val };
+      }, {});
+    });
   }
 
-  saveData() {
-    if (this.file.length === 0) {
-      this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
-    } else {
-      this.formData = this.patents
-      console.log(this.formData);
 
-      this.patentService
-        .importPatents(this.formData)
-        .subscribe((response) => {
-          console.log(response);
-          // this.formData.delete("peopleFile");
-        });
-    }
+  saveData() {
+    // if (this.file.length === 0) {
+    //   this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
+    // } else {
+    //   this.formData = this.patents
+    //   console.log(this.formData);
+
+    //   this.patentService
+    //     .importPatents(this.formData)
+    //     .subscribe((response) => {
+    //       console.log(response);
+    //       // this.formData.delete("peopleFile");
+    //     });
+    // }
   }
 
 }

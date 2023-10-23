@@ -68,10 +68,10 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { OpenPatentDetailComponent } from './pages/open-patent-detail/open-patent-detail.component';
 import { ProfileLayoutComponent } from './layout/profile-layout/profile-layout.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
-import { OrientationComponent } from './pages/orientation/orientation.component';
 import { PdfViewerModalComponent } from './pages/open-patent-detail/pdf-viewer-modal/pdf-viewer-modal.component';
 import { ImportPatentsComponent } from './pages/import-patents/import-patents.component';
 import { TableComponent } from './pages/import-patents/table/table.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -105,10 +105,10 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
         OpenPatentDetailComponent,
         ProfileLayoutComponent,
         ConfirmComponent,
-        OrientationComponent,
         PdfViewerModalComponent,
         ImportPatentsComponent,
         TableComponent,
+        RegisterComponent,
     ],
     imports: [
         BrowserModule,

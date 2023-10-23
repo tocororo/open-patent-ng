@@ -53,7 +53,7 @@
     <div class="menu-full">
         <a mat-button [routerLink]="['/']">Inicio</a>
         <a mat-button routerLink="./import">Importar patentes</a>
-        <a mat-button routerLink="./import">Registro de importaciones</a>
+        <a mat-button routerLink="./register">Registro de importaciones</a>
         <mat-menu #menu="matMenu">
           <ul *ngFor="let patent of patents">
             <button mat-menu-item>{{patent.title}}</button>

@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { element } from 'protractor';
+import { Patent } from 'src/app/interfaces/patent.entity';
 
 @Component({
   selector: 'app-table',
@@ -8,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class TableComponent implements OnInit{
 
-  @Input() dataSource
+  @Input() dataSource;
   private paginator: MatPaginator;
 
   @ViewChild(MatPaginator) set matPaginator(
@@ -19,17 +21,16 @@ export class TableComponent implements OnInit{
   }
 
   displayedColumns: string[] = [
-    "titulo",
-    "autores",
-    "afiliaciones",
-    "resumen",
-    "fecha_publicacion"
+    "title",
+    "assignee",
+    "author",
   ];
 
   pageSize: number = 5;
   pageIndex: number = 0;
 
   ngOnInit(){
+    console.log(this.dataSource.data[2].inventor);
   }
 
 }

@@ -3,12 +3,18 @@ import { Entity, Role } from 'toco-lib';
 
 export class Patent{
   id: string;
+  identifiers?: string;
   title: string;
-  authors?: Array<string>;
+  authors: Array<string>;
   affiliations: Array<string>;
-  summary: string;
-  estado_tecnica?: File;
-  country? : string;
+  summary?: string;
+  prior_art?: File;
+  country?: string;
+  language?: string;
+  creation_date?: string;
+  grant_date?: string;
+  publication_date?: string;
   claims?: File;
-  dibujo?: File;
+  drawing?: File;
+  link?: string;
 }

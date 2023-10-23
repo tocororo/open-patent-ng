@@ -11,8 +11,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ProfileLayoutComponent } from './layout/profile-layout/profile-layout.component';
 import { SolicitarPatenteComponent } from './pages/solicitar-patente/solicitar-patente.component';
 import { OpenPatentDetailComponent } from './pages/open-patent-detail/open-patent-detail.component';
-import { OrientationComponent } from './pages/orientation/orientation.component';
 import { ImportPatentsComponent } from './pages/import-patents/import-patents.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
 	// {
@@ -35,6 +35,10 @@ const routes: Routes = [
         component: ImportPatentsComponent,
       },
       {
+        path: 'register',
+        component: RegisterComponent,
+      },
+      {
         path: 'create',
         component: SolicitarPatenteComponent
       },
@@ -45,19 +49,6 @@ const routes: Routes = [
       {
         path: 'patent/:id',
         component: OpenPatentDetailComponent
-      },
-      {
-        path: 'help',
-        // resolve: {
-        //   'person': PeopleActiveResolverService
-        // },
-        children: [
-          {
-            path: 'learn',
-            component: OrientationComponent,
-            // data: { layout: Layouts.People },
-
-          }]
       },
     ],
   },
