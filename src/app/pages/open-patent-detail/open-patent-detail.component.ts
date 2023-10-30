@@ -19,7 +19,7 @@ export class OpenPatentDetailComponent implements OnInit{
 
   patent!: Patent;
 
-  patent1: Patent = {
+  patent1: any = {
     title: 'Iphone XS',
     authors: ['Steve Jobs'],
     affiliations: ["Samsung", "Xiaomi"],

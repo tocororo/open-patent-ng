@@ -17,24 +17,26 @@ import { PatentService } from '../../services/patent.service';
 })
 export class SolicitarPatenteComponent implements OnInit{
 
-  display       : FormControl = new FormControl("", Validators.required);
-  displayR      : FormControl = new FormControl("", Validators.required);
-  displayDrawing: FormControl = new FormControl("");
+  prior     : FormControl = new FormControl("", Validators.required);
+  claims    : FormControl = new FormControl("", Validators.required);
+  drawing   : FormControl = new FormControl("");
   file_store: FileList;
   file_list : FileList;
   m = new MessageHandler(this._snackBar);
 
-  openPatentFormGroup: FormGroup = this._formBuilder.group({
-    title          : ['', Validators.required],
-    author         : [''],
-    affiliations   : ['', Validators.required],
-    reivindicaciones: [''],
-    display        : [this.display, Validators.required],
-    displayR       : [this.displayR, Validators.required],
-    displayDrawing : [this.displayDrawing],
-    summary        : ['', Validators.required],
+  patentFormGroup: FormGroup = this._formBuilder.group({
+    identifier  : ['', Validators.required],
+    title       : ['', Validators.required],
+    author      : [''],
+    affiliations: ['', Validators.required],
+    prior       : [this.prior, Validators.required],
+    claims      : [this.claims, Validators.required],
+    drawing     : [this.drawing],
+    summary     : ['', Validators.required],
 
   });
+
+  patent: Patent[] = [];
 
 
 
@@ -50,6 +52,7 @@ export class SolicitarPatenteComponent implements OnInit{
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.patentService.getPatentById(id)))
         .subscribe((patent) => {
+          this.patent.push(patent);
         });
     }
   }
@@ -59,9 +62,9 @@ export class SolicitarPatenteComponent implements OnInit{
     if (l.length) {
       const f = l[0];
       const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-      this.display.patchValue(`${f.name}${count}`);
+      this.prior.patchValue(`${f.name}${count}`);
     } else {
-      this.display.patchValue("");
+      this.prior.patchValue("");
     }
   }
 
@@ -70,9 +73,9 @@ export class SolicitarPatenteComponent implements OnInit{
     if (l.length) {
       const f = l[0];
       const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-      this.displayDrawing.patchValue(`${f.name}${count}`);
+      this.drawing.patchValue(`${f.name}${count}`);
     } else {
-      this.displayDrawing.patchValue("");
+      this.drawing.patchValue("");
     }
   }
 
@@ -81,28 +84,31 @@ export class SolicitarPatenteComponent implements OnInit{
     if (l.length) {
       const f = l[0];
       const count = l.length > 1 ? `(+${l.length - 1} files)` : "";
-      this.displayR.patchValue(`${f.name}${count}`);
+      this.claims.patchValue(`${f.name}${count}`);
     } else {
-      this.displayR.patchValue("");
+      this.claims.patchValue("");
     }
   }
 
 
   enviarFormulario(){
     console.log('Enviar formulario');
-    console.log(this.openPatentFormGroup.value);
-    console.log(this.openPatentFormGroup.valid);
+    console.log(this.patentFormGroup.value);
+    console.log(this.patentFormGroup.valid);
 
-    if(this.openPatentFormGroup.valid){
-      this.patentService.createPatents(this.openPatentFormGroup).subscribe(dta => {
-        console.log('ok');
-
-      })
-    }
-    else{
-      this.m.showMessage(StatusCode.OK, "Por favor rellene todos los campos");
-    }
+    // if(this.patent.id){
+    //   this.patentService.editPatents(this.patentFormGroup, this.patent.id).subscribe(dta => {
+    //     console.log('ok');
+    //   })
+    // }else if(this.patentFormGroup.valid){
+    //   this.patentService.createPatents(this.patentFormGroup).subscribe(dta => {
+    //     console.log('ok');
+    // })}
+    // else{
+    //   this.m.showMessage(StatusCode.OK, "Por favor rellene todos los campos");
+    // }
   }
+
 
 
 }

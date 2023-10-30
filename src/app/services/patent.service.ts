@@ -11,16 +11,17 @@ import { FormGroup } from '@angular/forms';
 })
 export class PatentService {
 
-  patents: Patent[] = [];
+  url = 'https://localhost:5000/api';
 
 
-  constructor(    private _env: Environment,
+  constructor(    private environment: Environment,
                   private handler: HttpBackend,
                   private oAuthStorage: OAuthStorage,
                   private _http: HttpClient) { }
 
   getPatents(params: HttpParams): Observable<SearchResponse<Patent>>{
-    return this._http.get<SearchResponse<Patent>>('', {params});
+    const req = this.environment.sceibaApi + 'search/patents/';
+    return this._http.get<SearchResponse<Patent>>(`${this.url}/search/patents`, {params});
   }
 
   getPatentById(id: string): Observable<Patent>{
@@ -31,6 +32,10 @@ export class PatentService {
     return this._http.post('', formData)
   }
 
+  editPatents(formData, id: string){
+    return this._http.post('', formData)
+  }
+
   deletePatent(id: string){
     return this._http.delete<any>(`/${id}`);
   }
@@ -38,5 +43,9 @@ export class PatentService {
   importPatents(formData: FormData){
     // const url = this._env.cuorHost + "import";
     return this._http.post<any>('', formData);
+  }
+
+  getRegister(){
+    return this._http.get('');
   }
 }

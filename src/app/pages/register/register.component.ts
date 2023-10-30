@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { PatentService } from '../../services/patent.service';
 
 @Component({
   selector: 'app-register',
@@ -9,8 +10,9 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class RegisterComponent implements OnInit{
 
-  displayedColumns: string[] = ['numero', 'autor', 'fecha', 'cantidad'];
+  displayedColumns: string[] = ['numero', 'autor', 'fecha'];
   dataSource = new MatTableDataSource<any>();
+  register: any = [];
 
   private paginator: MatPaginator;
 
@@ -21,7 +23,11 @@ export class RegisterComponent implements OnInit{
     this.dataSource.paginator = this.paginator;
   }
 
-  ngOnInit(){
+  constructor(private patentService: PatentService){}
 
+  ngOnInit(){
+    // this.patentService.getRegister().subscribe(register => {
+    //   this.register = register;
+    // })
   }
 }

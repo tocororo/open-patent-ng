@@ -1,9 +1,7 @@
 import { Entity, Role } from 'toco-lib';
 
 
-export class Patent{
-  id: string;
-  identifiers?: string;
+export class Patent extends Entity{
   title: string;
   authors: Array<string>;
   affiliations: Array<string>;

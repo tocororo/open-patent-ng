@@ -5,9 +5,10 @@ import { PageEvent } from "@angular/material/paginator";
 import { MatDrawer } from "@angular/material/sidenav";
 import { ActivatedRoute, NavigationExtras, Params, Router } from "@angular/router";
 
-import { AggregationsSelection, SearchResponse } from "toco-lib";
+import { AggregationsSelection, Organization, SearchResponse } from "toco-lib";
 import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from "../../services/patent.service";
+import { OrgService } from '../../org.service';
 
 
 /**
@@ -66,6 +67,7 @@ export class SearchComponent implements OnInit {
     public constructor(
         private patentService: PatentService,
         private activatedRoute: ActivatedRoute,
+        private orgService: OrgService,
         private router: Router) {
 
     }
@@ -155,14 +157,24 @@ export class SearchComponent implements OnInit {
         this.patentService.getPatents(this.params).subscribe((response: SearchResponse<Patent>) => {
           console.log('Busqueda realizada');
           this.sr = response;
+          console.log(this.sr.aggregations);
 
-                //   this.aggrKeys = [
-                //     { value: this.sr.aggregations.country, key: 'País' },
-                //     { value: this.sr.aggregations.state, key: 'Provincia' },
-                //     { value: this.sr.aggregations.status, key: 'Estado' },
-                //     { value: this.sr.aggregations.types, key: 'Tipo' },
-                // ]
-        });
+          this.aggrKeys = [
+            { value: this.sr.aggregations.classification, key: 'Clasificacion' },
+            { value: this.sr.aggregations.country, key: 'Pais' },
+            { value: this.sr.aggregations.language, key: 'Idioma' },
+        ]
+        },
+
+        (error: any) => {
+          console.log("Error in `_fetchSearchRequested` method.");
+        },
+
+        () => {
+          console.log("Finish the `_fetchSearchRequested` method.");
+          this.loading = false;
+        }
+        );
 
 
     }

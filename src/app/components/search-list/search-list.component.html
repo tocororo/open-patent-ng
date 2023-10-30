@@ -1,45 +1,45 @@
-<mat-card class="mat-elevation-z0" *ngIf="patents && patents.length > 0; else templateNotInfo">
+<mat-card class="mat-elevation-z0" *ngIf="hitList && hitList.hits.length > 0; else templateNotInfo">
 
 
     <mat-card-content>
-      <div *ngFor="let patent of patents; let pos = index" [ngStyle]="{'margin': '1em 8px'}">
+      <div *ngFor="let hit of hitList.hits; let pos = index" [ngStyle]="{'margin': '1em 8px'}">
 
         <!-- Titulo de la patente -->
         <h2>
           <!-- <span mat-icon-button *ngIf="hasPermission" routerLink="/{{hit.metadata.id}}/edit" matTooltip="Editar la Organización">
             <mat-icon class="mat-18">mode_edit</mat-icon>
           </span> -->
-          <span [routerLink]="['/patent', patent.id]"
+          <span [routerLink]="['/patent', hit.id]"
                 style="cursor: pointer;">
-            {{patent.title}}
+            {{hit.title}}
           </span>
         </h2>
 
         <h4 class="p-40"
-              *ngIf="patent.author"
-              [routerLink]="['/profile', patent.author]"
+              *ngIf="hit.author"
+              [routerLink]="['/profile', hit.author]"
               style="cursor: pointer;">
-          Autor: {{patent.author}}
+          Autor: {{hit.author}}
         </h4>
 
-        <ul fxLayout="row wrap" *ngIf="patent.coco_author">
+        <ul fxLayout="row wrap" *ngIf="hit.coco_author">
           <h4>Coautores:</h4>
-          <li *ngFor="let affiliation of patent.affiliations; let i = index" class="li-margin-style">
+          <li *ngFor="let affiliation of hit.affiliations; let i = index" class="li-margin-style">
             {{affiliation}}
             <!-- <ng-container *ngIf="i < hit.metadata.types.length - 1"> | </ng-container> -->
           </li>
         </ul>
 
         <h4 class="p-40"
-              *ngIf="patent.organization"
-              [routerLink]="['/profile', patent.organization]"
+              *ngIf="hit.organization"
+              [routerLink]="['/profile', hit.organization]"
               style="cursor: pointer;">
-          Organizacion: {{patent.organization}}
+          Organizacion: {{hit.organization}}
         </h4>
 
         <ul fxLayout="row wrap" >
           <span>Afiliaciones:</span>
-          <li *ngFor="let affiliation of patent.affiliations; let i = index" class="li-margin-style">
+          <li *ngFor="let affiliation of hit.affiliations; let i = index" class="li-margin-style">
             {{affiliation}}
             <!-- <ng-container *ngIf="i < hit.metadata.types.length - 1"> | </ng-container> -->
           </li>
@@ -75,13 +75,13 @@
         <section class="button-container">
 
           <div class="button-edit-container">
-            <button mat-fab color="accent"  matTooltip="Editar" [routerLink]="['/patents/editar', patent.id]">
+            <button mat-fab color="accent"  matTooltip="Editar" [routerLink]="['/patents/editar', hit.id]">
               <mat-icon>edit</mat-icon>
             </button>
           </div>
 
           <div class="button-delete-container">
-            <button mat-fab color="warn"  matTooltip="Eliminar" (click)="eliminar(patent)">
+            <button mat-fab color="warn"  matTooltip="Eliminar" (click)="eliminar(hit)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>

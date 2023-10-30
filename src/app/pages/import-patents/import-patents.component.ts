@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Patent } from 'src/app/interfaces/patent.entity';
 import { MessageHandler, StatusCode } from 'toco-lib';
 import { PatentService } from '../../services/patent.service';
+import { Register } from 'src/app/interfaces/register.interface';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-import-patents',
@@ -14,6 +16,11 @@ import { PatentService } from '../../services/patent.service';
 export class ImportPatentsComponent {
 
   patents: any;
+  register: Register = {
+    id: '',
+    user: '',
+    date: undefined
+  }
 
   file: File[] = [];
   table = false;
@@ -92,11 +99,12 @@ export class ImportPatentsComponent {
     console.log(event);
     this.file.splice(this.file.indexOf(event), 1);
     this.patents = [];
+    this.table = false;
   }
 
   csvJson(text, quoteChar = '"', delimiter = ',') {
-    let rows=text.split("\n");
-    let headers=rows[0].split(",");
+    let rows = text.split("\n");
+    let headers = rows[0].split(",");
 
     const regex = new RegExp(`\\s*(${quoteChar})?(.*?)\\1\\s*(?:${delimiter}|$)`, 'gs');
 
@@ -120,6 +128,8 @@ export class ImportPatentsComponent {
 
 
   saveData() {
+    this.register.date = formatDate(new Date(), 'dd-MM-yyyy', 'en-US');
+    console.log(this.register.date);
     // if (this.file.length === 0) {
     //   this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
     // } else {

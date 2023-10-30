@@ -20,7 +20,7 @@ export class SearchListComponent implements OnInit
 
 	@Input()
 	// public hitList: HitList<Person>;
-  public patents: Patent[];
+  public hitList: HitList<Patent>;
   public pdfType: 'list' | 'single' =  'list';
 
   m = new MessageHandler(this._snackBar);

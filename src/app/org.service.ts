@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 // import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable, Subject } from 'rxjs';
 import { Environment, Organization, SearchResponse, User } from 'toco-lib';
+import { Patent } from './interfaces/patent.entity';
 
 
 
@@ -379,10 +380,11 @@ export class OrgService {
     };
     // console.log(params);
     const req = this.environment.sceibaApi + 'search/organizations/';
-    // console.log(req);
+    console.log(req);
 
     return this.http.get<SearchResponse<Organization>>(req, options);
   }
+
 
   getActiveOrganizationById(id: string): Observable<SearchResponse<Organization>> {
     const req = this.environment.sceibaApi + 'organizations/active/' + id ;
