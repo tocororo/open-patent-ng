@@ -13,6 +13,7 @@ import { SolicitarPatenteComponent } from './pages/solicitar-patente/solicitar-p
 import { OpenPatentDetailComponent } from './pages/open-patent-detail/open-patent-detail.component';
 import { ImportPatentsComponent } from './pages/import-patents/import-patents.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
 	// {
@@ -50,6 +51,10 @@ const routes: Routes = [
         path: 'patent/:id',
         component: OpenPatentDetailComponent
       },
+      // {
+      //   path: 'help/contact',
+      //   component: ContactComponent
+      // },
     ],
   },
   {

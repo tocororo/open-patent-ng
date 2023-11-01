@@ -57,7 +57,6 @@ import { ImportPeopleComponent } from "./import-people/import-people.component";
 import { OrgDialogComponent } from "./import-people/org-dialog/org-dialog.component";
 import { MainlayoutComponent } from "./layout/mainlayout/mainlayout.component";
 import { OrgService } from "./org.service";
-import { PageNotFoundPeopleComponent } from "./components/page-not-found-people/page-not-found-people.component";
 import { SearchListComponent } from "./components/search-list/search-list.component";
 import { SearchComponent } from "./components/search/search.component";
 import { SelectOrgComponent } from "./select-org/select-org.component";
@@ -72,6 +71,8 @@ import { PdfViewerModalComponent } from './pages/open-patent-detail/pdf-viewer-m
 import { ImportPatentsComponent } from './pages/import-patents/import-patents.component';
 import { TableComponent } from './pages/import-patents/table/table.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AddModalComponent } from './components/add-modal/add-modal.component';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -86,7 +87,6 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
     declarations: [
         AppComponent,
         HomeComponent,
-        PageNotFoundPeopleComponent,
         FooterComponent,
         SearchComponent,
         SearchListComponent,
@@ -109,6 +109,8 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
         ImportPatentsComponent,
         TableComponent,
         RegisterComponent,
+        PageNotFoundComponent,
+        AddModalComponent,
     ],
     imports: [
         BrowserModule,

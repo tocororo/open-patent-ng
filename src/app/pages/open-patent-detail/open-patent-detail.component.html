@@ -3,7 +3,7 @@
 
     <div class="column-left">
       <div class="row" fxLayout.xs="column">
-        <span class="title">Titulo</span>
+        <span class="title">{{ 'TITULO' | translate }}:</span>
         <span class="data-elements">{{patent1.title}}</span>
       </div>
 
@@ -12,7 +12,7 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <span class="title">Autores</span>
+                <span class="title">{{ 'AUTOR' | translate }}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-list role="list" *ngFor="let author of patent1.authors">
@@ -32,7 +32,7 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <span class="title">Afiliaciones</span>
+                <span class="title">{{ 'AFILIACIONES' | translate }}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-list role="list" *ngFor="let affiliation of patent1.affiliations">
@@ -50,7 +50,7 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                <span class="title">Documentos</span>
+                <span class="title">{{ 'DOCUMENTOS' | translate }}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-list role="list" *ngFor="let document of documents">
@@ -67,16 +67,9 @@
 
     <div class="column-right">
       <div class="row" fxLayout.xs="column">
-        <span class="title">Resumen</span>
+        <span class="title">{{ 'RESUMEN' | translate }}:</span>
         <span class="data-elements">{{patent1.summary}}</span>
       </div>
     </div>
 
 </div>
-
-  <div class="icons-container">
-    <div class="icon-view">
-      <p></p>
-      <mat-icon color="primary">visibility</mat-icon>
-    </div>
-  </div>

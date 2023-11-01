@@ -1,4 +1,144 @@
-<form [formGroup]="patentFormGroup">
+<mat-stepper #stepper [formGroup]="patentFormGroup">
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel></ng-template>
+      <section class="grid-container">
+        <div class="column-left">
+          <div class="identifier-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'IDENTIFICADORES' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="identifier"
+                      required>
+            </mat-form-field>
+          </div>
+          <div class="title-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'TITULO' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="title"
+                      required>
+            </mat-form-field>
+          </div>
+          <div class="country-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'TITULO' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="country">
+            </mat-form-field>
+          </div>
+
+          <div class="drawing-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'DIBUJO' | translate }}</mat-label>
+              <button mat-icon-button matPrefix (click)="f_input1.click()">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+              <input type="text" readonly matInput [formControl]="drawing" />
+              <input
+                type="file"
+                multiple
+                hidden
+                style="display: none"
+                #f_input1
+                (change)="handleFileInputChange1(f_input1.files)"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="column-right">
+          <div class="language-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'TITULO' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="language">
+            </mat-form-field>
+          </div>
+
+          <div class="summary-container">
+            <mat-form-field class="form-field-resumen" appearance="outline">
+              <mat-label>{{ 'RESUMEN' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="summary"
+                      required>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="button-container">
+          <button class="button-last" mat-button color="primary" matStepperNext>{{ 'ENTREGAR' | translate }}</button>
+        </div>
+
+      </section>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <section class="grid-container">
+        <div class="column-left">
+
+          <div class="claims-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'REIVINDICACIONES' | translate }}</mat-label>
+              <button mat-icon-button matPrefix (click)="f_inputR.click()">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+              <input type="text" readonly matInput [formControl]="claims" />
+              <input
+                type="file"
+                multiple
+                hidden
+                style="display: none"
+                #f_inputR
+                (change)="handleFileInputChangeR(f_inputR.files)"
+              />
+              <mat-error>this field is required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="prior-art-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'TECNICA' | translate }}</mat-label>
+              <button mat-icon-button matPrefix (click)="f_input.click()">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+              <input type="text" readonly matInput [formControl]="prior" />
+              <input
+                type="file"
+                multiple
+                hidden
+                style="display: none"
+                #f_input
+                (change)="handleFileInputChange(f_input.files)"
+              />
+              <mat-error>this field is required</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="second-stepper column-right">
+          <div class="author-container">
+            <button mat-button (click)="openModal()">{{ 'AGREGAR_A' | translate }}</button>
+          </div>
+
+
+          <div class="affiliations-container">
+            <button mat-button (click)="openModal($event)">{{ 'AGREGAR_O' | translate }}</button>
+          </div>
+        </div>
+      </section>
+      <div class="button-container">
+        <button mat-button matStepperPrevious color="primary">Atras</button>
+        <button mat-button matStepperNext color="primary" (click)="enviarFormulario()">Enviar</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>
+
+<!-- <form [formGroup]="patentFormGroup">
 
   <section class="grid-container">
 
@@ -6,7 +146,7 @@
 
             <div class="identifier-container">
               <mat-form-field appearance="outline">
-                <mat-label>Identificador</mat-label>
+                <mat-label>{{ 'IDENTIFICADORES' | translate }}</mat-label>
                 <input  matInput
                         formControlName="identifier"
                         required>
@@ -15,7 +155,7 @@
 
             <div class="title-container">
               <mat-form-field appearance="outline">
-                <mat-label>Titulo</mat-label>
+                <mat-label>{{ 'TITULO' | translate }}</mat-label>
                 <input  matInput
                         formControlName="title"
                         required>
@@ -23,27 +163,17 @@
             </div>
 
             <div class="author-container">
-              <mat-form-field class="form-field-autor" appearance="outline">
-                <mat-label>Autor</mat-label>
-                <input  matInput
-                        formControlName="author"
-                        required="false">
-              </mat-form-field>
+                <button mat-button color="primary" (click)="openModal()">{{ 'AGREGAR_A' | translate }}</button>
             </div>
 
 
             <div class="affiliations-container">
-              <mat-form-field appearance="outline">
-                <mat-label>Afiliaciones</mat-label>
-                <input  matInput
-                        formControlName="affiliations"
-                        required="false">
-              </mat-form-field>
+              <button mat-button color="primary" (click)="openModal($event)">{{ 'AGREGAR_O' | translate }}</button>
             </div>
 
             <div class="claims-container">
               <mat-form-field appearance="outline">
-                <mat-label>Reivindicaciones</mat-label>
+                <mat-label>{{ 'REIVINDICACIONES' | translate }}</mat-label>
                 <button mat-icon-button matPrefix (click)="f_inputR.click()">
                   <mat-icon>attach_file</mat-icon>
                 </button>
@@ -66,7 +196,7 @@
 
             <div class="prior-art-container">
               <mat-form-field appearance="outline">
-                <mat-label>Estado de la tecnica</mat-label>
+                <mat-label>{{ 'TECNICA' | translate }}</mat-label>
                 <button mat-icon-button matPrefix (click)="f_input.click()">
                   <mat-icon>attach_file</mat-icon>
                 </button>
@@ -85,7 +215,7 @@
 
             <div class="drawing-container">
               <mat-form-field appearance="outline">
-                <mat-label>Dibujo</mat-label>
+                <mat-label>{{ 'DIBUJO' | translate }}</mat-label>
                 <button mat-icon-button matPrefix (click)="f_input1.click()">
                   <mat-icon>attach_file</mat-icon>
                 </button>
@@ -104,7 +234,7 @@
 
             <div class="summary-container">
               <mat-form-field class="form-field-resumen" appearance="outline">
-                <mat-label>Resumen</mat-label>
+                <mat-label>{{ 'RESUMEN' | translate }}</mat-label>
                 <input  matInput
                         formControlName="summary"
                         required>
@@ -116,9 +246,9 @@
   </section>
 
   <div class="button-container">
-            <button mat-button color="primary" (click)="enviarFormulario()">Enviar</button>
+    <button mat-button color="primary" (click)="enviarFormulario()">{{ 'ENTREGAR' | translate }}</button>
   </div>
 
-</form>
+</form> -->
 
 

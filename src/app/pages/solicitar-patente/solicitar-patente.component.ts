@@ -9,6 +9,8 @@ import { map, switchMap } from 'rxjs/operators';
 import { IdentifierSchemas, MessageHandler, StatusCode } from 'toco-lib';
 import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from '../../services/patent.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddModalComponent } from 'src/app/components/add-modal/add-modal.component';
 
 @Component({
   selector: 'app-solicitar-patente',
@@ -20,31 +22,60 @@ export class SolicitarPatenteComponent implements OnInit{
   prior     : FormControl = new FormControl("", Validators.required);
   claims    : FormControl = new FormControl("", Validators.required);
   drawing   : FormControl = new FormControl("");
+  author: FormGroup = this._formBuilder.group({
+    identifier  : ['', Validators.required],
+    name        : ['', Validators.required]
+  });
+
+  affiliation: FormGroup = this._formBuilder.group({
+    identifier  : ['', Validators.required],
+    name        : ['', Validators.required]
+  });
+
   file_store: FileList;
   file_list : FileList;
   m = new MessageHandler(this._snackBar);
 
-  patentFormGroup: FormGroup = this._formBuilder.group({
+  authors: any[] = [];
+  affiliations: any[] = [];
+
+
+  firstFormGroup = this._formBuilder.group({
     identifier  : ['', Validators.required],
     title       : ['', Validators.required],
-    author      : [''],
-    affiliations: ['', Validators.required],
-    prior       : [this.prior, Validators.required],
-    claims      : [this.claims, Validators.required],
+    country     : [''],
     drawing     : [this.drawing],
+    language    : [''],
     summary     : ['', Validators.required],
-
   });
 
-  patent: Patent[] = [];
+  secondFormGroup = this._formBuilder.group({
+    author      : [this.author.value],
+    affiliations: [this.affiliation.value, Validators.required],
+    prior       : [this.prior, Validators.required],
+    claims      : [this.claims, Validators.required],
+  });
 
 
+  patentFormGroup: FormGroup = this._formBuilder.group({
+    identifier  : [this.firstFormGroup.value.identifier, Validators.required],
+    title       : [this.firstFormGroup.value.title, Validators.required],
+    country     : [this.firstFormGroup.value.country],
+    drawing     : [this.firstFormGroup.value.drawing],
+    language    : [this.firstFormGroup.value.language],
+    summary     : [this.firstFormGroup.value.summary, Validators.required],
+    author      : [this.secondFormGroup.value.author],
+    affiliations: [this.secondFormGroup.value.affiliations, Validators.required],
+    prior       : [this.secondFormGroup.value.prior, Validators.required],
+    claims      : [this.secondFormGroup.value.claims, Validators.required],
+  });
 
   constructor(private _formBuilder: FormBuilder,
               private patentService: PatentService,
               private _snackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
-              private router: Router,) {
+              private router: Router,
+              public dialog: MatDialog,) {
   }
 
   ngOnInit(){
@@ -52,7 +83,10 @@ export class SolicitarPatenteComponent implements OnInit{
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.patentService.getPatentById(id)))
         .subscribe((patent) => {
-          this.patent.push(patent);
+          // this.patent.push(patent);
+          this.patentFormGroup.value.identifier = patent.identifiers;
+          this.patentFormGroup.value.title = patent.title;
+          this.patentFormGroup.value.author = patent.authors;
         });
     }
   }
@@ -109,8 +143,27 @@ export class SolicitarPatenteComponent implements OnInit{
     // }
   }
 
+  openModal(event?){
+    const dialog = this.dialog.open(AddModalComponent, {
+      width: '500px',
+    });
 
+    dialog.afterClosed().subscribe((result) => {
+      if (result && event) {
+        this.affiliation = result;
+        this.affiliations.push(this.affiliation.value);
+        this.patentFormGroup.value.affiliations = this.affiliations;
+        console.log(this.patentFormGroup.value);
+      }
+      else{
+        this.author = result;
+        this.authors.push(this.author.value);
+        this.patentFormGroup.value.author = this.authors;
+        console.log(this.patentFormGroup.value);
+      }
+    });
 
+  }
 }
 
 

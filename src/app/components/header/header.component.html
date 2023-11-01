@@ -51,14 +51,9 @@
     </div>
 
     <div class="menu-full">
-        <a mat-button [routerLink]="['/']">Inicio</a>
-        <a mat-button routerLink="./import">Importar patentes</a>
-        <a mat-button routerLink="./register">Registro de importaciones</a>
-        <mat-menu #menu="matMenu">
-          <ul *ngFor="let patent of patents">
-            <button mat-menu-item>{{patent.title}}</button>
-          </ul>
-        </mat-menu>
+        <a mat-button [routerLink]="['/']">{{ 'INICIO' | translate }}</a>
+        <a mat-button routerLink="./import">{{ 'IMPORTAR' | translate }}</a>
+        <a mat-button routerLink="./register">{{ 'REGISTRO' | translate }}</a>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -78,7 +73,7 @@
 <ng-container *ngFor="let item of menuElements">
   <a mat-menu-item [routerLink]="item.href" *ngIf="item.useRouterLink; else useHrefMenu">
     <!-- <mat-icon>dialpad</mat-icon> -->
-    <span>{{item.nameTranslate |translate}}</span>
+    <span>{{item.nameTranslate | translate}}</span>
   </a>
   <ng-template #useHrefMenu>
     <a mat-menu-item [href]="item.href" [target]="item.target">

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-layout',
@@ -11,12 +11,12 @@ export class ProfileLayoutComponent implements OnInit{
   // public person: Person;
 
   constructor(
-    private _activatedRoute: ActivatedRoute,) { }
+    private _activatedRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
-    // console.log(this.route.root);
-
-		// let uuid = this.route.snapshot.paramMap.get('uuid');
+    if (this.router.url.includes('author')){
+    // let uuid = this.route.snapshot.paramMap.get('uuid');
     // this.service.getPeopleById(uuid).subscribe(
     //   (data) => {
     //     console.log(data);
@@ -24,7 +24,8 @@ export class ProfileLayoutComponent implements OnInit{
     //       this.person = data.person.metadata;
     //   }
     // );
-
+    }
+    // console.log(this.route.root);
     this._activatedRoute.data.subscribe(
       (data) => {
         console.log(data);

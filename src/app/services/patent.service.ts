@@ -25,15 +25,15 @@ export class PatentService {
   }
 
   getPatentById(id: string): Observable<Patent>{
-    return this._http.get<Patent>(`/${id}`);
+    return this._http.get<Patent>(`${this.url}/pid/patent/${id}`);
   }
 
   createPatents(formData){
-    return this._http.post('', formData)
+    return this._http.post(`${this.url}/patents/new`, formData)
   }
 
   editPatents(formData, id: string){
-    return this._http.post('', formData)
+    return this._http.post(`${this.url}/patents/${id}/edit`, formData)
   }
 
   deletePatent(id: string){

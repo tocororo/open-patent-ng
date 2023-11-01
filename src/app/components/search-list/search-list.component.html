@@ -17,60 +17,18 @@
 
         <h4 class="p-40"
               *ngIf="hit.author"
-              [routerLink]="['/profile', hit.author]"
+              [routerLink]="['/profile/author', hit.author.id]"
               style="cursor: pointer;">
           Autor: {{hit.author}}
         </h4>
 
-        <ul fxLayout="row wrap" *ngIf="hit.coco_author">
-          <h4>Coautores:</h4>
-          <li *ngFor="let affiliation of hit.affiliations; let i = index" class="li-margin-style">
+        <ul fxLayout="row wrap" *ngIf="hit.affiliations">
+          <h4>Organizaciones:</h4>
+          <li [routerLink]="['/profile/organization', hit.affiliation.id]" *ngFor="let affiliation of hit.affiliations; let i = index" class="li-margin-style">
             {{affiliation}}
             <!-- <ng-container *ngIf="i < hit.metadata.types.length - 1"> | </ng-container> -->
           </li>
         </ul>
-
-        <h4 class="p-40"
-              *ngIf="hit.organization"
-              [routerLink]="['/profile', hit.organization]"
-              style="cursor: pointer;">
-          Organizacion: {{hit.organization}}
-        </h4>
-
-        <ul fxLayout="row wrap" >
-          <span>Afiliaciones:</span>
-          <li *ngFor="let affiliation of hit.affiliations; let i = index" class="li-margin-style">
-            {{affiliation}}
-            <!-- <ng-container *ngIf="i < hit.metadata.types.length - 1"> | </ng-container> -->
-          </li>
-        </ul>
-
-
-
-        <!-- <ul fxLayout="row wrap" *ngIf="hit.metadata.acronyms && hit.metadata.acronyms.length > 0">
-          <span>Acrónimos:</span>
-          <li *ngFor="let acronym of hit.metadata.acronyms; let i = index" class="li-margin-style">
-            {{acronym}}
-            <ng-container *ngIf="i < hit.metadata.acronyms.length - 1"> | </ng-container>
-          </li>
-        </ul> -->
-
-        <!-- <ul fxLayout="row wrap" *ngIf="hit.metadata.aliases && hit.metadata.aliases.length > 0">
-          <span>Conocida como:</span>
-          <li *ngFor="let alias of hit.metadata.aliases; let i = index" class="li-margin-style">
-            {{alias}}
-            <ng-container *ngIf="i < hit.metadata.aliases.length - 1"> | </ng-container>
-          </li>
-        </ul> -->
-
-        <!-- <ul fxLayout="row wrap" *ngIf="hit.metadata.identifiers && hit.metadata.identifiers.length > 0">
-          <span>Identificadores:</span>
-          <li *ngFor="let identifier of hit.metadata.identifiers; let i = index" class="li-margin-style">
-            {{identifier.idtype}}: {{identifier.value}}
-            <ng-container *ngIf="i < hit.metadata.identifiers.length - 1"> | </ng-container>
-          </li>
-        </ul>
-        <hr class="hr-grey-ligth" *ngIf="pos < hitList.hits.length - 1"> -->
 
         <section class="button-container">
 
