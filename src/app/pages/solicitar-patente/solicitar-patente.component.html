@@ -7,6 +7,9 @@
           <div class="identifier-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'IDENTIFICADORES' | translate }}</mat-label>
+              <button mat-icon-button matPrefix (click)="addIdentifier()">
+                <mat-icon>add</mat-icon>
+              </button>
               <input  matInput
                       formControlName="identifier"
                       required>
@@ -22,7 +25,7 @@
           </div>
           <div class="country-container">
             <mat-form-field appearance="outline">
-              <mat-label>{{ 'TITULO' | translate }}</mat-label>
+              <mat-label>{{ 'PAIS' | translate }}</mat-label>
               <input  matInput
                       formControlName="country">
             </mat-form-field>
@@ -50,7 +53,7 @@
         <div class="column-right">
           <div class="language-container">
             <mat-form-field appearance="outline">
-              <mat-label>{{ 'TITULO' | translate }}</mat-label>
+              <mat-label>{{ 'IDIOMA_P' | translate }}</mat-label>
               <input  matInput
                       formControlName="language">
             </mat-form-field>
@@ -67,7 +70,7 @@
         </div>
 
         <div class="button-container">
-          <button class="button-last" mat-button color="primary" matStepperNext>{{ 'ENTREGAR' | translate }}</button>
+          <button class="button-last" mat-button color="primary" matStepperNext (click)="saveFirstForm()">{{ 'SIGUIENTE' | translate }}</button>
         </div>
 
       </section>
@@ -131,8 +134,8 @@
         </div>
       </section>
       <div class="button-container">
-        <button mat-button matStepperPrevious color="primary">Atras</button>
-        <button mat-button matStepperNext color="primary" (click)="enviarFormulario()">Enviar</button>
+        <button mat-button matStepperPrevious color="primary">{{ 'ATRAS' | translate }}</button>
+        <button mat-button matStepperNext color="primary" (click)="enviarFormulario()">{{ 'ENTREGAR' | translate }}</button>
       </div>
     </form>
   </mat-step>

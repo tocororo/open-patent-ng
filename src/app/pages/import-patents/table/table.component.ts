@@ -30,7 +30,7 @@ export class TableComponent implements OnInit{
   pageIndex: number = 0;
 
   ngOnInit(){
-    console.log(this.dataSource.data[2].inventor);
+    console.log('dataSource',this.dataSource);
   }
 
 }

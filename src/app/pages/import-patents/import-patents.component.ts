@@ -7,6 +7,7 @@ import { MessageHandler, StatusCode } from 'toco-lib';
 import { PatentService } from '../../services/patent.service';
 import { Register } from 'src/app/interfaces/register.interface';
 import { formatDate } from '@angular/common';
+import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-import-patents',
@@ -21,6 +22,9 @@ export class ImportPatentsComponent {
     user: '',
     date: undefined
   }
+  affiliations: string[] = [];
+  authors     : string[] = [];
+
 
   file: File[] = [];
   table = false;
@@ -62,6 +66,9 @@ export class ImportPatentsComponent {
         if (this.file[0].type !== "application/json") {
           const jsonFile = this.csvJson(fileContents);
           this.patents = jsonFile;
+          // const p = this.patents.slice(0,20)
+          const p = this.getAffiliations(this.patents)
+          console.log(p);
         } else {
           this.patents = JSON.parse(fileContents);
         }
@@ -125,6 +132,50 @@ export class ImportPatentsComponent {
       }, {});
     });
   }
+
+  noEsNuloNiIndefinido(elemento){
+    return elemento !== null && elemento !== undefined;
+  }
+
+  getAffiliations(patents){
+    try {
+      for (let index = 0; index < patents.length; index++) {
+        if (patents[index].assignee != undefined && patents[index].author!= undefined ) {
+          const affiliations = patents[index].assignee;
+          const authors = patents[index].author;
+          this.affiliations = affiliations.split(",");
+          this.authors = authors.split(",");
+          patents[index].assignee = this.affiliations;
+          patents[index].author = this.authors;
+        }
+        else if(patents[index].assignee == undefined &&  patents[index].author != undefined){
+          console.log('undefined affiliations');
+          patents[index].assignee = [];
+          const authors = patents[index].author;
+          this.authors = authors.split(",");
+          patents[index].author = this.authors;
+        }
+        else if(patents[index].assignee != undefined &&  patents[index].author == undefined){
+          console.log('undefined authors');
+          const affiliations = patents[index].assignee;
+          this.affiliations = affiliations.split(",");
+          patents[index].assignee = this.affiliations;
+          patents[index].author = [];
+        }
+        else {
+          console.log('undefined');
+
+          patents[index].author = [];
+          patents[index].assignee = [];
+        }
+      }
+      return patents
+    } catch (error) {
+      console.log(error.message);
+    }
+
+  }
+
 
 
   saveData() {

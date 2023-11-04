@@ -38,13 +38,13 @@ export class SolicitarPatenteComponent implements OnInit{
 
   authors: any[] = [];
   affiliations: any[] = [];
+  identifiers: any[] = [];
 
 
   firstFormGroup = this._formBuilder.group({
-    identifier  : ['', Validators.required],
+    identifier  : [this.identifiers, Validators.required],
     title       : ['', Validators.required],
     country     : [''],
-    drawing     : [this.drawing],
     language    : [''],
     summary     : ['', Validators.required],
   });
@@ -58,16 +58,8 @@ export class SolicitarPatenteComponent implements OnInit{
 
 
   patentFormGroup: FormGroup = this._formBuilder.group({
-    identifier  : [this.firstFormGroup.value.identifier, Validators.required],
-    title       : [this.firstFormGroup.value.title, Validators.required],
-    country     : [this.firstFormGroup.value.country],
-    drawing     : [this.firstFormGroup.value.drawing],
-    language    : [this.firstFormGroup.value.language],
-    summary     : [this.firstFormGroup.value.summary, Validators.required],
     author      : [this.secondFormGroup.value.author],
     affiliations: [this.secondFormGroup.value.affiliations, Validators.required],
-    prior       : [this.secondFormGroup.value.prior, Validators.required],
-    claims      : [this.secondFormGroup.value.claims, Validators.required],
   });
 
   constructor(private _formBuilder: FormBuilder,
@@ -124,11 +116,24 @@ export class SolicitarPatenteComponent implements OnInit{
     }
   }
 
+  addIdentifier(){
+    this.identifiers.push(this.firstFormGroup.value.identifier);
+    console.log(this.identifiers);
+  }
+
+  saveFirstForm(){
+    this.patentFormGroup.value.ifentifier = this.firstFormGroup.value.identifier;
+    this.patentFormGroup.value.title = this.firstFormGroup.value.title;
+    this.patentFormGroup.value.country = this.firstFormGroup.value.country;
+    // this.patentFormGroup.value.drawing = this.firstFormGroup.value.drawing;
+    this.patentFormGroup.value.language = this.firstFormGroup.value.language;
+    this.patentFormGroup.value.summary = this.firstFormGroup.value.summary;
+  }
 
   enviarFormulario(){
-    console.log('Enviar formulario');
-    console.log(this.patentFormGroup.value);
-    console.log(this.patentFormGroup.valid);
+    this.patentService.createPatents(this.patentFormGroup.value).subscribe(dta =>{
+      console.log('error',dta);
+    })
 
     // if(this.patent.id){
     //   this.patentService.editPatents(this.patentFormGroup, this.patent.id).subscribe(dta => {

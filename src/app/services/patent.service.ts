@@ -29,6 +29,7 @@ export class PatentService {
   }
 
   createPatents(formData){
+    console.log('formDat',formData);
     return this._http.post(`${this.url}/patents/new`, formData)
   }
 
