@@ -40,11 +40,15 @@ export class OpenPatentDetailComponent implements OnInit{
               public dialog: MatDialog,) { }
 
   ngOnInit() {
-    // this.activatedRoute.params
-    //   .pipe(
-    //     switchMap( ( {id} ) =>  this.patentService.getPatentById(id))
-    //   )
-    //   .subscribe( patent =>  this.patent = patent);
+    this.activatedRoute.params
+      .pipe(
+        switchMap( ( {id} ) =>  this.patentService.getPatentById(id))
+      )
+      .subscribe( patent =>  {
+        // this.patent = patent;
+        console.log(patent);
+
+      });
   }
 
   // PreviewInvoice(invoiceno: any) {

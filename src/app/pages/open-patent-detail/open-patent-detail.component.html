@@ -4,7 +4,7 @@
     <div class="column-left">
       <div class="row" fxLayout.xs="column">
         <span class="title">{{ 'TITULO' | translate }}:</span>
-        <span class="data-elements">{{patent1.title}}</span>
+        <span class="data-elements">{{patent.title}}</span>
       </div>
 
       <div class="row" fxLayout.xs="column">
@@ -15,7 +15,7 @@
                 <span class="title">{{ 'AUTOR' | translate }}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-list role="list" *ngFor="let author of patent1.authors">
+            <mat-list role="list" *ngFor="let author of patent.authors">
               <mat-list-item role="listitem">
                 <span  style="opacity: 0.6; margin-right: 10px">{{author}}</span>
                 <span  class="data-elements"></span>
@@ -35,7 +35,7 @@
                 <span class="title">{{ 'AFILIACIONES' | translate }}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-list role="list" *ngFor="let affiliation of patent1.affiliations">
+            <mat-list role="list" *ngFor="let affiliation of patent.affiliations">
               <mat-list-item role="listitem">
                 <span  style="opacity: 0.6; margin-right: 10px">{{affiliation}}</span>
                 <span  class="data-elements"></span>
@@ -68,7 +68,7 @@
     <div class="column-right">
       <div class="row" fxLayout.xs="column">
         <span class="title">{{ 'RESUMEN' | translate }}:</span>
-        <span class="data-elements">{{patent1.summary}}</span>
+        <span class="data-elements">{{patent.summary}}</span>
       </div>
     </div>
 

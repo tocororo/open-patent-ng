@@ -157,7 +157,7 @@ export class SearchComponent implements OnInit {
         this.patentService.getPatents(this.params).subscribe((response: SearchResponse<Patent>) => {
           console.log('Busqueda realizada');
           this.sr = response;
-          console.log(this.sr.aggregations);
+          console.log(this.sr.hits);
 
           this.aggrKeys = [
             { value: this.sr.aggregations.classification, key: 'Clasificacion' },

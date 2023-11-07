@@ -11,7 +11,7 @@
                 <mat-icon>add</mat-icon>
               </button>
               <input  matInput
-                      formControlName="identifier"
+                      [formControl]="value"
                       required>
             </mat-form-field>
           </div>
@@ -27,7 +27,7 @@
             <mat-form-field appearance="outline">
               <mat-label>{{ 'PAIS' | translate }}</mat-label>
               <input  matInput
-                      formControlName="country">
+                      [formControl]="name">
             </mat-form-field>
           </div>
 

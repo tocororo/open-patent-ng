@@ -9,10 +9,15 @@
     border-color: #ffffff33;
 }
 
+.card{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .button-container{
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
 
   .button-delete-container{
     margin-left: 10px;

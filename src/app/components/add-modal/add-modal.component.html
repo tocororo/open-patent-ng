@@ -5,8 +5,11 @@
     <div class="identifier-container">
       <mat-form-field appearance="outline">
         <mat-label>{{ 'IDENTIFICADORES' | translate }}</mat-label>
+        <button mat-icon-button matPrefix (click)="addIdentifier()">
+          <mat-icon>add</mat-icon>
+        </button>
         <input  matInput
-                formControlName="identifier"
+                [formControl]="value"
                 required>
       </mat-form-field>
     </div>

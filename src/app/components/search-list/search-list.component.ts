@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Permission } from 'src/app/permission.service';
 // import { OAuthStorage } from 'angular-oauth2-oidc';
-import { HitList, MessageHandler, Organization, StatusCode } from 'toco-lib';
+import { Hit, HitList, MessageHandler, Organization, StatusCode } from 'toco-lib';
 import { Patent } from '../../interfaces/patent.entity';
 import { Person } from '../../people/person.entity';
 import { ConfirmComponent } from '../confirm/confirm.component';
@@ -33,6 +33,7 @@ export class SearchListComponent implements OnInit
 
 	public ngOnInit(): void
 	{
+    console.log(this.hitList);
 
 	}
 	/**
@@ -47,7 +48,7 @@ export class SearchListComponent implements OnInit
 		return false;
 	}
 
-  eliminar(patent: Patent){
+  eliminar(patent: Hit<Patent>){
     const dialog = this.dialog.open(ConfirmComponent, {
       width: '350px',
       data: { ...patent },
@@ -57,8 +58,21 @@ export class SearchListComponent implements OnInit
       if (result) {
         console.log('Eliminar');
 
-        this.patentService.deletePatent(patent.title).subscribe((res) => {
-          this.m.showMessage(StatusCode.OK, "Se ha eliminado correctamente");
+        this.patentService.deletePatent(patent.metadata.id).subscribe((res) => {
+          console.log(res);
+          if (res) {
+            try {
+              this.hitList.hits = this.hitList.hits.filter(hit => {
+                hit.metadata.id != patent.metadata.id
+              });
+            this.m.showMessage(StatusCode.OK, "Se ha eliminado correctamente");
+
+            }
+            catch {
+              console.log('error');
+
+            }
+          }
         });
       }
     });

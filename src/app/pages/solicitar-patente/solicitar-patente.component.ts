@@ -19,46 +19,61 @@ import { AddModalComponent } from 'src/app/components/add-modal/add-modal.compon
 })
 export class SolicitarPatenteComponent implements OnInit{
 
+  id: string = '';
+
   prior     : FormControl = new FormControl("", Validators.required);
   claims    : FormControl = new FormControl("", Validators.required);
   drawing   : FormControl = new FormControl("");
+  value     : FormControl = new FormControl("", Validators.required);
+  name     : FormControl = new FormControl("", Validators.required);
   author: FormGroup = this._formBuilder.group({
-    identifier  : ['', Validators.required],
+    identifiers  : ['', Validators.required],
     name        : ['', Validators.required]
   });
 
   affiliation: FormGroup = this._formBuilder.group({
-    identifier  : ['', Validators.required],
-    name        : ['', Validators.required]
+    identifiers: ['', Validators.required],
+    name       : ['', Validators.required]
+  });
+
+  identifier: FormGroup = this._formBuilder.group({
+    idtype: [''],
+    value : ['', Validators.required]
+  });
+
+  country: FormGroup = this._formBuilder.group({
+    code: [''],
+    name: [this.name.value]
   });
 
   file_store: FileList;
   file_list : FileList;
   m = new MessageHandler(this._snackBar);
 
+  public patent: Patent;
   authors: any[] = [];
   affiliations: any[] = [];
   identifiers: any[] = [];
 
 
   firstFormGroup = this._formBuilder.group({
-    identifier  : [this.identifiers, Validators.required],
+    identifier  : [[this.identifiers]],
     title       : ['', Validators.required],
-    country     : [''],
+    country     : [this.country.value],
     language    : [''],
     summary     : ['', Validators.required],
   });
 
   secondFormGroup = this._formBuilder.group({
-    author      : [this.author.value],
-    affiliations: [this.affiliation.value, Validators.required],
+    authors     : [this.authors],
+    affiliations: [this.affiliations, Validators.required],
     prior       : [this.prior, Validators.required],
     claims      : [this.claims, Validators.required],
   });
 
 
   patentFormGroup: FormGroup = this._formBuilder.group({
-    author      : [this.secondFormGroup.value.author],
+    authors      : [this.secondFormGroup.value.authors],
     affiliations: [this.secondFormGroup.value.affiliations, Validators.required],
   });
 
@@ -74,11 +89,30 @@ export class SolicitarPatenteComponent implements OnInit{
     if (this.router.url.includes('editar')) {
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.patentService.getPatentById(id)))
-        .subscribe((patent) => {
-          // this.patent.push(patent);
-          this.patentFormGroup.value.identifier = patent.identifiers;
-          this.patentFormGroup.value.title = patent.title;
-          this.patentFormGroup.value.author = patent.authors;
+        .subscribe((data) => {
+          console.log(data.metadata.title);
+          this.id = data.metadata.id;
+          // this.identifier.value.value = data.metadata.identifiers[0].value;
+          // console.log(this.identifier.value.value);
+          // this.firstFormGroup.value.title = data.metadata.title;
+          // this.firstFormGroup.value.language = data.metadata.language;
+          // this.firstFormGroup.value.summary = data.metadata.summary;
+          // console.log(this.patentFormGroup.value);
+          this.identifiers = data.metadata.identifiers;
+          this.firstFormGroup.patchValue({
+            identifier: this.identifiers,
+            title: data.metadata.title,
+            country: data.metadata.country,
+            language: data.metadata.language,
+            summary: data.metadata.summary
+          })
+          this.patentFormGroup.patchValue({
+
+          })
+          console.log(this.patentFormGroup.value);
+
+          // this.patentFormGroup.value.title = patent.title;
+          // this.patentFormGroup.value.author = patent.authors;
         });
     }
   }
@@ -117,28 +151,38 @@ export class SolicitarPatenteComponent implements OnInit{
   }
 
   addIdentifier(){
-    this.identifiers.push(this.firstFormGroup.value.identifier);
+    this.identifier.value.value = this.value.value;
+    console.log(this.identifier.value.value);
+    this.identifiers.push(this.identifier.value);
     console.log(this.identifiers);
   }
 
   saveFirstForm(){
-    this.patentFormGroup.value.ifentifier = this.firstFormGroup.value.identifier;
+    this.country.value.name = this.name.value;
+    this.patentFormGroup.value.identifiers = this.firstFormGroup.value.identifier;
     this.patentFormGroup.value.title = this.firstFormGroup.value.title;
     this.patentFormGroup.value.country = this.firstFormGroup.value.country;
     // this.patentFormGroup.value.drawing = this.firstFormGroup.value.drawing;
     this.patentFormGroup.value.language = this.firstFormGroup.value.language;
     this.patentFormGroup.value.summary = this.firstFormGroup.value.summary;
+    console.log(this.patentFormGroup.value);
+
   }
 
   enviarFormulario(){
-    this.patentService.createPatents(this.patentFormGroup.value).subscribe(dta =>{
-      console.log('error',dta);
-    })
-
+    // this.affiliation.value.identifiers = this.ide
+    if (this.id) {
+      this.patentService.editPatents(this.patentFormGroup, this.id).subscribe(dta => {
+        console.log('ok');
+      })
+    }
+    else{
+      this.patentService.createPatents(this.patentFormGroup.value).subscribe(dta =>{
+        console.log('data',dta);
+      })
+    }
     // if(this.patent.id){
-    //   this.patentService.editPatents(this.patentFormGroup, this.patent.id).subscribe(dta => {
-    //     console.log('ok');
-    //   })
+
     // }else if(this.patentFormGroup.valid){
     //   this.patentService.createPatents(this.patentFormGroup).subscribe(dta => {
     //     console.log('ok');
@@ -163,7 +207,7 @@ export class SolicitarPatenteComponent implements OnInit{
       else{
         this.author = result;
         this.authors.push(this.author.value);
-        this.patentFormGroup.value.author = this.authors;
+        this.patentFormGroup.value.authors = this.authors;
         console.log(this.patentFormGroup.value);
       }
     });

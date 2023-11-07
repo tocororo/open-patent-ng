@@ -2,7 +2,7 @@ import { HttpBackend, HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
-import { Environment, SearchResponse } from 'toco-lib';
+import { Environment, Hit, SearchResponse } from 'toco-lib';
 import { Patent } from '../interfaces/patent.entity';
 import { FormGroup } from '@angular/forms';
 
@@ -24,12 +24,12 @@ export class PatentService {
     return this._http.get<SearchResponse<Patent>>(`${this.url}/search/patents`, {params});
   }
 
-  getPatentById(id: string): Observable<Patent>{
-    return this._http.get<Patent>(`${this.url}/pid/patent/${id}`);
+  getPatentById(id: string): Observable<Hit<Patent>>{
+    return this._http.get<Hit<Patent>>(`${this.url}/pid/patent/${id}`);
   }
 
   createPatents(formData){
-    console.log('formDat',formData);
+    console.log('enviar',formData);
     return this._http.post(`${this.url}/patents/new`, formData)
   }
 
@@ -38,7 +38,7 @@ export class PatentService {
   }
 
   deletePatent(id: string){
-    return this._http.delete<any>(`/${id}`);
+    return this._http.delete<any>(`${this.url}/patents/delete/${id}`);
   }
 
   importPatents(formData: FormData){

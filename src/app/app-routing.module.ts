@@ -44,6 +44,10 @@ const routes: Routes = [
         component: SolicitarPatenteComponent
       },
       {
+        path: 'editar/:id',
+        component: SolicitarPatenteComponent
+      },
+      {
         path: 'detail',
         component: OpenPatentDetailComponent
       },
