@@ -58,7 +58,7 @@ export class SolicitarPatenteComponent implements OnInit{
 
 
   firstFormGroup = this._formBuilder.group({
-    identifier  : [[this.identifiers]],
+    identifier  : [this.identifiers],
     title       : ['', Validators.required],
     country     : [this.country.value],
     language    : [''],
@@ -68,8 +68,8 @@ export class SolicitarPatenteComponent implements OnInit{
   secondFormGroup = this._formBuilder.group({
     link          : [''],
     classification: [''],
-    authors       : [[this.authors]],
-    affiliations  : [[this.affiliations]],
+    authors       : [this.authors],
+    affiliations  : [this.affiliations],
     prior         : [this.prior],
     claims        : [this.claims],
   });
@@ -79,7 +79,7 @@ export class SolicitarPatenteComponent implements OnInit{
     link          : [this.secondFormGroup.value.link],
     classification: [this.secondFormGroup.value.classification],
     authors       : [this.secondFormGroup.value.authors],
-    affiliations  : [this.secondFormGroup.value.affiliations, Validators.required],
+    affiliations  : [this.secondFormGroup.value.affiliations],
   });
 
   constructor(private _formBuilder: FormBuilder,
@@ -105,7 +105,7 @@ export class SolicitarPatenteComponent implements OnInit{
           // console.log(this.patentFormGroup.value);
           this.identifiers = data.metadata.identifiers;
           this.firstFormGroup.patchValue({
-            identifier: this.identifiers,
+            // identifier: this.identifiers,
             title: data.metadata.title,
             country: data.metadata.country,
             language: data.metadata.language,
@@ -170,7 +170,7 @@ export class SolicitarPatenteComponent implements OnInit{
     // this.patentFormGroup.value.drawing = this.firstFormGroup.value.drawing;
     this.patentFormGroup.value.language = this.firstFormGroup.value.language;
     this.patentFormGroup.value.summary = this.firstFormGroup.value.summary;
-    console.log(this.patentFormGroup.value);
+    console.log('p', this.patentFormGroup.value);
 
   }
 

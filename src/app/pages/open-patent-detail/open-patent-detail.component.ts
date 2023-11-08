@@ -6,6 +6,7 @@ import { PatentService } from '../../services/patent.service';
 import { Patent } from '../../interfaces/patent.entity';
 import { MatDialog } from '@angular/material/dialog';
 import { PdfViewerModalComponent } from './pdf-viewer-modal/pdf-viewer-modal.component';
+import { Hit, Links } from 'toco-lib';
 
 
 @Component({
@@ -17,15 +18,7 @@ export class OpenPatentDetailComponent implements OnInit{
 
   @ViewChild('content') popupview !: ElementRef;
 
-  patent!: Patent;
-
-  patent1: any = {
-    title: 'Iphone XS',
-    authors: ['Steve Jobs'],
-    affiliations: ["Samsung", "Xiaomi"],
-    summary: 'Nuevo Iphone lanzado al mercado',
-    id: ''
-  }
+  patent!: Hit<Patent>
 
   documents = [
     "Documento1",
@@ -45,21 +38,10 @@ export class OpenPatentDetailComponent implements OnInit{
         switchMap( ( {id} ) =>  this.patentService.getPatentById(id))
       )
       .subscribe( patent =>  {
-        // this.patent = patent;
         console.log(patent);
-
+        this.patent = patent;
       });
   }
-
-  // PreviewInvoice(invoiceno: any) {
-  //   this.invoiceno = invoiceno;
-  //   this.patentService.GenerateInvoicePDF(invoiceno).subscribe(res => {
-  //     let blob: Blob = res.body as Blob;
-  //     let url = window.URL.createObjectURL(blob);
-  //     this.pdfUrl = url;
-  //     //window.open(url);
-  //   });
-  // }
 
 
   showPdf(){

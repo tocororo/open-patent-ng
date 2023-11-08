@@ -8,7 +8,7 @@ export class Patent extends Entity{
   classification?: string;
   summary?: string;
   prior_art?: File;
-  country?: string;
+  country?: any;
   language?: string;
   creation_date?: string;
   grant_date?: string;
