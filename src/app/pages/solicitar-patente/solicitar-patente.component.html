@@ -82,6 +82,15 @@
       <section class="grid-container">
         <div class="column-left">
 
+          <div class="classification-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'CLASIFICACION' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="classification"
+                      required>
+            </mat-form-field>
+          </div>
+
           <div class="claims-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'REIVINDICACIONES' | translate }}</mat-label>
@@ -120,9 +129,19 @@
             </mat-form-field>
           </div>
 
+          <div class="link-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'LINK' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="link"
+                      required>
+            </mat-form-field>
+          </div>
+
         </div>
 
         <div class="second-stepper column-right">
+
           <div class="author-container">
             <button mat-button (click)="openModal()">{{ 'AGREGAR_A' | translate }}</button>
           </div>

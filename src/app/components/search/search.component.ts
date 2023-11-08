@@ -160,7 +160,6 @@ export class SearchComponent implements OnInit {
           console.log(this.sr.hits);
 
           this.aggrKeys = [
-            { value: this.sr.aggregations.classification, key: 'Clasificacion' },
             { value: this.sr.aggregations.country, key: 'Pais' },
             { value: this.sr.aggregations.language, key: 'Idioma' },
         ]

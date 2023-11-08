@@ -21,20 +21,21 @@ export class SolicitarPatenteComponent implements OnInit{
 
   id: string = '';
 
-  prior     : FormControl = new FormControl("", Validators.required);
-  claims    : FormControl = new FormControl("", Validators.required);
+  prior     : FormControl = new FormControl("");
+  claims    : FormControl = new FormControl("");
   drawing   : FormControl = new FormControl("");
   value     : FormControl = new FormControl("", Validators.required);
   name     : FormControl = new FormControl("", Validators.required);
-  author: FormGroup = this._formBuilder.group({
-    identifiers  : ['', Validators.required],
-    name        : ['', Validators.required]
-  });
 
-  affiliation: FormGroup = this._formBuilder.group({
-    identifiers: ['', Validators.required],
-    name       : ['', Validators.required]
-  });
+  // author: FormGroup = this._formBuilder.group({
+  //   identifiers  : ['', Validators.required],
+  //   name        : ['', Validators.required]
+  // });
+
+  // affiliation: FormGroup = this._formBuilder.group({
+  //   identifiers: ['', Validators.required],
+  //   name       : ['', Validators.required]
+  // });
 
   identifier: FormGroup = this._formBuilder.group({
     idtype: [''],
@@ -65,16 +66,20 @@ export class SolicitarPatenteComponent implements OnInit{
   });
 
   secondFormGroup = this._formBuilder.group({
-    authors     : [this.authors],
-    affiliations: [this.affiliations, Validators.required],
-    prior       : [this.prior, Validators.required],
-    claims      : [this.claims, Validators.required],
+    link          : [''],
+    classification: [''],
+    authors       : [[this.authors]],
+    affiliations  : [[this.affiliations]],
+    prior         : [this.prior],
+    claims        : [this.claims],
   });
 
 
   patentFormGroup: FormGroup = this._formBuilder.group({
-    authors      : [this.secondFormGroup.value.authors],
-    affiliations: [this.secondFormGroup.value.affiliations, Validators.required],
+    link          : [this.secondFormGroup.value.link],
+    classification: [this.secondFormGroup.value.classification],
+    authors       : [this.secondFormGroup.value.authors],
+    affiliations  : [this.secondFormGroup.value.affiliations, Validators.required],
   });
 
   constructor(private _formBuilder: FormBuilder,
@@ -199,14 +204,14 @@ export class SolicitarPatenteComponent implements OnInit{
 
     dialog.afterClosed().subscribe((result) => {
       if (result && event) {
-        this.affiliation = result;
-        this.affiliations.push(this.affiliation.value);
+        // this.affiliation = result;
+        this.affiliations.push(result.value);
         this.patentFormGroup.value.affiliations = this.affiliations;
         console.log(this.patentFormGroup.value);
       }
       else{
-        this.author = result;
-        this.authors.push(this.author.value);
+        // this.author = result;
+        this.authors.push(result.value);
         this.patentFormGroup.value.authors = this.authors;
         console.log(this.patentFormGroup.value);
       }

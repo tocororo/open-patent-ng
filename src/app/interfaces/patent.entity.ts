@@ -5,6 +5,7 @@ export class Patent extends Entity{
   title: string;
   authors: Array<string>;
   affiliations: Array<string>;
+  classification?: string;
   summary?: string;
   prior_art?: File;
   country?: string;

@@ -62,9 +62,10 @@ export class SearchListComponent implements OnInit
           console.log(res);
           if (res) {
             try {
-              this.hitList.hits = this.hitList.hits.filter(hit => {
+              this.hitList.hits = this.hitList.hits.filter(hit =>
                 hit.metadata.id != patent.metadata.id
-              });
+              );
+
             this.m.showMessage(StatusCode.OK, "Se ha eliminado correctamente");
 
             }

@@ -19,7 +19,7 @@
     <ng-container matColumnDef="author">
       <th mat-header-cell *matHeaderCellDef>{{ 'AUTOR' | translate }}</th>
       <td mat-cell *matCellDef="let element">
-        <li *ngFor="let author of element.author">
+        <li *ngFor="let author of element.author.name">
           {{ author | titlecase }}
         </li>
       </td>

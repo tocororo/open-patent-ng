@@ -26,8 +26,20 @@ export class ImportPatentsComponent {
     idtype: "",
     value: ""
   }
-  affiliations: string[] = [];
-  authors     : string[] = [];
+
+  affiliation = {
+    identifiers: [],
+    name: ""
+  }
+
+  author = {
+    identifiers: [],
+    name: ""
+  }
+
+
+  affiliations: any[] = [];
+  authors     : any[] = [];
   identifiers : any[] = [];
 
 
@@ -72,7 +84,6 @@ export class ImportPatentsComponent {
           const jsonFile = this.csvJson(fileContents);
           this.patents = jsonFile;
           this.patents.pop();
-          // const p = this.patents.slice(0,20)
           this.patents = this.getAffiliations(this.patents)
           console.log(this.patents);
         } else {
@@ -142,27 +153,44 @@ export class ImportPatentsComponent {
   getAffiliations(patents){
     try {
       for (let index = 0; index < patents.length; index++) {
-        this.identifier.value = patents[index].id;
-        this.identifiers.push(this.identifier);
-        patents[index].id = this.identifiers;
+        // this.identifier.value = patents[index].id;
+        // this.identifiers.push(this.identifier);
+        // patents[index].id = this.identifiers;
         if (patents[index].assignee != undefined && patents[index].author!= undefined ) {
-          const affiliations = patents[index].assignee;
-          const authors = patents[index].author;
-          this.affiliations = affiliations.split(",");
-          this.authors = authors.split(",");
+          const affiliations = patents[index].assignee.split(",");
+          const authors = patents[index].author.split(",");
+          for (let i = 0; i < affiliations.length; i++) {
+            this.affiliation.name = affiliations[i];
+            this.affiliations.push(this.affiliation);
+          }
           patents[index].assignee = this.affiliations;
+          this.affiliations = [];
+
+          for (let i = 0; i < authors.length; i++) {
+            this.author.name = authors[i];
+            this.authors.push(this.author);
+          }
           patents[index].author = this.authors;
+          this.authors = [];
         }
         else if(patents[index].assignee == undefined &&  patents[index].author != undefined){
           patents[index].assignee = [];
-          const authors = patents[index].author;
-          this.authors = authors.split(",");
+          const authors = patents[index].author.split(",");
+          for (let i = 0; i < authors.length; i++) {
+            this.author.name = authors[i];
+            this.authors.push(this.author);
+          }
           patents[index].author = this.authors;
+          this.authors = [];
         }
         else if(patents[index].assignee != undefined &&  patents[index].author == undefined){
-          const affiliations = patents[index].assignee;
-          this.affiliations = affiliations.split(",");
+          const affiliations = patents[index].assignee.split(",");
+          for (let i = 0; i < affiliations.length; i++) {
+            this.affiliation.name = affiliations[i];
+            this.affiliations.push(this.affiliation);
+          }
           patents[index].assignee = this.affiliations;
+          this.affiliations = [];
           patents[index].author = [];
         }
         else {

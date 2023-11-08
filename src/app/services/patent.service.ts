@@ -1,52 +1,57 @@
-import { HttpBackend, HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, Output, EventEmitter } from '@angular/core';
-import { OAuthStorage } from 'angular-oauth2-oidc';
-import { Observable } from 'rxjs';
-import { Environment, Hit, SearchResponse } from 'toco-lib';
-import { Patent } from '../interfaces/patent.entity';
-import { FormGroup } from '@angular/forms';
+import { HttpBackend, HttpClient, HttpParams } from "@angular/common/http";
+import { Injectable, Output, EventEmitter } from "@angular/core";
+import { OAuthStorage } from "angular-oauth2-oidc";
+import { Observable } from "rxjs";
+import { Environment, Hit, SearchResponse } from "toco-lib";
+import { Patent } from "../interfaces/patent.entity";
+import { FormGroup } from "@angular/forms";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class PatentService {
+  url = "";
+  private _http: HttpClient;
 
-  url = 'https://localhost:5000/api';
-
-
-  constructor(    private environment: Environment,
-                  private handler: HttpBackend,
-                  private oAuthStorage: OAuthStorage,
-                  private _http: HttpClient) { }
-
-  getPatents(params: HttpParams): Observable<SearchResponse<Patent>>{
-    const req = this.environment.sceibaApi + 'search/patents/';
-    return this._http.get<SearchResponse<Patent>>(`${this.url}/search/patents`, {params});
+  constructor(
+    private environment: Environment,
+    private _httpAuth: HttpClient,
+    private handler: HttpBackend
+  ) {
+    this.url = this.environment.sceibaApi;
+    this._http = new HttpClient(handler);
   }
 
-  getPatentById(id: string): Observable<Hit<Patent>>{
+  getPatents(params: HttpParams): Observable<SearchResponse<Patent>> {
+    return this._http.get<SearchResponse<Patent>>(
+      `${this.url}/search/patents`,
+      { params }
+    );
+  }
+
+  getPatentById(id: string): Observable<Hit<Patent>> {
     return this._http.get<Hit<Patent>>(`${this.url}/pid/patent/${id}`);
   }
 
-  createPatents(formData){
-    console.log('enviar',formData);
-    return this._http.post(`${this.url}/patents/new`, formData)
+  createPatents(formData) {
+    console.log("enviar", formData);
+    return this._httpAuth.post(`${this.url}/patents/new`, formData);
   }
 
-  editPatents(formData, id: string){
-    return this._http.post(`${this.url}/patents/${id}/edit`, formData)
+  editPatents(formData, id: string) {
+    return this._httpAuth.post(`${this.url}/patents/${id}/edit`, formData);
   }
 
-  deletePatent(id: string){
-    return this._http.delete<any>(`${this.url}/patents/delete/${id}`);
+  deletePatent(id: string) {
+    return this._httpAuth.delete<any>(`${this.url}/patents/delete/${id}`);
   }
 
-  importPatents(formData: FormData){
+  importPatents(formData: FormData) {
     // const url = this._env.cuorHost + "import";
-    return this._http.post<any>('', formData);
+    return this._http.post<any>("", formData);
   }
 
-  getRegister(){
-    return this._http.get('');
+  getRegister() {
+    return this._http.get("");
   }
 }

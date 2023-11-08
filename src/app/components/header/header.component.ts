@@ -258,14 +258,6 @@ export class HeaderComponent implements OnInit {
     ];
 
     this.staticMenuOptions = this.menuOptions || [
-
-      {
-        nameTranslate: "CREATE",
-        icon: "add_circle",
-        useRouterLink: true,
-        hideLabel: true,
-        href: '/create',
-      },
       {
         nameTranslate: "APLICACIONES",
         icon: "apps",
@@ -302,12 +294,19 @@ export class HeaderComponent implements OnInit {
       this._menuOptions = [
         ...this.staticMenuOptions,
         {
+          nameTranslate: "CREATE",
+          icon: "add_circle",
+          useRouterLink: true,
+          hideLabel: true,
+          href: '/create',
+        },
+        {
           nameTranslate: this.user ? this.user.email.split('@')[0] : '',
           icon: 'person_pin',
           childrenMenu: this._menuUser,
           hideLabel: true
         }
-       ]
+      ]
     }
 
     this.authenticateSuscription =
@@ -319,6 +318,13 @@ export class HeaderComponent implements OnInit {
 
           this._menuOptions = [
             ...this.staticMenuOptions,
+            {
+              nameTranslate: "CREATE",
+              icon: "add_circle",
+              useRouterLink: true,
+              hideLabel: true,
+              href: '/create',
+            },
             {
               nameTranslate: this.user ? this.user.email.split('@')[0] : '',
               icon: 'person_pin',
@@ -397,30 +403,30 @@ export class HeaderComponent implements OnInit {
     return user['email'];
   }
 
-  getUserInfo(): Observable<Response<any>> {
-    // let token = this.oauthStorage.getItem('access_token');
-    // let headers = new HttpHeaders()
-    // headers.set('Authorization', 'Bearer ' + token);
-    // headers = headers.set('Content-Type', 'application/json');
-    // headers = headers.set('Access-Control-Allow-Origin', '*');
-    // const options = {
-    //   headers: headers
-    // };
-    return this.http.get<Response<any>>(this._env.sceibaApi + 'me');
-  }
+  // getUserInfo(): Observable<Response<any>> {
+  //   let token = this.oauthStorage.getItem('access_token');
+  //   let headers = new HttpHeaders()
+  //   headers.set('Authorization', 'Bearer ' + token);
+  //   headers = headers.set('Content-Type', 'application/json');
+  //   headers = headers.set('Access-Control-Allow-Origin', '*');
+  //   const options = {
+  //     headers: headers
+  //   };
+  //   return this.http.get<Response<any>>(this._env.sceibaApi + 'me');
+  // }
 
-  public me()
-  {
-    this.getUserInfo().subscribe({
-      next: (response) => {
-        console.log(response)
-      },
+  // public me()
+  // {
+  //   this.getUserInfo().subscribe({
+  //     next: (response) => {
+  //       console.log(response)
+  //     },
 
-      error: (e) => { },
+  //     error: (e) => { },
 
-      complete: () => { },
-    });
-  }
+  //     complete: () => { },
+  //   });
+  // }
 
 }
 

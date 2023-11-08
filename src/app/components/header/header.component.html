@@ -50,7 +50,7 @@
       </toco-authentication>
     </div>
 
-    <div class="menu-full">
+    <div class="menu-full" *ngIf="user">
         <a mat-button [routerLink]="['/']">{{ 'INICIO' | translate }}</a>
         <a mat-button routerLink="./import">{{ 'IMPORTAR' | translate }}</a>
         <a mat-button routerLink="./register">{{ 'REGISTRO' | translate }}</a>
