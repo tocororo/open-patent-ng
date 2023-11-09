@@ -39,6 +39,8 @@ export class PatentService {
   }
 
   editPatents(formData, id: string) {
+    console.log('id',id);
+    console.log(formData);
     return this._httpAuth.post(`${this.url}/patents/${id}/edit`, formData);
   }
 

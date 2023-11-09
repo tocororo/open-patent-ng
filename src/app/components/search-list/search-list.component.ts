@@ -9,6 +9,8 @@ import { Patent } from '../../interfaces/patent.entity';
 import { Person } from '../../people/person.entity';
 import { ConfirmComponent } from '../confirm/confirm.component';
 import { PatentService } from '../../services/patent.service';
+import { OAuthStorage } from 'angular-oauth2-oidc';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'search-list',
@@ -22,19 +24,25 @@ export class SearchListComponent implements OnInit
 	// public hitList: HitList<Person>;
   public hitList: HitList<Patent>;
   public pdfType: 'list' | 'single' =  'list';
+  isLogged: boolean = false
 
   m = new MessageHandler(this._snackBar);
 
 
     public constructor( private _snackBar: MatSnackBar,
                         public dialog: MatDialog,
-                        private patentService: PatentService)
+                        private _router: Router,
+                        private patentService: PatentService,
+                        private oauthStorage: OAuthStorage,)
 	{ }
 
 	public ngOnInit(): void
 	{
-    console.log(this.hitList);
+    let request = JSON.parse(this.oauthStorage.getItem("user"));
 
+    if (request) {
+      this.isLogged = true;
+    }
 	}
 	/**
 	* hasPermission return true if the user have permission
@@ -77,5 +85,6 @@ export class SearchListComponent implements OnInit
         });
       }
     });
+
   }
 }

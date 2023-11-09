@@ -16,35 +16,33 @@
             </span>
           </h2>
 
-          <h4 class="p-40"
-                *ngIf="hit.metadata.authors && hit.metadata.authors.lenght > 0"
+          <!-- <h4 class="p-40"
+                *ngIf="hit.metadata.authors && hit.metadata.authors.length > 0"
                 style="cursor: pointer;">
             Autor:
             <li *ngFor="let author of hit.metadata.authors">
-              <!-- [routerLink]="['/profile/author', hit.author.identifiers]" -->
               {{author.name}}
             </li>
-          </h4>
+          </h4> -->
 
-          <ul fxLayout="row wrap" *ngIf="hit.metadata.affiliations && hit.metadata.affiliations.lenght > 0">
+          <!-- <ul fxLayout="row wrap" *ngIf="hit.metadata.affiliations && hit.metadata.affiliations.length > 0">
             <h4>Organizaciones:</h4>
-            <li *ngFor="let affiliation of hit.metadata.affiliations; let i = index" class="li-margin-style">
-              <!-- [routerLink]="['/profile/organization', hit.affiliation.id]" -->
+            <li *ngFor="let affiliation of hit.metadata.affiliations">
               {{affiliation.name}}
             </li>
-          </ul>
+          </ul> -->
         </div>
 
         <section class="button-container">
 
-          <div class="button-edit-container">
-            <button mat-fab color="accent"  matTooltip="Editar" [routerLink]="['/editar', hit.metadata.id]">
+          <div class="button-edit-container" *ngIf="isLogged">
+            <button mat-icon-button color="accent"  matTooltip="Editar" [routerLink]="['/editar', hit.metadata.id]">
               <mat-icon>edit</mat-icon>
             </button>
           </div>
 
-          <div class="button-delete-container">
-            <button mat-fab color="warn"  matTooltip="Eliminar" (click)="eliminar(hit)">
+          <div class="button-delete-container" *ngIf="isLogged">
+            <button mat-icon-button color="warn"  matTooltip="Eliminar" (click)="eliminar(hit)">
               <mat-icon>delete</mat-icon>
             </button>
           </div>

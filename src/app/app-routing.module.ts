@@ -14,6 +14,8 @@ import { OpenPatentDetailComponent } from './pages/open-patent-detail/open-paten
 import { ImportPatentsComponent } from './pages/import-patents/import-patents.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ContactComponent } from './contact/contact.component';
+import { AdminPermissionService, CuratorPermissionService } from './permission.service';
+import { UserService } from './org.service';
 
 const routes: Routes = [
 	// {
@@ -34,18 +36,23 @@ const routes: Routes = [
       {
         path: 'import',
         component: ImportPatentsComponent,
+        canActivate: [CuratorPermissionService]
+
       },
       {
         path: 'register',
         component: RegisterComponent,
+        canActivate: [CuratorPermissionService]
       },
       {
         path: 'create',
-        component: SolicitarPatenteComponent
+        component: SolicitarPatenteComponent,
+        canActivate: [CuratorPermissionService]
       },
       {
         path: 'editar/:id',
-        component: SolicitarPatenteComponent
+        component: SolicitarPatenteComponent,
+        canActivate: [CuratorPermissionService]
       },
       {
         path: 'detail',

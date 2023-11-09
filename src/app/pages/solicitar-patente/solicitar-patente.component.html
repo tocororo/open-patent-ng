@@ -82,15 +82,6 @@
       <section class="grid-container">
         <div class="column-left">
 
-          <div class="classification-container">
-            <mat-form-field appearance="outline">
-              <mat-label>{{ 'CLASIFICACION' | translate }}</mat-label>
-              <input  matInput
-                      formControlName="classification"
-                      required>
-            </mat-form-field>
-          </div>
-
           <div class="claims-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'REIVINDICACIONES' | translate }}</mat-label>
@@ -129,6 +120,18 @@
             </mat-form-field>
           </div>
 
+        </div>
+
+        <div class="second-stepper column-right">
+          <div class="classification-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'CLASIFICACION' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="classification"
+                      required>
+            </mat-form-field>
+          </div>
+
           <div class="link-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'LINK' | translate }}</mat-label>
@@ -137,20 +140,81 @@
                       required>
             </mat-form-field>
           </div>
-
         </div>
+      </section>
 
-        <div class="second-stepper column-right">
+      <div class="button-container">
+        <button class="button-last" mat-button color="primary" matStepperNext (click)="saveSecondForm()">{{ 'SIGUIENTE' | translate }}</button>
+      </div>
+    </form>
+  </mat-step>
 
-          <div class="author-container">
-            <button mat-button (click)="openModal()">{{ 'AGREGAR_A' | translate }}</button>
+  <mat-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <section class="third grid-container">
+        <form [formGroup]="author" class="column-left">
+
+          <div class="identifiers-authors-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'IDENTIFICADORES' | translate }}</mat-label>
+              <button mat-icon-button matPrefix (click)="addIdentifier()">
+                <mat-icon>add</mat-icon>
+              </button>
+              <input  matInput
+                      [formControl]="value"
+                      required>
+            </mat-form-field>
           </div>
 
+          <div class="name-author-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'NAME' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="nameAuthor"
+                      required>
 
-          <div class="affiliations-container">
-            <button mat-button (click)="openModal($event)">{{ 'AGREGAR_O' | translate }}</button>
+              <!-- <select matNativeControl *ngIf="edit">
+                <option  *ngFor="let author of authors" [value]="author.name">{{author.name}}</option>
+              </select> -->
+            </mat-form-field>
           </div>
-        </div>
+
+          <div class="button author">
+            <button mat-button (click)="addAuthor()">{{ 'AGREGAR_A' | translate }}</button>
+          </div>
+        </form>
+
+        <form [formGroup]="affiliation" class="column-right">
+
+          <div class="identifiers-affiliations-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'IDENTIFICADORES' | translate }}</mat-label>
+              <button mat-icon-button matPrefix (click)="addIdentifier()">
+                <mat-icon>add</mat-icon>
+              </button>
+              <input  matInput
+                      [formControl]="value"
+                      required>
+            </mat-form-field>
+          </div>
+
+          <div class="name-affiliation-container">
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'NAME' | translate }}</mat-label>
+              <input  matInput
+                      formControlName="nameAffiliation"
+                      required>
+              <!-- <select matNativeControl *ngIf="edit">
+                <option *ngFor="let affiliation of affiliations" [value]="affiliation.name">{{affiliation.name}}</option>
+              </select> -->
+            </mat-form-field>
+          </div>
+
+          <div class="button affiliation">
+            <button mat-button (click)="addAffiliation()">{{ 'AGREGAR_O' | translate }}</button>
+          </div>
+
+        </form>
       </section>
       <div class="button-container">
         <button mat-button matStepperPrevious color="primary">{{ 'ATRAS' | translate }}</button>

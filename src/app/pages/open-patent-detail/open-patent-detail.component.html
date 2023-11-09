@@ -1,4 +1,4 @@
-<div class="grid-container">
+<div class="grid-container" *ngIf="patent">
 
     <div class="column-left">
       <div class="row" fxLayout.xs="column">
@@ -16,7 +16,7 @@
             </mat-expansion-panel-header>
             <mat-list role="list" *ngFor="let author of patent.metadata.authors">
               <mat-list-item role="listitem">
-                <span  style="opacity: 0.6; margin-right: 10px">{{author}}</span>
+                <span  style="opacity: 0.6; margin-right: 10px">{{author.name}}</span>
                 <span  class="data-elements"></span>
               </mat-list-item>
             </mat-list>
@@ -34,7 +34,7 @@
             </mat-expansion-panel-header>
             <mat-list role="list" *ngFor="let affiliation of patent.metadata.affiliations">
               <mat-list-item role="listitem">
-                <span  style="opacity: 0.6; margin-right: 10px">{{affiliation}}</span>
+                <span  style="opacity: 0.6; margin-right: 10px">{{affiliation.name}}</span>
                 <span  class="data-elements"></span>
               </mat-list-item>
             </mat-list>

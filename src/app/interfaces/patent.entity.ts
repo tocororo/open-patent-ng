@@ -3,8 +3,8 @@ import { Entity, Role } from 'toco-lib';
 
 export class Patent extends Entity{
   title: string;
-  authors: Array<string>;
-  affiliations: Array<string>;
+  authors: Array<any>;
+  affiliations: Array<any>;
   classification?: string;
   summary?: string;
   prior_art?: File;
