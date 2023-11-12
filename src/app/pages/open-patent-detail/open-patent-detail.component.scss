@@ -19,6 +19,9 @@
     margin-bottom: 10px;
   }
 }
+.expansion{
+  width: 70%;
+}
 
 .icons-container{
   display: flex;
@@ -31,9 +34,19 @@
   }
 }
 
+@media screen and (max-width: 922px) {
+  .grid-container{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 
 @media screen and (max-width: 599px) {
   .wrapper {
     padding: 30px 20px;
+  }
+  .expansion{
+    width: 90%;
   }
 }

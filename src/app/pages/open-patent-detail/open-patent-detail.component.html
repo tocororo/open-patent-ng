@@ -6,7 +6,7 @@
         <span class="data-elements">{{patent.metadata.title}}</span>
       </div>
 
-      <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.authors">
+      <div class="row expansion" fxLayout.xs="column" *ngIf="patent.metadata.authors && patent.metadata.authors.length > 0">
         <mat-accordion>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -24,7 +24,7 @@
         </mat-accordion>
       </div>
 
-      <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.affiliations">
+      <div class="row expansion" fxLayout.xs="column" *ngIf="patent.metadata.affiliations && patent.metadata.affiliations.length > 0">
         <mat-accordion>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
@@ -61,14 +61,24 @@
         </mat-accordion>
       </div> -->
 
-      <div class="row" fxLayout.xs="column">
+      <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.language">
         <span class="title">{{ 'IDIOMA' | translate }}:</span>
         <span class="data-elements">{{patent.metadata.language}}</span>
       </div>
 
-      <div class="row" fxLayout.xs="column">
+      <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.country">
         <span class="title">{{ 'PAIS' | translate }}:</span>
         <span class="data-elements">{{patent.metadata.country.name}}</span>
+      </div>
+
+      <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.link">
+        <span class="title">{{ 'LINK' | translate }}:</span>
+        <span class="data-elements">{{patent.metadata.link}}</span>
+      </div>
+
+      <div class="row" fxLayout.xs="column"  *ngIf="patent.metadata.classification">
+        <span class="title">{{ 'CLASIFICACION' | translate }}:</span>
+        <span class="data-elements">{{patent.metadata.classification}}</span>
       </div>
 
     </div>

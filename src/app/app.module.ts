@@ -73,6 +73,7 @@ import { TableComponent } from './pages/import-patents/table/table.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AddModalComponent } from './components/add-modal/add-modal.component';
+import { ExportPdfExcelComponent } from './components/export-pdf-excel/export-pdf-excel.component';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -111,6 +112,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
         RegisterComponent,
         PageNotFoundComponent,
         AddModalComponent,
+        ExportPdfExcelComponent,
     ],
     imports: [
         BrowserModule,

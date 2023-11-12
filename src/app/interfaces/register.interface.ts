@@ -1,5 +1,6 @@
 export interface Register{
-  id: string;
-  user: string;
+  id?: string;
+  userEmail: string;
   date: string;
+  patents: number
 }

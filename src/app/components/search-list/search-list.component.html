@@ -1,12 +1,15 @@
 <mat-card class="mat-elevation-z0" *ngIf="hitList && hitList.hits.length > 0; else templateNotInfo">
 
+  <mat-card-header>
+    <app-export-pdf-excel [inputValue]="hitList.hits" viewType="button" pdfType="list"></app-export-pdf-excel>
+  </mat-card-header>
 
     <mat-card-content>
       <div class="card" *ngFor="let hit of hitList.hits; let pos = index" [ngStyle]="{'margin': '1em 8px'}">
 
         <!-- Titulo de la patente -->
         <div class="column-left">
-          <h2>
+          <h3>
             <!-- <span mat-icon-button *ngIf="hasPermission" routerLink="/{{hit.metadata.id}}/edit" matTooltip="Editar la Organización">
               <mat-icon class="mat-18">mode_edit</mat-icon>
             </span> -->
@@ -14,7 +17,7 @@
                   style="cursor: pointer;">
               {{hit.metadata.title}}
             </span>
-          </h2>
+          </h3>
 
           <!-- <h4 class="p-40"
                 *ngIf="hit.metadata.authors && hit.metadata.authors.length > 0"

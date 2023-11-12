@@ -20,6 +20,7 @@ import { AddModalComponent } from 'src/app/components/add-modal/add-modal.compon
 export class SolicitarPatenteComponent implements OnInit{
 
   id: string = '';
+  type: string = 'affiliation';
 
   prior          : FormControl = new FormControl("");
   claims         : FormControl = new FormControl("");
@@ -30,16 +31,6 @@ export class SolicitarPatenteComponent implements OnInit{
   edit: boolean = false;
 
   identifiers: any[] = [];
-
-  author: FormGroup = this._formBuilder.group({
-    identifiers: [this.identifiers, Validators.required],
-    nameAuthor : ['', Validators.required]
-  });
-
-  affiliation: FormGroup = this._formBuilder.group({
-    identifiers: [this.identifiers, Validators.required],
-    nameAffiliation: ['', Validators.required]
-  });
 
   identifier: FormGroup = this._formBuilder.group({
     idtype: [''],
@@ -73,17 +64,16 @@ export class SolicitarPatenteComponent implements OnInit{
     classification: [''],
     prior         : [this.prior],
     claims        : [this.claims],
-  });
-
-  thirdFormGroup = this._formBuilder.group({
     authors       : [this.authors],
     affiliations  : [this.affiliations],
   });
 
 
   patentFormGroup: FormGroup = this._formBuilder.group({
-    authors       : [this.thirdFormGroup.value.authors],
-    affiliations  : [this.thirdFormGroup.value.affiliations],
+    link          : [this.secondFormGroup.value.link],
+    classification: [this.secondFormGroup.value.classification],
+    authors       : [this.secondFormGroup.value.authors],
+    affiliations  : [this.secondFormGroup.value.affiliations],
   });
 
   constructor(private _formBuilder: FormBuilder,
@@ -112,24 +102,13 @@ export class SolicitarPatenteComponent implements OnInit{
             language: data.metadata.language,
             summary: data.metadata.summary
           })
-          this.secondFormGroup.patchValue({
-            link: data.metadata.link,
-            classification: data.metadata.classification
-          })
-          // for (let index = 0; index < data.metadata.affiliations.length; index++) {
-          //   this.affiliation.patchValue({
-          //     identifiers: data.metadata.affiliations[index].identifiers,
-          //     nameAffiliation: data.metadata.affiliations[index].name,
-          //   })}
-
-          //   for (let index = 0; index < data.metadata.authors.length; index++) {
-          //     this.author.patchValue({
-          //       identifiers: data.metadata.authors[index].identifiers,
-          //       nameAuthor: data.metadata.authors[index].name,
-          //     })}
+          this.identifiers= [];
           this.authors = data.metadata.authors;
           this.affiliations = data.metadata.affiliations;
+
           this.patentFormGroup.patchValue({
+            link: data.metadata.link,
+            classification: data.metadata.classification,
             authors: this.authors,
             affiliations: this.affiliations
           })
@@ -190,37 +169,6 @@ export class SolicitarPatenteComponent implements OnInit{
     this.patentFormGroup.value.language = this.firstFormGroup.value.language;
     this.patentFormGroup.value.summary = this.firstFormGroup.value.summary;
     console.log('p', this.patentFormGroup.value);
-
-  }
-
-  saveSecondForm(){
-    this.patentFormGroup.value.link = this.secondFormGroup.value.link;
-    this.patentFormGroup.value.classification = this.secondFormGroup.value.classification;
-    console.log('p', this.patentFormGroup.value);
-
-  }
-
-  addAffiliation(){
-    this.affiliations.push(this.affiliation.value);
-    this.patentFormGroup.value.affiliations = this.affiliations;
-    this.identifiers = [];
-    console.log(this.patentFormGroup.value.affiliations);
-    this.affiliation.patchValue({
-      identifiers: [this.identifiers],
-      nameAuthor: ['']
-    })
-  }
-
-  addAuthor(){
-    this.authors.push(this.author.value);
-    this.patentFormGroup.value.authors = this.authors;
-    this.identifiers = [];
-    console.log(this.patentFormGroup.value.authors);
-    this.author.patchValue({
-      identifiers: [this.identifiers],
-      nameAuthor: ['']
-    })
-
   }
 
   enviarFormulario(){
@@ -247,24 +195,51 @@ export class SolicitarPatenteComponent implements OnInit{
     }
   }
 
-  openModal(event?){
+  openModalAu(event?){
     const dialog = this.dialog.open(AddModalComponent, {
+      data: {...event},
       width: '500px',
     });
 
-    dialog.afterClosed().subscribe((result) => {
+    dialog.afterClosed().subscribe((result?) => {
       if (result && event) {
-        // this.affiliation = result;
-        this.affiliations.push(result.value);
-        this.patentFormGroup.value.affiliations = this.affiliations;
-        console.log(this.patentFormGroup.value);
+        for (let i = 0; i < this.authors.length; i++) {
+          if (this.authors[i].name === event.name) {
+            this.authors[i] = result.value;
+          }
+        }
       }
-      else{
-        // this.author = result;
+      else if(result){
         this.authors.push(result.value);
         this.patentFormGroup.value.authors = this.authors;
-        console.log(this.patentFormGroup.value);
+        console.log(this.authors);
       }
+      else{}
+  });
+
+  }
+
+  openModalAf(event?){
+    const dialog = this.dialog.open(AddModalComponent, {
+      data: {...event},
+      width: '500px',
+    });
+
+    dialog.afterClosed().subscribe((result?) => {
+        if (result && event) {
+          for (let i = 0; i < this.affiliations.length; i++) {
+            if (this.affiliations[i].name === event.name) {
+              this.affiliations[i] = result.value;
+            }
+          }
+          console.log('af',this.affiliations);
+        }
+        else if(result){
+          this.affiliations.push(result.value);
+          this.patentFormGroup.value.affiliations = this.affiliations;
+          console.log(this.affiliations);
+        }
+        else{}
     });
 
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,45 +8,27 @@ import { PatentService } from '../../services/patent.service';
 import { Register } from 'src/app/interfaces/register.interface';
 import { formatDate } from '@angular/common';
 import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
+import { OAuthStorage } from 'angular-oauth2-oidc';
+import { request } from 'http';
+import { PrepareService } from '../../services/prepare.service';
 
 @Component({
   selector: 'app-import-patents',
   templateUrl: './import-patents.component.html',
   styleUrls: ['./import-patents.component.scss']
 })
-export class ImportPatentsComponent {
+export class ImportPatentsComponent implements OnInit{
 
   patents: any;
   register: Register = {
-    id: '',
-    user: '',
-    date: undefined
+    userEmail: '',
+    date: undefined,
+    patents: 0
   }
-  identifier = {
-    idtype: "",
-    value: ""
-  }
-
-  affiliation = {
-    identifiers: [],
-    name: ""
-  }
-
-  author = {
-    identifiers: [],
-    name: ""
-  }
-
-
-  affiliations: any[] = [];
-  authors     : any[] = [];
-  identifiers : any[] = [];
-
 
   file: File[] = [];
   table = false;
   dataSource = new MatTableDataSource<Patent>([]);
-  formData = new FormData();
   m = new MessageHandler(this._snackBar);
 
   requiredCSVKyes = [
@@ -62,38 +44,67 @@ export class ImportPatentsComponent {
     "representative figure link"
   ];
 
+  identifier = {
+    idtype: "",
+    value: ""
+  }
+
+  affiliation = {
+    identifiers: [],
+    name: ""
+  }
+
+  author = {
+    identifiers: [],
+    name: ""
+  }
+
+  affiliations: any[] = [];
+  authors     : any[] = [];
+  identifiers : any[] = [];
+
   constructor(
     private patentService: PatentService,
     private _snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private oauthStorage: OAuthStorage,
+    private prepareService: PrepareService
   ) {}
+
+  ngOnInit(){
+  }
 
 
 
   onSelect(event: any) {
     // const file = [...event.addedFiles];
     this.file.push(...event.addedFiles);
+    this.readFile(this.file[0]).then((fileContents: string) => {
+      let patents = null
+      if (this.file[0].type !== "application/json") {
+        const jsonFile = this.csvJson(fileContents);
+        patents = jsonFile;
+        patents.pop();
+        this.file[0] = patents;
+        console.log('file',this.file[0]);
+      } else {
+        this.patents = JSON.parse(fileContents);
+      }
+    });
   }
 
   showData() {
     if (this.file.length === 0) {
       this.m.showMessage(StatusCode.OK, "No hay archivo para mostrar");
     } else {
-      this.readFile(this.file[0]).then((fileContents: string) => {
-        if (this.file[0].type !== "application/json") {
-          const jsonFile = this.csvJson(fileContents);
-          this.patents = jsonFile;
-          this.patents.pop();
-          this.patents = this.getAffiliations(this.patents)
-          console.log(this.patents);
-        } else {
-          this.patents = JSON.parse(fileContents);
-        }
-        this.table = true;
-        this.dataSource.data =
-          this.patents.length > 800 ? this.patents.slice(0, 800) : this.patents;
-          console.log("🚀 ~ file: import-patents.component.ts:130 ~ this.readFile ~ this.dataSource.data", this.dataSource.data)
-      });
+      this.patents = this.file[0];
+      // this.patents = this.getAffiliations(this.patents)
+      console.log('patents',this.patents);
+      this.table = true;
+      this.dataSource.data =
+        this.patents.length > 800 ? this.patents.slice(0, 800) : this.patents;
+        console.log("🚀 ~ file: import-patents.component.ts:130 ~ this.readFile ~ this.dataSource.data", this.dataSource.data)
+
     }
   }
 
@@ -157,38 +168,37 @@ export class ImportPatentsComponent {
         // this.identifiers.push(this.identifier);
         // patents[index].id = this.identifiers;
         if (patents[index].assignee != undefined && patents[index].author!= undefined ) {
-          const affiliations = patents[index].assignee.split(",");
-          const authors = patents[index].author.split(",");
-          for (let i = 0; i < affiliations.length; i++) {
-            this.affiliation.name = affiliations[i];
-            this.affiliations.push(this.affiliation);
-          }
+          this.affiliations = patents[index].assignee.split(",");
+          this.authors = patents[index].author.split(",");
+          // for (let i = 0; i < affiliations.length; i++) {
+          //   this.affiliation.name = affiliations[i];
+          //   this.affiliations.push(this.affiliation);
+          // }
           patents[index].assignee = this.affiliations;
           this.affiliations = [];
-
-          for (let i = 0; i < authors.length; i++) {
-            this.author.name = authors[i];
-            this.authors.push(this.author);
-          }
+          // for (let i = 0; i < authors.length; i++) {
+          //   this.author.name = authors[i];
+          //   this.authors.push(this.author);
+          // }
           patents[index].author = this.authors;
           this.authors = [];
         }
         else if(patents[index].assignee == undefined &&  patents[index].author != undefined){
           patents[index].assignee = [];
-          const authors = patents[index].author.split(",");
-          for (let i = 0; i < authors.length; i++) {
-            this.author.name = authors[i];
-            this.authors.push(this.author);
-          }
+          this.authors = patents[index].author.split(",");
+          // for (let i = 0; i < authors.length; i++) {
+          //   this.author.name = authors[i];
+          //   this.authors.push(this.author);
+          // }
           patents[index].author = this.authors;
           this.authors = [];
         }
         else if(patents[index].assignee != undefined &&  patents[index].author == undefined){
-          const affiliations = patents[index].assignee.split(",");
-          for (let i = 0; i < affiliations.length; i++) {
-            this.affiliation.name = affiliations[i];
-            this.affiliations.push(this.affiliation);
-          }
+          this.affiliations = patents[index].assignee.split(",");
+          // for (let i = 0; i < affiliations.length; i++) {
+          //   this.affiliation.name = affiliations[i];
+          //   this.affiliations.push(this.affiliation);
+          // }
           patents[index].assignee = this.affiliations;
           this.affiliations = [];
           patents[index].author = [];
@@ -205,24 +215,30 @@ export class ImportPatentsComponent {
 
   }
 
-
-
   saveData() {
-    this.register.date = formatDate(new Date(), 'dd-MM-yyyy', 'en-US');
-    console.log(this.register.date);
-    // if (this.file.length === 0) {
-    //   this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
-    // } else {
-    //   this.formData = this.patents
-    //   console.log(this.formData);
+    if (this.file.length === 0) {
+      this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
+    } else {
+      // this.createRegister()
+      const file = new File([JSON.stringify(this.file[0])], 'patents.json', {type: 'application/json'})
+      this.patentService
+        .importPatents(file)
+        .subscribe((response) => {
+          console.log('ok',response);
+        });
+    }
+  }
 
-    //   this.patentService
-    //     .importPatents(this.formData)
-    //     .subscribe((response) => {
-    //       console.log(response);
-    //       // this.formData.delete("peopleFile");
-    //     });
-    // }
+  createRegister(){
+    let request = JSON.parse(this.oauthStorage.getItem("user"));
+    this.register = {
+      userEmail: request.data.userprofile.user.email,
+      date: formatDate(new Date(), 'dd-MM-yyyy', 'en-US'),
+      patents: this.patents.length
+    }
+    console.log(this.register);
+    this.patentService.createRegister(this.register).subscribe(rta=> console.log(rta));
+
   }
 
 }

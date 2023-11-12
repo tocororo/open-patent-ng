@@ -22,22 +22,32 @@ export class AddModalComponent {
     value : ['', Validators.required]
   });
 
-  // affiliation: FormGroup = this._formBuilder.group({
-  //   identifier  : ['', Validators.required],
-  //   name        : ['', Validators.required]
-  // });
-
-
   constructor(private dialagRef: MatDialogRef<AddModalComponent>,
-              private _formBuilder: FormBuilder,) {}
+              private _formBuilder: FormBuilder,
+              @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(){
+    console.log(this.data.identifiers);
+    if(this.data.identifiers){
+      // this.result.value.identifiers = this.data.identifiers
+      this.identifiers = this.data.identifiers;
+      this.result.patchValue({
+        identifiers: [this.identifiers],
+        name: this.data.name
+      })
+    }
   }
 
   addIdentifier(){
     this.identifier.value.value = this.value.value;
     this.identifiers.push(this.identifier.value);
+    this.value.patchValue('')
+    this.identifier.patchValue({
+      idtype: '',
+      value: ''
+    })
     console.log(this.identifiers);
+
   }
 
 

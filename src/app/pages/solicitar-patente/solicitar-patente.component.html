@@ -120,9 +120,6 @@
             </mat-form-field>
           </div>
 
-        </div>
-
-        <div class="second-stepper column-right">
           <div class="classification-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'CLASIFICACION' | translate }}</mat-label>
@@ -140,16 +137,61 @@
                       required>
             </mat-form-field>
           </div>
+
+        </div>
+
+        <div class="second-stepper column-right">
+
+          <div class="author-container">
+            <mat-form-field *ngIf="edit" appearance="outline">
+              <mat-label>Autores</mat-label>
+              <select matNativeControl>
+                <option *ngFor="let author of authors" [value]="author.name" (click)="openModalAu(author)">{{author.name}}</option>
+              </select>
+            </mat-form-field>
+
+            <div class="button author" *ngIf="!edit">
+              <button mat-button (click)="openModalAu()">{{ 'AGREGAR_A' | translate }}</button>
+            </div>
+
+            <div *ngIf="edit" class="button-edit">
+              <button mat-icon-button matPrefix (click)="openModalAu()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+
+
+          <div class="affiliation-container">
+            <mat-form-field *ngIf="edit" appearance="outline" class="affiliaciones">
+              <mat-label>Afiliaciones</mat-label>
+              <select matNativeControl>
+                <option *ngFor="let affiliation of affiliations" [value]="affiliation.name" (click)="openModalAf(affiliation)">{{affiliation.name}}</option>
+              </select>
+            </mat-form-field>
+
+            <div class="button affiliation" *ngIf="!edit">
+              <button mat-button (click)="openModalAf()">{{ 'AGREGAR_O' | translate }}</button>
+            </div>
+
+            <div *ngIf="edit" class="button-edit">
+              <button mat-icon-button matPrefix (click)="openModalAf()">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+
         </div>
       </section>
 
       <div class="button-container">
-        <button class="button-last" mat-button color="primary" matStepperNext (click)="saveSecondForm()">{{ 'SIGUIENTE' | translate }}</button>
+        <button mat-button matStepperPrevious color="primary">{{ 'ATRAS' | translate }}</button>
+        <button mat-button matStepperNext color="primary" (click)="enviarFormulario()">{{ 'ENTREGAR' | translate }}</button>
       </div>
     </form>
   </mat-step>
 
-  <mat-step [stepControl]="thirdFormGroup">
+  <!-- <mat-step [stepControl]="thirdFormGroup">
     <form [formGroup]="thirdFormGroup">
       <section class="third grid-container">
         <form [formGroup]="author" class="column-left">
@@ -172,10 +214,6 @@
               <input  matInput
                       formControlName="nameAuthor"
                       required>
-
-              <!-- <select matNativeControl *ngIf="edit">
-                <option  *ngFor="let author of authors" [value]="author.name">{{author.name}}</option>
-              </select> -->
             </mat-form-field>
           </div>
 
@@ -201,13 +239,14 @@
           <div class="name-affiliation-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'NAME' | translate }}</mat-label>
+              <mat-select>
+                <mat-option>None</mat-option>
+              </mat-select>
               <input  matInput
                       formControlName="nameAffiliation"
                       required>
-              <!-- <select matNativeControl *ngIf="edit">
-                <option *ngFor="let affiliation of affiliations" [value]="affiliation.name">{{affiliation.name}}</option>
-              </select> -->
             </mat-form-field>
+
           </div>
 
           <div class="button affiliation">
@@ -221,7 +260,7 @@
         <button mat-button matStepperNext color="primary" (click)="enviarFormulario()">{{ 'ENTREGAR' | translate }}</button>
       </div>
     </form>
-  </mat-step>
+  </mat-step> -->
 </mat-stepper>
 
 <!-- <form [formGroup]="patentFormGroup">

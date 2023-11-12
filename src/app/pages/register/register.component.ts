@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { PatentService } from '../../services/patent.service';
+import { Register } from '../../interfaces/register.interface';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -26,8 +28,9 @@ export class RegisterComponent implements OnInit{
   constructor(private patentService: PatentService){}
 
   ngOnInit(){
-    // this.patentService.getRegister().subscribe(register => {
-    //   this.register = register;
-    // })
+    this.patentService.getRegister().subscribe(data => {
+      // this.register = register;
+      console.log(data.data.register.data);
+    })
   }
 }

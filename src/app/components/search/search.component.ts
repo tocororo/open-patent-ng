@@ -161,7 +161,7 @@ export class SearchComponent implements OnInit {
 
           this.aggrKeys = [
             { value: this.sr.aggregations.country, key: 'Pais' },
-            { value: this.sr.aggregations.language, key: 'Idioma' },
+            { value: this.sr.aggregations.language, key: 'Lenguaje' },
         ]
         },
 

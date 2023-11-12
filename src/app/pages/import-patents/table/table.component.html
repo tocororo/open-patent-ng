@@ -11,7 +11,7 @@
       <th mat-header-cell *matHeaderCellDef>{{ 'AFILIACIONES' | translate }}</th>
       <td mat-cell *matCellDef="let element">
         <li *ngFor="let affiliation of element.assignee">
-          {{ affiliation | titlecase }}
+          {{ affiliation.name | titlecase }}
         </li>
       </td>
     </ng-container>
@@ -19,8 +19,8 @@
     <ng-container matColumnDef="author">
       <th mat-header-cell *matHeaderCellDef>{{ 'AUTOR' | translate }}</th>
       <td mat-cell *matCellDef="let element">
-        <li *ngFor="let author of element.author.name">
-          {{ author | titlecase }}
+        <li *ngFor="let author of element.author">
+          {{ author.name | titlecase }}
         </li>
       </td>
     </ng-container>
