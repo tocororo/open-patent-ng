@@ -48,14 +48,14 @@ export class PatentService {
     return this._httpAuth.delete<any>(`${this.url}/patents/delete/${id}`);
   }
 
-  importPatents(patents: File) {
-    const formData = new FormData();
-    formData.append('file', patents);
-    console.log(formData.get('file'));
-    console.log(formData);
+  importPatents(patents) {
+    // const formData = new FormData();
+    // formData.set('file', file);
+    // console.log(formData);
 
+    // console.log(formData.get('file'));
 
-    return this._httpAuth.post<any>(`${this.url}patents/import`, formData);
+    return this._httpAuth.post<any>(`${this.url}patents/import`, patents);
   }
 
   createRegister(register){
@@ -64,5 +64,9 @@ export class PatentService {
 
   getRegister() {
     return this._http.get<any>(`${this.url}patents/register`);
+  }
+
+  deleteRegister(id){
+    return this._httpAuth.delete<any>(`${this.url}patents/register/delete/${id}`);
   }
 }

@@ -78,6 +78,9 @@ export class ImportPatentsComponent implements OnInit{
 
   onSelect(event: any) {
     // const file = [...event.addedFiles];
+    if (this.file.length > 0) {
+        this.m.showMessage(StatusCode.OK, "Solo se puede seleccionar un archivo");
+    }else {
     this.file.push(...event.addedFiles);
     this.readFile(this.file[0]).then((fileContents: string) => {
       let patents = null
@@ -86,18 +89,22 @@ export class ImportPatentsComponent implements OnInit{
         patents = jsonFile;
         patents.pop();
         this.file[0] = patents;
-        console.log('file',this.file[0]);
       } else {
         this.patents = JSON.parse(fileContents);
+        patents = fileContents;
+        this.file[0] = patents;
+        console.log(this.file[0]);
+
+        // this.patents = JSON.parse(fileContents);
       }
     });
+  }
   }
 
   showData() {
     if (this.file.length === 0) {
       this.m.showMessage(StatusCode.OK, "No hay archivo para mostrar");
     } else {
-      this.patents = this.file[0];
       // this.patents = this.getAffiliations(this.patents)
       console.log('patents',this.patents);
       this.table = true;
@@ -219,10 +226,11 @@ export class ImportPatentsComponent implements OnInit{
     if (this.file.length === 0) {
       this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
     } else {
-      // this.createRegister()
-      const file = new File([JSON.stringify(this.file[0])], 'patents.json', {type: 'application/json'})
+      this.createRegister()
+      // const file = new File([this.file[0]], 'patentes.json')
+      console.log(this.patents.patents);
       this.patentService
-        .importPatents(file)
+        .importPatents(this.patents.patents)
         .subscribe((response) => {
           console.log('ok',response);
         });
@@ -233,8 +241,7 @@ export class ImportPatentsComponent implements OnInit{
     let request = JSON.parse(this.oauthStorage.getItem("user"));
     this.register = {
       userEmail: request.data.userprofile.user.email,
-      date: formatDate(new Date(), 'dd-MM-yyyy', 'en-US'),
-      patents: this.patents.length
+      patents: this.patents.patents.length
     }
     console.log(this.register);
     this.patentService.createRegister(this.register).subscribe(rta=> console.log(rta));

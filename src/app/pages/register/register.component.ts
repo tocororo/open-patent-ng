@@ -12,9 +12,9 @@ import { formatDate } from '@angular/common';
 })
 export class RegisterComponent implements OnInit{
 
-  displayedColumns: string[] = ['numero', 'autor', 'fecha'];
+  displayedColumns: string[] = ['autor', 'fecha', 'cantidad', 'delete'];
   dataSource = new MatTableDataSource<any>();
-  register: any = [];
+  register: Register[] = [];
 
   private paginator: MatPaginator;
 
@@ -30,7 +30,19 @@ export class RegisterComponent implements OnInit{
   ngOnInit(){
     this.patentService.getRegister().subscribe(data => {
       // this.register = register;
-      console.log(data.data.register.data);
+      this.register = data.data.register.data;
+      console.log(this.register);
+      this.dataSource.data = this.register;
+    })
+  }
+
+  eliminar(id){
+    this.patentService.deleteRegister(id).subscribe(rta => {
+        this.register = this.register.filter(register =>
+          register.id != id
+        );
+        this.dataSource.data = this.register;
+      console.log(rta);
     })
   }
 }
