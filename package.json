@@ -49,6 +49,7 @@
     "pspdfkit": "^2023.3.5",
     "rxjs": "~6.6.7",
     "simple-pdf-viewer": "^2.0.3",
+    "sweetalert2": "^11.10.0",
     "toco-lib": "0.0.7",
     "tslib": "^2.0.0",
     "util": "^0.12.5",

@@ -1,93 +1,100 @@
-<div class="grid-container" *ngIf="patent">
+<section  *ngIf="patent">
+  <section>
+    <img src="../../../assets/images/photo-of-people-having-meeting.jpg" alt="">
+  </section>
 
-    <div class="column-left">
-      <div class="row" fxLayout.xs="column">
-        <span class="title">{{ 'TITULO' | translate }}:</span>
-        <span class="data-elements">{{patent.metadata.title}}</span>
+
+  <div class="grid-container">
+      <div class="column-left">
+        <div class="row" fxLayout.xs="column">
+          <span class="title">{{ 'TITULO' | translate }}:</span>
+          <span class="data-elements">{{patent.metadata.title}}</span>
+        </div>
+
+        <div class="row expansion" fxLayout.xs="column" *ngIf="patent.metadata.authors && patent.metadata.authors.length > 0">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span class="title">{{ 'AUTOR' | translate }}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-list role="list" *ngFor="let author of patent.metadata.authors">
+                <mat-list-item role="listitem">
+                  <span  style="opacity: 0.6; margin-right: 10px">{{author.name}}</span>
+                  <span  class="data-elements"></span>
+                </mat-list-item>
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <div class="row expansion" fxLayout.xs="column" *ngIf="patent.metadata.affiliations && patent.metadata.affiliations.length > 0">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span class="title">{{ 'AFILIACIONES' | translate }}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-list role="list" *ngFor="let affiliation of patent.metadata.affiliations">
+                <mat-list-item role="listitem">
+                  <span  style="opacity: 0.6; margin-right: 10px">{{affiliation.name}}</span>
+                  <span  class="data-elements"></span>
+                </mat-list-item>
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <!-- <div class="row" fxLayout.xs="column">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <span class="title">{{ 'DOCUMENTOS' | translate }}</span>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-list role="list" *ngFor="let document of documents">
+                <mat-list-item role="listitem">
+                  <span  style="opacity: 0.6; margin-right: 10px"></span>
+                  <span  class="data-elements" style="cursor: pointer" (click)="showPdf()">{{document}}</span>
+
+                </mat-list-item>
+              </mat-list>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div> -->
+
+        <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.language">
+          <span class="title">{{ 'IDIOMA' | translate }}:</span>
+          <span class="data-elements">{{patent.metadata.language}}</span>
+        </div>
+
+        <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.country">
+          <span class="title">{{ 'PAIS' | translate }}:</span>
+          <span class="data-elements">{{patent.metadata.country.name}}</span>
+        </div>
+
+        <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.link">
+          <span class="title">{{ 'LINK' | translate }}:</span>
+          <span class="data-elements">{{patent.metadata.link}}</span>
+        </div>
+
+        <div class="row" fxLayout.xs="column"  *ngIf="patent.metadata.classification">
+          <span class="title">{{ 'CLASIFICACION' | translate }}:</span>
+          <span class="data-elements">{{patent.metadata.classification}}</span>
+        </div>
+
       </div>
 
-      <div class="row expansion" fxLayout.xs="column" *ngIf="patent.metadata.authors && patent.metadata.authors.length > 0">
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <span class="title">{{ 'AUTOR' | translate }}</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-list role="list" *ngFor="let author of patent.metadata.authors">
-              <mat-list-item role="listitem">
-                <span  style="opacity: 0.6; margin-right: 10px">{{author.name}}</span>
-                <span  class="data-elements"></span>
-              </mat-list-item>
-            </mat-list>
-          </mat-expansion-panel>
-        </mat-accordion>
+      <div class="column-right" *ngIf="patent.metadata.summary">
+        <div class="row" fxLayout.xs="column">
+          <span class="title">{{ 'RESUMEN' | translate }}:</span>
+          <span class="data-elements">{{patent.metadata.summary}}</span>
+        </div>
       </div>
 
-      <div class="row expansion" fxLayout.xs="column" *ngIf="patent.metadata.affiliations && patent.metadata.affiliations.length > 0">
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <span class="title">{{ 'AFILIACIONES' | translate }}</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-list role="list" *ngFor="let affiliation of patent.metadata.affiliations">
-              <mat-list-item role="listitem">
-                <span  style="opacity: 0.6; margin-right: 10px">{{affiliation.name}}</span>
-                <span  class="data-elements"></span>
-              </mat-list-item>
-            </mat-list>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div>
+  </div>
+</section>
 
-      <!-- <div class="row" fxLayout.xs="column">
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <span class="title">{{ 'DOCUMENTOS' | translate }}</span>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-list role="list" *ngFor="let document of documents">
-              <mat-list-item role="listitem">
-                <span  style="opacity: 0.6; margin-right: 10px"></span>
-                <span  class="data-elements" style="cursor: pointer" (click)="showPdf()">{{document}}</span>
-
-              </mat-list-item>
-            </mat-list>
-          </mat-expansion-panel>
-        </mat-accordion>
-      </div> -->
-
-      <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.language">
-        <span class="title">{{ 'IDIOMA' | translate }}:</span>
-        <span class="data-elements">{{patent.metadata.language}}</span>
-      </div>
-
-      <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.country">
-        <span class="title">{{ 'PAIS' | translate }}:</span>
-        <span class="data-elements">{{patent.metadata.country.name}}</span>
-      </div>
-
-      <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.link">
-        <span class="title">{{ 'LINK' | translate }}:</span>
-        <span class="data-elements">{{patent.metadata.link}}</span>
-      </div>
-
-      <div class="row" fxLayout.xs="column"  *ngIf="patent.metadata.classification">
-        <span class="title">{{ 'CLASIFICACION' | translate }}:</span>
-        <span class="data-elements">{{patent.metadata.classification}}</span>
-      </div>
-
-    </div>
-
-    <div class="column-right" *ngIf="patent.metadata.summary">
-      <div class="row" fxLayout.xs="column">
-        <span class="title">{{ 'RESUMEN' | translate }}:</span>
-        <span class="data-elements">{{patent.metadata.summary}}</span>
-      </div>
-    </div>
-
-</div>

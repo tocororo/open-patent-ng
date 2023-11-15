@@ -9,17 +9,17 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class AddModalComponent {
 
-  value     : FormControl = new FormControl("", Validators.required);
+  value     : FormControl = new FormControl("");
   identifiers: any[] = [];
 
   result: FormGroup = this._formBuilder.group({
-    identifiers : [this.identifiers, Validators.required],
-    name        : ['', Validators.required]
+    identifiers : [this.identifiers],
+    name        : ['']
   });
 
   identifier: FormGroup = this._formBuilder.group({
     idtype: [''],
-    value : ['', Validators.required]
+    value : ['']
   });
 
   constructor(private dialagRef: MatDialogRef<AddModalComponent>,

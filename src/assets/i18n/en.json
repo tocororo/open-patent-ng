@@ -81,6 +81,8 @@
     "SMOODLE": "S-Moodle",
     "IDENTIFICADORES": "Identifiers",
     "TITULO": "Title",
+    "FECHA": "Date",
+    "CANTIDAD": "Amount",
     "AUTOR": "Author",
     "AFILIACIONES": "Affiliations",
     "REIVINDICACIONES": "Claims",
@@ -98,6 +100,8 @@
     "NAME": "Name",
     "SIGUIENTE": "Next",
     "ATRAS": "Back",
+    "MOSTRAR": "Show",
+    "NO_REGISTRO": "There are no import registration",
 
 
 

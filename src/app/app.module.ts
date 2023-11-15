@@ -74,6 +74,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AddModalComponent } from './components/add-modal/add-modal.component';
 import { ExportPdfExcelComponent } from './components/export-pdf-excel/export-pdf-excel.component';
+import { HelpCComponent } from './pages/help-c/help-c.component';
 
 export function storageFactory(): OAuthStorage {
   return localStorage;
@@ -113,6 +114,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
         PageNotFoundComponent,
         AddModalComponent,
         ExportPdfExcelComponent,
+        HelpCComponent,
     ],
     imports: [
         BrowserModule,

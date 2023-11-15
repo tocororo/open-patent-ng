@@ -1,4 +1,4 @@
-import { Entity, Role } from 'toco-lib';
+import { Entity, Identifier, Role } from 'toco-lib';
 
 
 export class Patent extends Entity{

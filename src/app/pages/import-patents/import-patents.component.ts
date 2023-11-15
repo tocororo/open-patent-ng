@@ -10,7 +10,8 @@ import { formatDate } from '@angular/common';
 import { EventListenerFocusTrapInertStrategy } from '@angular/cdk/a11y';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { request } from 'http';
-import { PrepareService } from '../../services/prepare.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-import-patents',
@@ -31,18 +32,6 @@ export class ImportPatentsComponent implements OnInit{
   dataSource = new MatTableDataSource<Patent>([]);
   m = new MessageHandler(this._snackBar);
 
-  requiredCSVKyes = [
-    "identifiers",
-    "title",
-    "assignee",
-    "author",
-    "priority date",
-    "filing/creation date",
-    "publication date",
-    "grant date",
-    "result link",
-    "representative figure link"
-  ];
 
   identifier = {
     idtype: "",
@@ -68,7 +57,7 @@ export class ImportPatentsComponent implements OnInit{
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
     private oauthStorage: OAuthStorage,
-    private prepareService: PrepareService
+    private _router: Router,
   ) {}
 
   ngOnInit(){
@@ -86,6 +75,9 @@ export class ImportPatentsComponent implements OnInit{
       let patents = null
       if (this.file[0].type !== "application/json") {
         const jsonFile = this.csvJson(fileContents);
+        this.patents = jsonFile;
+        this.patents = this.getAffiliations(this.patents);
+        this.patents = this.patents.slice(0, 2);
         patents = jsonFile;
         patents.pop();
         this.file[0] = patents;
@@ -103,13 +95,24 @@ export class ImportPatentsComponent implements OnInit{
 
   showData() {
     if (this.file.length === 0) {
-      this.m.showMessage(StatusCode.OK, "No hay archivo para mostrar");
+      Swal.fire({
+        title: "No hay archivo para mostrar",
+        width: 400,
+        confirmButtonText: 'De acuerdo',
+        confirmButtonColor: '#006128',
+        buttonsStyling: true,
+        allowEscapeKey: true,
+        focusConfirm: false,
+        returnFocus: false,
+        icon: "error"
+      });
+      // this.m.showMessage(StatusCode.OK, "No hay archivo para mostrar");
     } else {
       // this.patents = this.getAffiliations(this.patents)
       console.log('patents',this.patents);
       this.table = true;
       this.dataSource.data =
-        this.patents.length > 800 ? this.patents.slice(0, 800) : this.patents;
+        this.patents.length > 800 ? this.patents.slice(0, 800) : this.patents.patents;
         console.log("🚀 ~ file: import-patents.component.ts:130 ~ this.readFile ~ this.dataSource.data", this.dataSource.data)
 
     }
@@ -171,41 +174,22 @@ export class ImportPatentsComponent implements OnInit{
   getAffiliations(patents){
     try {
       for (let index = 0; index < patents.length; index++) {
-        // this.identifier.value = patents[index].id;
-        // this.identifiers.push(this.identifier);
-        // patents[index].id = this.identifiers;
         if (patents[index].assignee != undefined && patents[index].author!= undefined ) {
           this.affiliations = patents[index].assignee.split(",");
           this.authors = patents[index].author.split(",");
-          // for (let i = 0; i < affiliations.length; i++) {
-          //   this.affiliation.name = affiliations[i];
-          //   this.affiliations.push(this.affiliation);
-          // }
           patents[index].assignee = this.affiliations;
           this.affiliations = [];
-          // for (let i = 0; i < authors.length; i++) {
-          //   this.author.name = authors[i];
-          //   this.authors.push(this.author);
-          // }
           patents[index].author = this.authors;
           this.authors = [];
         }
         else if(patents[index].assignee == undefined &&  patents[index].author != undefined){
           patents[index].assignee = [];
           this.authors = patents[index].author.split(",");
-          // for (let i = 0; i < authors.length; i++) {
-          //   this.author.name = authors[i];
-          //   this.authors.push(this.author);
-          // }
           patents[index].author = this.authors;
           this.authors = [];
         }
         else if(patents[index].assignee != undefined &&  patents[index].author == undefined){
           this.affiliations = patents[index].assignee.split(",");
-          // for (let i = 0; i < affiliations.length; i++) {
-          //   this.affiliation.name = affiliations[i];
-          //   this.affiliations.push(this.affiliation);
-          // }
           patents[index].assignee = this.affiliations;
           this.affiliations = [];
           patents[index].author = [];
@@ -224,15 +208,30 @@ export class ImportPatentsComponent implements OnInit{
 
   saveData() {
     if (this.file.length === 0) {
+      Swal.fire({
+        title: "Error!",
+        text: "No hay archivo para guardar",
+        icon: "error"
+      });
       this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
     } else {
-      this.createRegister()
       // const file = new File([this.file[0]], 'patentes.json')
-      console.log(this.patents.patents);
+      console.log(this.patents);
+      if(this.patents.patents != undefined){
+        this.patents = this.patents.patents
+      }
       this.patentService
-        .importPatents(this.patents.patents)
+        .importPatents(this.patents)
         .subscribe((response) => {
-          console.log('ok',response);
+          console.log(response);
+          try {
+            if (response.SUCCES) {
+              this.createRegister();
+              this.m.showMessage(StatusCode.OK, "Patentes creadas exitosamente");
+            }
+          } catch (error) {
+            this.m.showMessage(StatusCode.serverError, "Ocurrio algun error. Asegurese de que los campos del archivo sean correctos.");
+          }
         });
     }
   }

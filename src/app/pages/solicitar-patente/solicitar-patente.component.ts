@@ -11,6 +11,8 @@ import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from '../../services/patent.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddModalComponent } from 'src/app/components/add-modal/add-modal.component';
+import { allowedURLS } from '../../../environments/environment.prod';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-solicitar-patente',
@@ -26,7 +28,7 @@ export class SolicitarPatenteComponent implements OnInit{
   claims         : FormControl = new FormControl("");
   drawing        : FormControl = new FormControl("");
   value          : FormControl = new FormControl("", Validators.required);
-  name           : FormControl = new FormControl("", Validators.required);
+  name           : FormControl = new FormControl("");
   nameAffiliation: FormControl = new FormControl("", Validators.required);
   edit: boolean = false;
 
@@ -52,11 +54,11 @@ export class SolicitarPatenteComponent implements OnInit{
 
 
   firstFormGroup = this._formBuilder.group({
-    identifier  : [this.identifiers],
+    identifier  : this.identifiers,
     title       : ['', Validators.required],
     country     : [this.country.value],
     language    : [''],
-    summary     : ['', Validators.required],
+    summary     : [''],
   });
 
   secondFormGroup = this._formBuilder.group({
@@ -81,7 +83,8 @@ export class SolicitarPatenteComponent implements OnInit{
               private _snackBar: MatSnackBar,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog,) {
+              public dialog: MatDialog,
+              private _location: Location) {
   }
 
   ngOnInit(){
@@ -91,18 +94,21 @@ export class SolicitarPatenteComponent implements OnInit{
         .subscribe((data) => {
           /*Rellenando todos los campos del formulario con los valores enviados de la
           patente creada previamente para editar*/
+          this.edit = true;
           this.id = data.metadata.id;
           this.identifiers = data.metadata.identifiers;
-          this.country.value.name = data.metadata.country.name;
-          this.name.patchValue(data.metadata.country.name)
-          this.edit = true;
+          if (data.metadata.country) {
+            this.country.value.name = data.metadata.country.name;
+            this.name.patchValue(data.metadata.country.name)
+          }
           this.firstFormGroup.patchValue({
+            identifier: this.identifiers,
             title: data.metadata.title,
             country: data.metadata.country,
             language: data.metadata.language,
             summary: data.metadata.summary
           })
-          this.identifiers= [];
+          // this.identifiers= [];
           this.authors = data.metadata.authors;
           this.affiliations = data.metadata.affiliations;
 
@@ -163,6 +169,8 @@ export class SolicitarPatenteComponent implements OnInit{
 
   saveFirstForm(){
     this.country.value.name = this.name.value;
+    console.log(this.country.value);
+    this.firstFormGroup.value.country = this.country.value;
     this.patentFormGroup.value.identifiers = this.identifiers;
     this.patentFormGroup.value.title = this.firstFormGroup.value.title;
     this.patentFormGroup.value.country = this.firstFormGroup.value.country;
@@ -176,22 +184,29 @@ export class SolicitarPatenteComponent implements OnInit{
       this.patentService.editPatents(this.patentFormGroup.value, this.id).subscribe(dta => {
         try {
           this.m.showMessage(StatusCode.OK, "Patente editada exitosamente");
-          this.router.navigate(['/']);
+          this._location.back();
         } catch (error) {
           console.log(error);
         }
       })
     }
     else{
-      this.patentService.createPatents(this.patentFormGroup.value).subscribe(dta =>{
-        try {
-          this.m.showMessage(StatusCode.OK, "Patente creada exitosamente");
-          this.router.navigate(['/']);
+      if (this.patentFormGroup.valid && this.firstFormGroup.valid) {
+        this.patentService.createPatents(this.patentFormGroup.value).subscribe(dta =>{
+          try {
+            this.m.showMessage(StatusCode.OK, "Patente creada exitosamente");
+            this.router.navigate(['/']);
 
-        } catch (error) {
-          console.log(error);
-        }
-      })
+          } catch (error) {
+            console.log(error);
+          }
+        })
+      }
+
+      else{
+        this.m.showMessage(StatusCode.notFound, "Rellene todos los campos requeridos");
+      }
+
     }
   }
 

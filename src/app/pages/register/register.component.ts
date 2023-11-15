@@ -31,6 +31,7 @@ export class RegisterComponent implements OnInit{
     this.patentService.getRegister().subscribe(data => {
       // this.register = register;
       this.register = data.data.register.data;
+
       console.log(this.register);
       this.dataSource.data = this.register;
     })

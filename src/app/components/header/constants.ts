@@ -52,23 +52,17 @@ export const menuHelp = [
     useRouterLink : true,
     icon: "info"
   },
-  {
-    nameTranslate : "PRIVACIDAD",
-    href : "/help/policy",
-    useRouterLink : true,
-    icon: "security"
-  },
+  // {
+  //   nameTranslate : "PRIVACIDAD",
+  //   href : "/help/policy",
+  //   useRouterLink : true,
+  //   icon: "security"
+  // },
   {
     nameTranslate : "CONTACTOS",
     href : "/help/contact",
     useRouterLink : true,
     icon: "contacts"
-  },
-  {
-    nameTranslate : "APRENDE CREAR PATENTES ABIERTAS",
-    href : "/help/learn",
-    useRouterLink : true,
-    icon: "edit square"
   },
 ];
 

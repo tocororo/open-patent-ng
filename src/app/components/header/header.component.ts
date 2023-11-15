@@ -136,40 +136,40 @@ export class HeaderComponent implements OnInit {
     ];
 
     this._menuUser = this.menuUser || [
-      {
-        nameTranslate : "ACCOUNT_SETTINGS",
-        icon: "account_circle",
-        href: `${ this.sceibaHost }account/settings/profile/`,
-        useRouterLink : false,
-        target: "_blank"
-      },
-      {
-        nameTranslate : "PERFIL_USUARIO",
-        icon: "person_outline",
-        href: `/person/${this.user && this.user.id}`,
-        useRouterLink: true,
-      },
-      {
-        nameTranslate : "CAMBIAR_CONTRASEÑA",
-        icon: "vpn_key",
-        href: `${ this.sceibaHost }account/settings/password/`,
-        useRouterLink : false,
-        target: "_blank"
-      },
-      {
-        nameTranslate : "SEGURIDAD",
-        icon: "security",
-        href: `${ this.sceibaHost }account/settings/security/`,
-        useRouterLink : false,
-        target: "_blank"
-      },
-      {
-        nameTranslate : "APLICACIONES",
-        icon: "settings_applications",
-        href: `${ this.sceibaHost }account/settings/applications/`,
-        useRouterLink : false,
-        target: "_blank"
-      },
+      // {
+      //   nameTranslate : "ACCOUNT_SETTINGS",
+      //   icon: "account_circle",
+      //   href: `${ this.sceibaHost }account/settings/profile/`,
+      //   useRouterLink : false,
+      //   target: "_blank"
+      // },
+      // {
+      //   nameTranslate : "PERFIL_USUARIO",
+      //   icon: "person_outline",
+      //   href: `/person/${this.user && this.user.id}`,
+      //   useRouterLink: true,
+      // },
+      // {
+      //   nameTranslate : "CAMBIAR_CONTRASEÑA",
+      //   icon: "vpn_key",
+      //   href: `https://cuba-iroko.sceiba.org/account/settings/password/`,
+      //   useRouterLink : false,
+      //   target: "_blank"
+      // },
+      // {
+      //   nameTranslate : "SEGURIDAD",
+      //   icon: "security",
+      //   href: `${ this.sceibaHost }account/settings/security/`,
+      //   useRouterLink : false,
+      //   target: "_blank"
+      // },
+      // {
+      //   nameTranslate : "APLICACIONES",
+      //   icon: "settings_applications",
+      //   href: `${ this.sceibaHost }account/settings/applications/`,
+      //   useRouterLink : false,
+      //   target: "_blank"
+      // },
       {
         nameTranslate : "SALIR",
         icon: "exit_to_app",

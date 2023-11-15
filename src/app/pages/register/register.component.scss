@@ -1,14 +1,15 @@
-h2{
+h3{
   text-align: center;
 }
 div{
   margin-top: 50px;
-  margin-left: 15%;
+  justify-content: center;
+  margin-left: 10%;
   margin-bottom: 50px;
-  width: 70%;
+  width: 80%;
 }
 
-@media screen and (max-width: 966px) {
+@media screen and (max-width: 1000px) {
   div{
     margin-left: 5%;
     width: 90%;
@@ -17,4 +18,25 @@ div{
       width: 100%;
     }
   }
+}
+
+@media screen and (max-width: 812px) {
+  div{
+    margin-left: 5px;
+    width: 98%;
+
+    table{
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 746px) {
+  // div{
+  //   width: 98%;
+
+  //   table{
+  //     width: 100%;
+  //   }
+  // }
 }

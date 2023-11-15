@@ -16,6 +16,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ContactComponent } from './contact/contact.component';
 import { AdminPermissionService, CuratorPermissionService } from './permission.service';
 import { UserService } from './org.service';
+import { HelpCComponent } from './pages/help-c/help-c.component';
 
 const routes: Routes = [
 	// {
@@ -54,33 +55,31 @@ const routes: Routes = [
         component: SolicitarPatenteComponent,
         canActivate: [CuratorPermissionService]
       },
+
       {
-        path: 'detail',
-        component: OpenPatentDetailComponent
+        path: 'help/about',
+        component: HelpCComponent
       },
       {
-        path: 'patent/:id',
-        component: OpenPatentDetailComponent
+        path: 'help/contact',
+        component: ContactComponent
       },
-      // {
-      //   path: 'help/contact',
-      //   component: ContactComponent
-      // },
     ],
   },
-  {
-    path: 'profile',
-    component: ProfileLayoutComponent,
-    // resolve: {
-    //   'person': PeopleActiveResolverService
-    // },
-    children: [
-      {
-        path: ':id',
-        component: ProfileComponent,
-        // data: { layout: Layouts.People },
+  // {
+  //   path: 'detail',
+  //   component: ProfileLayoutComponent,
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: OpenPatentDetailComponent,
 
-      }]
+  //     }]
+  // },
+
+  {
+    path: 'patent/:id',
+    component: OpenPatentDetailComponent
   },
 
 ];

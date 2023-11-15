@@ -1,21 +1,21 @@
-<h2>Registro de importaciones</h2>
+<h3>{{'REGISTRO' | translate}}</h3>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource"  *ngIf="register.length != 0; else templateNotInfo">
 
     <ng-container matColumnDef="autor">
-      <th mat-header-cell *matHeaderCellDef> Autor </th>
-      <td mat-cell *matCellDef="let element"> {{element.userEmail}} </td>
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;">{{'AUTOR' | translate}}</th>
+      <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.userEmail}} </td>
     </ng-container>
 
 
     <ng-container matColumnDef="fecha">
-      <th mat-header-cell *matHeaderCellDef> Fecha </th>
-      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;">{{'FECHA' | translate}}</th>
+      <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.date}} </td>
     </ng-container>
 
     <ng-container matColumnDef="cantidad">
-      <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-      <td mat-cell *matCellDef="let element"> {{element.patents}} </td>
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;">{{'CANTIDAD' | translate}}</th>
+      <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.patents}} </td>
     </ng-container>
 
     <ng-container matColumnDef="delete">
@@ -42,7 +42,7 @@
 <ng-template #templateNotInfo>
   <mat-card>
     <mat-card-content>
-      <h3 style="text-align: center;">No hay registro de importaciones</h3>
+      <h3 style="text-align: center;">{{'NO_REGISTRO' | translate}}</h3>
     </mat-card-content>
   </mat-card>
 </ng-template>
