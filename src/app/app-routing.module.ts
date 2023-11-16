@@ -35,6 +35,10 @@ const routes: Routes = [
         // data: { layout: Layouts.Main },
       },
       {
+        path: 'patent/:id',
+        component: OpenPatentDetailComponent
+      },
+      {
         path: 'import',
         component: ImportPatentsComponent,
         canActivate: [CuratorPermissionService]
@@ -64,22 +68,11 @@ const routes: Routes = [
         path: 'help/contact',
         component: ContactComponent
       },
+      {
+        path: '**',
+        redirectTo: ''
+      },
     ],
-  },
-  // {
-  //   path: 'detail',
-  //   component: ProfileLayoutComponent,
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: OpenPatentDetailComponent,
-
-  //     }]
-  // },
-
-  {
-    path: 'patent/:id',
-    component: OpenPatentDetailComponent
   },
 
 ];

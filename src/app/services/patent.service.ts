@@ -39,8 +39,8 @@ export class PatentService {
   }
 
   editPatents(formData, id: string) {
-    console.log('id',id);
-    console.log(formData);
+    console.log('id', id);
+    console.log('editar',formData);
     return this._httpAuth.post(`${this.url}/patents/${id}/edit`, formData);
   }
 
@@ -54,7 +54,7 @@ export class PatentService {
     // console.log(formData);
 
     // console.log(formData.get('file'));
-
+    console.log('patents',patents);
     return this._httpAuth.post<any>(`${this.url}patents/import`, patents);
   }
 

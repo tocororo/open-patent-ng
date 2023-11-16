@@ -96,14 +96,11 @@ export class ImportPatentsComponent implements OnInit{
   showData() {
     if (this.file.length === 0) {
       Swal.fire({
-        title: "No hay archivo para mostrar",
+        html: `<h2>No hay archivo para mostrar</h2>`,
         width: 400,
-        confirmButtonText: 'De acuerdo',
-        confirmButtonColor: '#006128',
-        buttonsStyling: true,
+        showConfirmButton: false,
+        timer: 1500,
         allowEscapeKey: true,
-        focusConfirm: false,
-        returnFocus: false,
         icon: "error"
       });
       // this.m.showMessage(StatusCode.OK, "No hay archivo para mostrar");
@@ -209,11 +206,13 @@ export class ImportPatentsComponent implements OnInit{
   saveData() {
     if (this.file.length === 0) {
       Swal.fire({
-        title: "Error!",
-        text: "No hay archivo para guardar",
+        html: `<h2>No hay archivo para guardar</h2>`,
+        width: 400,
+        showConfirmButton: false,
+        timer: 1500,
+        allowEscapeKey: true,
         icon: "error"
       });
-      this.m.showMessage(StatusCode.OK, "No hay archivo para guardar");
     } else {
       // const file = new File([this.file[0]], 'patentes.json')
       console.log(this.patents);
@@ -223,11 +222,19 @@ export class ImportPatentsComponent implements OnInit{
       this.patentService
         .importPatents(this.patents)
         .subscribe((response) => {
+          this.createRegister();
           console.log(response);
           try {
-            if (response.SUCCES) {
-              this.createRegister();
-              this.m.showMessage(StatusCode.OK, "Patentes creadas exitosamente");
+            if (response) {
+
+              Swal.fire({
+                html: `<h2>Patentes creadas exitosamente</h2>`,
+                width: 400,
+                showConfirmButton: false,
+                timer: 1500,
+                allowEscapeKey: true,
+                icon: "success"
+              });
             }
           } catch (error) {
             this.m.showMessage(StatusCode.serverError, "Ocurrio algun error. Asegurese de que los campos del archivo sean correctos.");
@@ -238,9 +245,11 @@ export class ImportPatentsComponent implements OnInit{
 
   createRegister(){
     let request = JSON.parse(this.oauthStorage.getItem("user"));
+    let date = new Date();
     this.register = {
       userEmail: request.data.userprofile.user.email,
-      patents: this.patents.patents.length
+      patents: this.patents.length,
+      date: date
     }
     console.log(this.register);
     this.patentService.createRegister(this.register).subscribe(rta=> console.log(rta));

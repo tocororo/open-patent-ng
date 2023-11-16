@@ -7,6 +7,7 @@ import { Patent } from '../../interfaces/patent.entity';
 import { MatDialog } from '@angular/material/dialog';
 import { PdfViewerModalComponent } from './pdf-viewer-modal/pdf-viewer-modal.component';
 import { Hit, Links } from 'toco-lib';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -18,7 +19,10 @@ export class OpenPatentDetailComponent implements OnInit{
 
   @ViewChild('content') popupview !: ElementRef;
 
+
   patent!: Hit<Patent>
+  displayedColumns: string[] = ['type', 'value'];
+  dataSource = new MatTableDataSource<any>();
 
   documents = [
     "Documento1",
@@ -40,6 +44,7 @@ export class OpenPatentDetailComponent implements OnInit{
       .subscribe( patent =>  {
         console.log(patent);
         this.patent = patent;
+        this.dataSource.data = this.patent.metadata.identifiers;
       });
   }
 

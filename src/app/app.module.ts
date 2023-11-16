@@ -75,7 +75,6 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AddModalComponent } from './components/add-modal/add-modal.component';
 import { ExportPdfExcelComponent } from './components/export-pdf-excel/export-pdf-excel.component';
 import { HelpCComponent } from './pages/help-c/help-c.component';
-
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }

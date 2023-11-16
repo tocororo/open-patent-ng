@@ -1,10 +1,89 @@
-<section  *ngIf="patent">
-  <section>
+<section *ngIf="patent">
+  <!-- <section>
     <img src="../../../assets/images/photo-of-people-having-meeting.jpg" alt="">
-  </section>
+  </section> -->
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{patent.metadata.title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="identifiers">
+        <h4>{{ 'IDENTIFICADORES' | translate }}:</h4>
+        <table mat-table>
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Tipo</th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.idtype}} </td>
+
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Valor</th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element.value}} </td>
+
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+      <div class="authors" *ngIf="patent.metadata.authors && patent.metadata.authors.length > 0">
+        <h4>{{ 'AUTOR' | translate }}:</h4>
+        <div class="chips">
+          <mat-chip color="primary" disabled *ngFor="let author of patent.metadata.authors">{{author.name}}</mat-chip>
+        </div>
+      </div>
+
+      <div class="affiliations" *ngIf="patent.metadata.affiliations && patent.metadata.affiliations.length > 0">
+        <h4>Organizaciones:</h4>
+        <div class="chips">
+          <mat-chip color="primary" disabled *ngFor="let aff of patent.metadata.affiliations">{{aff.name}}</mat-chip>
+        </div>
+      </div>
+
+      <div class="summary" *ngIf="patent.metadata.summary">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h4 class="title">{{ 'RESUMEN' | translate }}:</h4>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{patent.metadata.summary}}</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="flex">
+        <div class="language" *ngIf="patent.metadata.language">
+          <h4>{{ 'IDIOMA_P' | translate }}:</h4>
+          <mat-chip color="primary" disabled>{{patent.metadata.language}}</mat-chip>
+        </div>
+
+        <div class="country" *ngIf="patent.metadata.country">
+          <h4>{{ 'PAIS' | translate }}:</h4>
+          <mat-chip color="primary" disabled >{{patent.metadata.country.name}}</mat-chip>
+        </div>
+
+      </div>
+
+      <div class="country" *ngIf="patent.metadata.classification">
+        <h4>{{ 'CLASIFICACION' | translate }}:</h4>
+        <mat-chip color="primary" disabled >{{patent.metadata.classification}}</mat-chip>
+      </div>
+
+      <div class="country" *ngIf="patent.metadata.link">
+        <h4>{{ 'LINK' | translate }}:</h4>
+        <mat-chip color="primary" disabled >{{patent.metadata.link}}</mat-chip>
+      </div>
 
 
-  <div class="grid-container">
+
+    </mat-card-content>
+  </mat-card>
+
+
+
+  <!-- <div class="grid-container">
       <div class="column-left">
         <div class="row" fxLayout.xs="column">
           <span class="title">{{ 'TITULO' | translate }}:</span>
@@ -47,24 +126,6 @@
           </mat-accordion>
         </div>
 
-        <!-- <div class="row" fxLayout.xs="column">
-          <mat-accordion>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <span class="title">{{ 'DOCUMENTOS' | translate }}</span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <mat-list role="list" *ngFor="let document of documents">
-                <mat-list-item role="listitem">
-                  <span  style="opacity: 0.6; margin-right: 10px"></span>
-                  <span  class="data-elements" style="cursor: pointer" (click)="showPdf()">{{document}}</span>
-
-                </mat-list-item>
-              </mat-list>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </div> -->
 
         <div class="row" fxLayout.xs="column" *ngIf="patent.metadata.language">
           <span class="title">{{ 'IDIOMA' | translate }}:</span>
@@ -95,6 +156,6 @@
         </div>
       </div>
 
-  </div>
+  </div> -->
 </section>
 

@@ -17,6 +17,8 @@ export class RegisterComponent implements OnInit{
   register: Register[] = [];
 
   private paginator: MatPaginator;
+  date: string = ""
+  data: any
 
   @ViewChild(MatPaginator) set matPaginator(
     mp: MatPaginator
@@ -30,8 +32,15 @@ export class RegisterComponent implements OnInit{
   ngOnInit(){
     this.patentService.getRegister().subscribe(data => {
       // this.register = register;
-      this.register = data.data.register.data;
-
+      this.data = data.data.register.data
+      for (let i = 0; i < this.data.length; i++) {
+        let f = this.data[i].date;
+        this.data[i].date = f.split("T")
+        this.data[i].date.pop()
+        this.data[i].date = this.data[i].date.toString();
+        this.register.push(this.data[i])
+      }
+      // this.register = this.data;
       console.log(this.register);
       this.dataSource.data = this.register;
     })

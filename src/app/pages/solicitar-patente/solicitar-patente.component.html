@@ -9,9 +9,6 @@
           <div class="identifier-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'IDENTIFICADORES' | translate }}</mat-label>
-              <button mat-icon-button matPrefix (click)="addIdentifier()">
-                <mat-icon>add</mat-icon>
-              </button>
               <input  matInput
                       [formControl]="value"
                       required>
@@ -145,7 +142,7 @@
             <mat-form-field *ngIf="edit" appearance="outline">
               <mat-label>Autores</mat-label>
               <select matNativeControl>
-                <option *ngFor="let author of authors" [value]="author.name" (click)="openModalAu(author)">{{author.name}}</option>
+                <option *ngFor="let author of authors" [value]="author" (click)="openModalAu(author)">{{author.name}}</option>
               </select>
             </mat-form-field>
 

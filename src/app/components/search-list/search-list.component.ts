@@ -11,6 +11,7 @@ import { ConfirmComponent } from '../confirm/confirm.component';
 import { PatentService } from '../../services/patent.service';
 import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
 	selector: 'search-list',
@@ -73,8 +74,14 @@ export class SearchListComponent implements OnInit
               this.hitList.hits = this.hitList.hits.filter(hit =>
                 hit.metadata.id != patent.metadata.id
               );
-
-            this.m.showMessage(StatusCode.OK, "Se ha eliminado correctamente");
+              Swal.fire({
+                html: `<h2>Se ha eliminado correctamente</h2>`,
+                width: 400,
+                showConfirmButton: false,
+                timer: 1500,
+                allowEscapeKey: true,
+                icon: "success"
+              });
 
             }
             catch {

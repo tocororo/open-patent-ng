@@ -289,6 +289,8 @@ export class HeaderComponent implements OnInit {
 
     let request = JSON.parse(this.oauthStorage.getItem("user"));
 
+
+
     if (request) {
       this.user = request.data.userprofile.user;
       this._menuOptions = [

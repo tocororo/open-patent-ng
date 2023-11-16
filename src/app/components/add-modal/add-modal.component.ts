@@ -27,14 +27,15 @@ export class AddModalComponent {
               @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(){
-    console.log(this.data.identifiers);
     if(this.data.identifiers){
       // this.result.value.identifiers = this.data.identifiers
       this.identifiers = this.data.identifiers;
       this.result.patchValue({
-        identifiers: [this.identifiers],
+        identifiers: this.identifiers,
         name: this.data.name
       })
+      console.log(this.result.value);
+
     }
   }
 

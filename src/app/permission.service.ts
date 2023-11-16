@@ -5,6 +5,7 @@ import { OAuthStorage } from 'angular-oauth2-oidc';
 // import { OAuthStorage } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
 import { MessageHandler, StatusCode } from 'toco-lib';
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,16 @@ export class CuratorPermissionService implements CanActivate{
       return true;
     }
     this._router.navigate(['/']);
-    const m = new MessageHandler(this._snackBar);
-    m.showMessage(StatusCode.OK, "Usted no tiene los permisos para acceder a esta ruta");
+    Swal.fire({
+      html: `<h2>Usted no tiene permiso para acceder a esta ruta</h2>`,
+      width: 400,
+      showConfirmButton: false,
+      timer: 1500,
+      allowEscapeKey: true,
+      icon: "error"
+    });
+    // const m = new MessageHandler(this._snackBar);
+    // m.showMessage(StatusCode.OK, "Usted no tiene los permisos para acceder a esta ruta");
     return false;
   }
 
@@ -61,8 +70,16 @@ export class AdminPermissionService implements CanActivate{
     //   return true;
     // }
     this._router.navigate(['/']);
-    const m = new MessageHandler(this._snackBar);
-    m.showMessage(StatusCode.OK, "Usted no tiene los permisos para acceder");
+    // const m = new MessageHandler(this._snackBar);
+    Swal.fire({
+      html: `<h2>Usted no tiene permiso para acceder a esta ruta</h2>`,
+      width: 400,
+      showConfirmButton: false,
+      timer: 1500,
+      allowEscapeKey: true,
+      icon: "error"
+    });
+    // m.showMessage(StatusCode.OK, "Usted no tiene los permisos para acceder");
     return false;
   }
 }

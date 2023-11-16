@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddModalComponent } from 'src/app/components/add-modal/add-modal.component';
 import { allowedURLS } from '../../../environments/environment.prod';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-solicitar-patente',
@@ -35,7 +36,7 @@ export class SolicitarPatenteComponent implements OnInit{
   identifiers: any[] = [];
 
   identifier: FormGroup = this._formBuilder.group({
-    idtype: [''],
+    idtype: ['doi'],
     value : ['', Validators.required]
   });
 
@@ -94,6 +95,8 @@ export class SolicitarPatenteComponent implements OnInit{
         .subscribe((data) => {
           /*Rellenando todos los campos del formulario con los valores enviados de la
           patente creada previamente para editar*/
+          console.log(data.metadata);
+
           this.edit = true;
           this.id = data.metadata.id;
           this.identifiers = data.metadata.identifiers;
@@ -107,6 +110,10 @@ export class SolicitarPatenteComponent implements OnInit{
             country: data.metadata.country,
             language: data.metadata.language,
             summary: data.metadata.summary
+          })
+          this.secondFormGroup.patchValue({
+            link: data.metadata.link,
+            classification: data.metadata.classification
           })
           // this.identifiers= [];
           this.authors = data.metadata.authors;
@@ -156,20 +163,12 @@ export class SolicitarPatenteComponent implements OnInit{
     }
   }
 
-  addIdentifier(){
-    this.identifier.value.value = this.value.value;
-    this.identifiers.push(this.identifier.value);
-    this.value.patchValue('')
-    this.identifier.patchValue({
-      idtype: '',
-      value: ''
-    })
-    console.log(this.identifiers);
-  }
-
   saveFirstForm(){
     this.country.value.name = this.name.value;
-    console.log(this.country.value);
+    if (!this.edit) {
+      this.identifier.value.value = this.value.value;
+      this.identifiers.push(this.identifier.value);
+    }
     this.firstFormGroup.value.country = this.country.value;
     this.patentFormGroup.value.identifiers = this.identifiers;
     this.patentFormGroup.value.title = this.firstFormGroup.value.title;
@@ -180,10 +179,21 @@ export class SolicitarPatenteComponent implements OnInit{
   }
 
   enviarFormulario(){
+    this.patentFormGroup.value.classification = this.secondFormGroup.value.classification;
+    this.patentFormGroup.value.link = this.secondFormGroup.value.link;
     if (this.id) {
       this.patentService.editPatents(this.patentFormGroup.value, this.id).subscribe(dta => {
         try {
-          this.m.showMessage(StatusCode.OK, "Patente editada exitosamente");
+          console.log(dta);
+          Swal.fire({
+            html: `<h2>Patente editada exitosamente</h2>`,
+            width: 400,
+            showConfirmButton: false,
+            timer: 1500,
+            allowEscapeKey: true,
+            icon: "success"
+          });
+          // this.m.showMessage(StatusCode.OK, "Patente editada exitosamente");
           this._location.back();
         } catch (error) {
           console.log(error);
@@ -194,9 +204,27 @@ export class SolicitarPatenteComponent implements OnInit{
       if (this.patentFormGroup.valid && this.firstFormGroup.valid) {
         this.patentService.createPatents(this.patentFormGroup.value).subscribe(dta =>{
           try {
-            this.m.showMessage(StatusCode.OK, "Patente creada exitosamente");
-            this.router.navigate(['/']);
-
+            if(dta['ERROR'] == "Patente existente"){
+              Swal.fire({
+                html: `<h2>La patente que usted intenta crear ya existe</h2>`,
+                width: 400,
+                showConfirmButton: false,
+                timer: 1500,
+                allowEscapeKey: true,
+                icon: "error"
+              });
+            }
+            else{
+              Swal.fire({
+                html: `<h2>Patente creada exitosamente</h2>`,
+                width: 400,
+                showConfirmButton: false,
+                timer: 1500,
+                allowEscapeKey: true,
+                icon: "success"
+              });
+              this.router.navigate(['/']);
+            }
           } catch (error) {
             console.log(error);
           }
@@ -204,7 +232,15 @@ export class SolicitarPatenteComponent implements OnInit{
       }
 
       else{
-        this.m.showMessage(StatusCode.notFound, "Rellene todos los campos requeridos");
+        Swal.fire({
+          html: `<h2>Rellene todos los campos requeridos</h2>`,
+          width: 400,
+          showConfirmButton: false,
+          timer: 1500,
+          allowEscapeKey: true,
+          icon: "error"
+        });
+        // this.m.showMessage(StatusCode.notFound, "Rellene todos los campos requeridos");
       }
 
     }
@@ -220,6 +256,7 @@ export class SolicitarPatenteComponent implements OnInit{
       if (result && event) {
         for (let i = 0; i < this.authors.length; i++) {
           if (this.authors[i].name === event.name) {
+            console.log(result.value);
             this.authors[i] = result.value;
           }
         }

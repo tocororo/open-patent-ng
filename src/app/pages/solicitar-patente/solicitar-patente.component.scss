@@ -115,4 +115,47 @@ mat-form-field{
 
     }
   }
+
+  .second-stepper{
+    display: flex;
+    flex-direction: row;
+
+
+    .button{
+      margin-left: 0;
+        button{
+          width: 90%;
+        }
+    }
+    .author{
+      text-align: start;
+    }
+
+    .affiliation{
+      margin-top: 0;
+      text-align: end;
+    }
+  }
+}
+
+@media(max-width: 510px){
+  .second-stepper{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .affiliation-container{
+    margin-top: 15px;
+    text-align: start;
+  }
+
+  .affiliation{
+    width: 100%;
+    text-align: start;
+    margin-left: 0;
+    button{
+      width: 100%;
+      margin-left: 0;
+    }
+  }
 }
