@@ -9,8 +9,7 @@
           <mat-icon>add</mat-icon>
         </button>
         <input  matInput
-                [formControl]="value"
-                required>
+                [formControl]="value">
       </mat-form-field>
     </div>
 
@@ -18,15 +17,14 @@
       <mat-form-field appearance="outline">
         <mat-label>{{ 'NAME' | translate }}</mat-label>
         <input  matInput
-                formControlName="name"
-                required>
+                formControlName="name">
       </mat-form-field>
     </div>
   </div>
 
   <div mat-dialog-actions class="button-container">
-    <button mat-button (click)="agregar()" color="primary">Agregar</button>
-    <button mat-button (click)="cerrar()" color="warn">Cancelar</button>
+    <button mat-button (click)="agregar()" color="primary">{{ 'AGREGAR' | translate }}</button>
+    <button mat-button (click)="cerrar()" color="warn">{{ 'CANCELAR' | translate }}</button>
   </div>
 </form>
 

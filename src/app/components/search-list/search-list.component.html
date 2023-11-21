@@ -15,7 +15,7 @@
             </span> -->
             <span [routerLink]="['/patent', hit.metadata.id]"
                   style="cursor: pointer;">
-              {{hit.metadata.title}}
+              {{hit.metadata.title | titlecase}}
             </span>
           </h3>
 

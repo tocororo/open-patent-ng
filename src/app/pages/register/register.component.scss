@@ -4,9 +4,9 @@ h3{
 div{
   margin-top: 50px;
   justify-content: center;
-  margin-left: 10%;
+  margin-left: 20%;
   margin-bottom: 50px;
-  width: 80%;
+  width: 60%;
 }
 
 @media screen and (max-width: 1000px) {
@@ -20,23 +20,24 @@ div{
   }
 }
 
-@media screen and (max-width: 812px) {
+// @media screen and (max-width: 812px) {
+//   div{
+//     margin-left: 5px;
+//     width: 98%;
+
+//     table{
+//       width: 100%;
+//     }
+//   }
+// }
+
+@media screen and (max-width: 508px) {
   div{
-    margin-left: 5px;
-    width: 98%;
+    width: 100%;
+    margin-left: 0;
 
     table{
       width: 100%;
     }
   }
-}
-
-@media screen and (max-width: 746px) {
-  // div{
-  //   width: 98%;
-
-  //   table{
-  //     width: 100%;
-  //   }
-  // }
 }

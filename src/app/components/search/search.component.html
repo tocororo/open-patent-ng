@@ -6,6 +6,20 @@
 >
     <span class="mat-h2">{{ 'TOCO_SEARCH_SEARCH.SPAN_SEARCH_LABEL' | translate }}</span>
 
+    <div *ngIf="search_type; then search_list_button else search_charts_button"></div>
+
+    <ng-template #search_list_button>
+      <button mat-button  matTooltip="Estadisticas" (click)="changeView()">
+        <mat-icon>insert_chart</mat-icon>
+      </button>
+    </ng-template>
+
+    <ng-template #search_charts_button>
+      <button mat-button  matTooltip="Patentes" (click)="changeView()">
+        <mat-icon>list</mat-icon>
+      </button>
+    </ng-template>
+
 </div>
 
 <toco-progress [loading]="loading"></toco-progress>
@@ -13,7 +27,7 @@
 <mat-drawer-container autosize style="background-color: white;">
 
   <!-- Filtros -->
-    <mat-drawer #drawer mode="side" opened position="start" style="width: 300px;">
+    <mat-drawer #drawer [mode]="mode"  opened position="start" style="width: 300px;">
 
         <toco-search-aggregations *ngIf="sr !== undefined"
             [aggregations]="sr.aggregations" [selectedAggr]="aggrsSelection" (keySelect)="aggrChange($event)"
@@ -21,8 +35,9 @@
         </toco-search-aggregations>
 
     </mat-drawer>
+    <div *ngIf="search_type; then search_list else search_charts">{{search_type}}</div>
 
-    <ng-container>
+    <ng-template #search_list >
       <div *ngIf="sr" class="m-1">
 
         <div fxLayout="row nowrap" fxLayout.xs="column" fxLayoutAlign="space-between center">
@@ -43,7 +58,26 @@
         </mat-paginator>
 
     </div>
-    </ng-container>
+  </ng-template>
+
+    <ng-template #search_charts>
+
+      <div class="m-1" *ngIf="sr">
+
+        <div fxLayout="row nowrap" fxLayoutAlign="space-between center">
+          <button
+            mat-button
+            (click)="drawer.toggle()"
+            matTooltip="Filtros avanzados"
+          >
+            <mat-icon>filter_list</mat-icon>
+          </button>
+        </div>
+
+        <canvas #canvas id="canvas">{{ chart }}</canvas>
+      </div>
+    </ng-template>
+
 
 
 

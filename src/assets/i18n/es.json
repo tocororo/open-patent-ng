@@ -84,6 +84,8 @@
     "CANTIDAD": "Cantidad",
     "AUTOR": "Autor",
     "AFILIACIONES": "Afiliaciones",
+    "TIPO": "Tipo",
+    "VALOR": "Valor",
     "REIVINDICACIONES": "Reivindicaciones",
     "TECNICA": "Estado de la técnica",
     "DIBUJO": "Dibujo o anexos",
@@ -101,6 +103,12 @@
     "ATRAS": "Atrás",
     "MOSTRAR": "Mostrar",
     "NO_REGISTRO": "No hay registro de importaciones",
+    "CANCELAR": "Cancelar",
+    "AGREGAR": "Agregar",
+    "NUEVA": "Crear nueva patente",
+    "EXISTENTE": "Editar",
+
+
 
 
 

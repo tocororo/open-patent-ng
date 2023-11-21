@@ -44,6 +44,7 @@ export class RegisterComponent implements OnInit{
       console.log(this.register);
       this.dataSource.data = this.register;
     })
+
   }
 
   eliminar(id){

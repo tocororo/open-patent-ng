@@ -50,7 +50,9 @@ export const menuHelp = [
     nameTranslate : "ACERCA_DE",
     href : "/help/about",
     useRouterLink : true,
-    icon: "info"
+    icon: "info",
+    click: () => console.log("login===")
+
   },
   // {
   //   nameTranslate : "PRIVACIDAD",
@@ -62,7 +64,9 @@ export const menuHelp = [
     nameTranslate : "CONTACTOS",
     href : "/help/contact",
     useRouterLink : true,
-    icon: "contacts"
+    icon: "contacts",
+    click: () => console.log("login===")
+
   },
 ];
 

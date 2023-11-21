@@ -68,7 +68,14 @@ export class ImportPatentsComponent implements OnInit{
   onSelect(event: any) {
     // const file = [...event.addedFiles];
     if (this.file.length > 0) {
-        this.m.showMessage(StatusCode.OK, "Solo se puede seleccionar un archivo");
+      Swal.fire({
+        html: `<h2>Solo se puede importar un archivo a ala vez</h2>`,
+        width: 400,
+        showConfirmButton: false,
+        timer: 1500,
+        allowEscapeKey: true,
+        icon: "error"
+      });
     }else {
     this.file.push(...event.addedFiles);
     this.readFile(this.file[0]).then((fileContents: string) => {
@@ -83,9 +90,9 @@ export class ImportPatentsComponent implements OnInit{
         this.file[0] = patents;
       } else {
         this.patents = JSON.parse(fileContents);
-        patents = fileContents;
-        this.file[0] = patents;
-        console.log(this.file[0]);
+        // patents = fileContents;
+        // this.file[0] = patents;
+        // console.log(this.file[0]);
 
         // this.patents = JSON.parse(fileContents);
       }
@@ -107,9 +114,14 @@ export class ImportPatentsComponent implements OnInit{
     } else {
       // this.patents = this.getAffiliations(this.patents)
       console.log('patents',this.patents);
+      if(this.patents.patents != undefined){
+        this.patents = this.patents.patents;
+      }
+      console.log(this.patents);
+
       this.table = true;
       this.dataSource.data =
-        this.patents.length > 800 ? this.patents.slice(0, 800) : this.patents.patents;
+        this.patents.length > 800 ? this.patents.slice(0, 800) : this.patents;
         console.log("🚀 ~ file: import-patents.component.ts:130 ~ this.readFile ~ this.dataSource.data", this.dataSource.data)
 
     }
@@ -215,7 +227,6 @@ export class ImportPatentsComponent implements OnInit{
       });
     } else {
       // const file = new File([this.file[0]], 'patentes.json')
-      console.log(this.patents);
       if(this.patents.patents != undefined){
         this.patents = this.patents.patents
       }
@@ -225,10 +236,20 @@ export class ImportPatentsComponent implements OnInit{
           this.createRegister();
           console.log(response);
           try {
-            if (response) {
-
+            if (response['SUCCES']) {
               Swal.fire({
                 html: `<h2>Patentes creadas exitosamente</h2>`,
+                width: 400,
+                showConfirmButton: false,
+                timer: 1500,
+                allowEscapeKey: true,
+                icon: "success"
+              });
+            }
+            else{
+              Swal.fire({
+                html: `<h2>Ocurrió algún error. Por favor asegúrese que los
+                campos sean correctos</h2>`,
                 width: 400,
                 showConfirmButton: false,
                 timer: 1500,
@@ -247,7 +268,7 @@ export class ImportPatentsComponent implements OnInit{
     let request = JSON.parse(this.oauthStorage.getItem("user"));
     let date = new Date();
     this.register = {
-      userEmail: request.data.userprofile.user.email,
+      userEmail: request.email.split('@')[0],
       patents: this.patents.length,
       date: date
     }

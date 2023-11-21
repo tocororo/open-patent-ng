@@ -36,7 +36,8 @@
         <!-- Handle leaf node menu items -->
         <ng-container *ngIf="!child.childrenMenu || child.childrenMenu.length === 0">
           <span *ngIf="child.useRouterLink; else useHrefMenu">
-            <button mat-menu-item [routerLink]="child.href" (click)="child.click()">
+            <button mat-menu-item [routerLink]="child.href"  (click)="child.click()">
+              <!-- (click)="child.click()" -->
               <mat-icon>{{child.icon}}</mat-icon>
               <span>{{ child.nameTranslate | translate }}</span>
             </button>

@@ -85,6 +85,8 @@
     "CANTIDAD": "Amount",
     "AUTOR": "Author",
     "AFILIACIONES": "Affiliations",
+    "TIPO": "Type",
+    "VALOR": "Value",
     "REIVINDICACIONES": "Claims",
     "TECNICA": "Prior art",
     "DIBUJO": "Drawing or photos",
@@ -102,6 +104,10 @@
     "ATRAS": "Back",
     "MOSTRAR": "Show",
     "NO_REGISTRO": "There are no import registration",
+    "CANCELAR": "Cancel",
+    "AGREGAR": "Add",
+    "NUEVA": "Create new patent",
+    "EXISTENTE": "Edit",
 
 
 

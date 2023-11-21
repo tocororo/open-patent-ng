@@ -142,7 +142,14 @@ mat-form-field{
   .second-stepper{
     display: flex;
     flex-direction: column;
-  }
+
+    .button{
+      margin-left: 0;
+      margin-right: 0;
+        button{
+          width: 100%;
+        }
+    }}
 
   .affiliation-container{
     margin-top: 15px;

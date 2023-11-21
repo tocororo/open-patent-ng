@@ -1,9 +1,8 @@
-<h3 *ngIf="edit">Editar: {{this.firstFormGroup.value.title}}</h3>
-<h3 *ngIf="!edit">Crear nueva patente:</h3>
-<mat-stepper #stepper [formGroup]="patentFormGroup">
+<h3 *ngIf="edit">{{ 'EXISTENTE' | translate }}: {{this.firstFormGroup.value.title}}</h3>
+<h3 *ngIf="!edit">{{ 'NUEVA' | translate }}</h3>
+<mat-stepper #stepper [formGroup]="patentFormGroup" linear="true">
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
-      <ng-template matStepLabel></ng-template>
       <section class="grid-container">
         <div class="column-left">
           <div class="identifier-container">
@@ -12,6 +11,7 @@
               <input  matInput
                       [formControl]="value"
                       required>
+              <mat-error>este campo es requerido</mat-error>
             </mat-form-field>
           </div>
           <div class="title-container">
@@ -20,6 +20,7 @@
               <input  matInput
                       formControlName="title"
                       required>
+              <mat-error>este campo es requerido</mat-error>
             </mat-form-field>
           </div>
           <div class="country-container">
@@ -33,7 +34,7 @@
           <div class="drawing-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'DIBUJO' | translate }}</mat-label>
-              <button mat-icon-button matPrefix (click)="f_input1.click()">
+              <button mat-icon-button matPrefix (click)="f_input1.click()" disabled>
                 <mat-icon>attach_file</mat-icon>
               </button>
               <input type="text" readonly matInput [formControl]="drawing" />
@@ -68,7 +69,7 @@
         </div>
 
         <div class="button-container">
-          <button class="button-last" mat-button color="primary" matStepperNext (click)="saveFirstForm()">{{ 'SIGUIENTE' | translate }}</button>
+          <button class="button-last" *ngIf="firstFormGroup.value.title != '' && value.value != ''" mat-button color="primary" matStepperNext (click)="saveFirstForm()">{{ 'SIGUIENTE' | translate }}</button>
         </div>
 
       </section>
@@ -83,7 +84,7 @@
           <div class="claims-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'REIVINDICACIONES' | translate }}</mat-label>
-              <button mat-icon-button matPrefix (click)="f_inputR.click()">
+              <button mat-icon-button matPrefix (click)="f_inputR.click()" disabled>
                 <mat-icon>attach_file</mat-icon>
               </button>
               <input type="text" readonly matInput [formControl]="claims" />
@@ -102,7 +103,7 @@
           <div class="prior-art-container">
             <mat-form-field appearance="outline">
               <mat-label>{{ 'TECNICA' | translate }}</mat-label>
-              <button mat-icon-button matPrefix (click)="f_input.click()">
+              <button mat-icon-button matPrefix (click)="f_input.click()" disabled>
                 <mat-icon>attach_file</mat-icon>
               </button>
               <input type="text" readonly matInput [formControl]="prior" />

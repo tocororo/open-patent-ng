@@ -52,25 +52,19 @@ export class CuratorPermissionService implements CanActivate{
 export class AdminPermissionService implements CanActivate{
 
   constructor(
-    // private oauthStorage: OAuthStorage,
     private _router: Router,
-    private _snackBar: MatSnackBar,
     private oauthStorage: OAuthStorage,) { }
 
   canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    let permission = new Permission();
 
+    let permission = new Permission();
     let request = JSON.parse(this.oauthStorage.getItem("user"));
 
-    if(request){
+    if(request && permission.hasPermissions("admin")){
       return true;
     }
 
-    // if (permission.hasPermissions("admin")){
-    //   return true;
-    // }
     this._router.navigate(['/']);
-    // const m = new MessageHandler(this._snackBar);
     Swal.fire({
       html: `<h2>Usted no tiene permiso para acceder a esta ruta</h2>`,
       width: 400,
@@ -79,7 +73,6 @@ export class AdminPermissionService implements CanActivate{
       allowEscapeKey: true,
       icon: "error"
     });
-    // m.showMessage(StatusCode.OK, "Usted no tiene los permisos para acceder");
     return false;
   }
 }

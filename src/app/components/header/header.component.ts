@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
    * The English language is: 1.
    */
   public currentLang: number;
-
+  @Input() public isBeta: boolean = true;
   /**
    * Gets the icon for menu bar
    */
@@ -136,40 +136,49 @@ export class HeaderComponent implements OnInit {
     ];
 
     this._menuUser = this.menuUser || [
-      // {
-      //   nameTranslate : "ACCOUNT_SETTINGS",
-      //   icon: "account_circle",
-      //   href: `${ this.sceibaHost }account/settings/profile/`,
-      //   useRouterLink : false,
-      //   target: "_blank"
-      // },
-      // {
-      //   nameTranslate : "PERFIL_USUARIO",
-      //   icon: "person_outline",
-      //   href: `/person/${this.user && this.user.id}`,
-      //   useRouterLink: true,
-      // },
-      // {
-      //   nameTranslate : "CAMBIAR_CONTRASEÑA",
-      //   icon: "vpn_key",
-      //   href: `https://cuba-iroko.sceiba.org/account/settings/password/`,
-      //   useRouterLink : false,
-      //   target: "_blank"
-      // },
-      // {
-      //   nameTranslate : "SEGURIDAD",
-      //   icon: "security",
-      //   href: `${ this.sceibaHost }account/settings/security/`,
-      //   useRouterLink : false,
-      //   target: "_blank"
-      // },
-      // {
-      //   nameTranslate : "APLICACIONES",
-      //   icon: "settings_applications",
-      //   href: `${ this.sceibaHost }account/settings/applications/`,
-      //   useRouterLink : false,
-      //   target: "_blank"
-      // },
+      {
+        nameTranslate : "ACCOUNT_SETTINGS",
+        icon: "account_circle",
+        href: `${ this.sceibaHost }account/settings/profile/`,
+        useRouterLink : false,
+        target: "_blank",
+        click: () => console.log("login===")
+      },
+      {
+        nameTranslate : "PERFIL_USUARIO",
+        icon: "person_outline",
+        href: `/person/${this.user && this.user.id}`,
+        useRouterLink: true,
+        click: () => console.log("login===")
+
+      },
+      {
+        nameTranslate : "CAMBIAR_CONTRASEÑA",
+        icon: "vpn_key",
+        href: `https://cuba-iroko.sceiba.org/account/settings/password/`,
+        useRouterLink : false,
+        target: "_blank",
+        click: () => console.log("login===")
+
+      },
+      {
+        nameTranslate : "SEGURIDAD",
+        icon: "security",
+        href: `${ this.sceibaHost }account/settings/security/`,
+        useRouterLink : false,
+        target: "_blank",
+        click: () => console.log("login===")
+
+      },
+      {
+        nameTranslate : "APLICACIONES",
+        icon: "settings_applications",
+        href: `${ this.sceibaHost }account/settings/applications/`,
+        useRouterLink : false,
+        target: "_blank",
+        click: () => console.log("login===")
+
+      },
       {
         nameTranslate : "SALIR",
         icon: "exit_to_app",
@@ -262,12 +271,16 @@ export class HeaderComponent implements OnInit {
         nameTranslate: "APLICACIONES",
         icon: "apps",
         childrenMenu: menuApps,
-        isMenuApps: true
+        isMenuApps: true,
+        click: () => console.log("login===")
+
       },
       {
         nameTranslate: "AYUDA",
         icon: "help",
-        childrenMenu: menuHelp
+        childrenMenu: menuHelp,
+        click: () => console.log("login===")
+
       },
       // {
       //   nameTranslate: "USUARIO",
@@ -288,11 +301,11 @@ export class HeaderComponent implements OnInit {
 
 
     let request = JSON.parse(this.oauthStorage.getItem("user"));
-
-
-
+    console.log(request);
     if (request) {
-      this.user = request.data.userprofile.user;
+      this.user = request;
+      const roles = request.roles.map((rol)=> rol.name);
+      localStorage.setItem("roles", roles);
       this._menuOptions = [
         ...this.staticMenuOptions,
         {
@@ -315,7 +328,7 @@ export class HeaderComponent implements OnInit {
       this.authenticateService.authenticationSubjectObservable.subscribe(
         (request) => {
           if (request) {
-            this.user = request.data.userprofile.user;
+            this.user = request;
 
 
           this._menuOptions = [
@@ -405,30 +418,30 @@ export class HeaderComponent implements OnInit {
     return user['email'];
   }
 
-  // getUserInfo(): Observable<Response<any>> {
-  //   let token = this.oauthStorage.getItem('access_token');
-  //   let headers = new HttpHeaders()
-  //   headers.set('Authorization', 'Bearer ' + token);
-  //   headers = headers.set('Content-Type', 'application/json');
-  //   headers = headers.set('Access-Control-Allow-Origin', '*');
-  //   const options = {
-  //     headers: headers
-  //   };
-  //   return this.http.get<Response<any>>(this._env.sceibaApi + 'me');
-  // }
+  getUserInfo(): Observable<Response<any>> {
+    let token = this.oauthStorage.getItem('access_token');
+    let headers = new HttpHeaders()
+    headers.set('Authorization', 'Bearer ' + token);
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Access-Control-Allow-Origin', '*');
+    const options = {
+      headers: headers
+    };
+    return this.http.get<Response<any>>(this._env.sceibaApi + 'me');
+  }
 
-  // public me()
-  // {
-  //   this.getUserInfo().subscribe({
-  //     next: (response) => {
-  //       console.log(response)
-  //     },
+  public me()
+  {
+    this.getUserInfo().subscribe({
+      next: (response) => {
+        console.log(response)
+      },
 
-  //     error: (e) => { },
+      error: (e) => { },
 
-  //     complete: () => { },
-  //   });
-  // }
+      complete: () => { },
+    });
+  }
 
 }
 

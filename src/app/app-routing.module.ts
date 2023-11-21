@@ -27,12 +27,10 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
-        // data: { layout: Layouts.Main },
       },
       {
         path: 'search',
         component: SearchComponent,
-        // data: { layout: Layouts.Main },
       },
       {
         path: 'patent/:id',
@@ -41,23 +39,23 @@ const routes: Routes = [
       {
         path: 'import',
         component: ImportPatentsComponent,
-        canActivate: [CuratorPermissionService]
+        canActivate: [AdminPermissionService]
 
       },
       {
         path: 'register',
         component: RegisterComponent,
-        canActivate: [CuratorPermissionService]
+        canActivate: [AdminPermissionService]
       },
       {
         path: 'create',
         component: SolicitarPatenteComponent,
-        canActivate: [CuratorPermissionService]
+        canActivate: [AdminPermissionService]
       },
       {
         path: 'editar/:id',
         component: SolicitarPatenteComponent,
-        canActivate: [CuratorPermissionService]
+        canActivate: [AdminPermissionService]
       },
 
       {

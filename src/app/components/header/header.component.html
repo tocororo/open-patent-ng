@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z8" style="position: relative; z-index: 2">
+<mat-toolbar class="mat-elevation-z8" style="position: relative; z-index: 2;">
   <mat-toolbar-row
     fxLayout="row wrap"
     fxLayout.xs="column"
@@ -7,11 +7,18 @@
     style="height: auto !important; min-height: 80px"
   >
     <div style="width: 330px; display: flex; align-items: center" class="icon-header">
+      <div *ngIf="isBeta" class="triangle">
+        <span
+          matTooltipClass="tooltip-beta-red"
+          matTooltip="{{ 'BETA_TOOLTIP' | translate }}"
+        >
+          <strong>{{ 'BETA' | translate }}</strong>
+        </span>
+      </div>
       <a
         mat-button
         [routerLink]="['/']"
         style="white-space: normal; display: flex; align-items: center"
-
       >
         <img
           class="icon-header-sceiba"

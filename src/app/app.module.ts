@@ -27,6 +27,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 
 import { OAuthModule, OAuthStorage } from "angular-oauth2-oidc";
@@ -121,6 +122,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
         HttpClientModule,
         PdfViewerModule,
         MatTableModule,
+        NgxChartsModule,
         MatPaginatorModule,
         NgxDropzoneModule,
 

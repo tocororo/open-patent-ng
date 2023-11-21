@@ -40,6 +40,25 @@
   flex-wrap: wrap;
   margin-top: 20px;
 }
+.triangle {
+  position: relative;
+  width: 0;
+  height: 0;
+  border-top: 0px solid transparent;
+  // el valor siguiente se define en el `style` global para utilizar los colores como variable
+  border-left: 80px solid #dd2c00;
+  border-bottom: 80px solid transparent;
+  margin-left: -16px;
+}
+.triangle span {
+  position: absolute;
+  right: 23px;
+  top: 11px;
+  color: white;
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
 
 .font-bold {
   font-weight: bold;
@@ -75,6 +94,7 @@ a:hover{
 @media screen and (max-width: 664px) {
   .icon-header-sceiba{
     margin-top: 50px;
+    text-align: center;
   }
   .center-elements {
     margin-top: 50px;

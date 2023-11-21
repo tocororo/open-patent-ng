@@ -24,6 +24,8 @@ export class SolicitarPatenteComponent implements OnInit{
 
   id: string = '';
   type: string = 'affiliation';
+  validar: boolean = false;
+  disabled: boolean = false;
 
   prior          : FormControl = new FormControl("");
   claims         : FormControl = new FormControl("");
@@ -95,11 +97,17 @@ export class SolicitarPatenteComponent implements OnInit{
         .subscribe((data) => {
           /*Rellenando todos los campos del formulario con los valores enviados de la
           patente creada previamente para editar*/
-          console.log(data.metadata);
+          console.log('DATA',data);
 
           this.edit = true;
+          this.value.disable();
           this.id = data.metadata.id;
           this.identifiers = data.metadata.identifiers;
+          console.log('IDENTIFIERS',this.identifiers);
+
+          this.value.patchValue(data.metadata.identifiers[0].value)
+          console.log('VALUE',this.value.value);
+
           if (data.metadata.country) {
             this.country.value.name = data.metadata.country.name;
             this.name.patchValue(data.metadata.country.name)
@@ -111,6 +119,7 @@ export class SolicitarPatenteComponent implements OnInit{
             language: data.metadata.language,
             summary: data.metadata.summary
           })
+          console.log(this.firstFormGroup.value.title);
           this.secondFormGroup.patchValue({
             link: data.metadata.link,
             classification: data.metadata.classification
@@ -164,18 +173,21 @@ export class SolicitarPatenteComponent implements OnInit{
   }
 
   saveFirstForm(){
-    this.country.value.name = this.name.value;
-    if (!this.edit) {
-      this.identifier.value.value = this.value.value;
-      this.identifiers.push(this.identifier.value);
-    }
-    this.firstFormGroup.value.country = this.country.value;
-    this.patentFormGroup.value.identifiers = this.identifiers;
-    this.patentFormGroup.value.title = this.firstFormGroup.value.title;
-    this.patentFormGroup.value.country = this.firstFormGroup.value.country;
-    this.patentFormGroup.value.language = this.firstFormGroup.value.language;
-    this.patentFormGroup.value.summary = this.firstFormGroup.value.summary;
-    console.log('p', this.patentFormGroup.value);
+      if (this.firstFormGroup.value.title != '' && this.value.value != '') {
+        this.country.value.name = this.name.value;
+        if (!this.edit) {
+          this.identifier.value.value = this.value.value;
+          this.identifiers.push(this.identifier.value);
+        }
+        this.firstFormGroup.value.country = this.country.value;
+        this.patentFormGroup.value.identifiers = this.identifiers;
+        this.patentFormGroup.value.title = this.firstFormGroup.value.title;
+        this.patentFormGroup.value.country = this.firstFormGroup.value.country;
+        this.patentFormGroup.value.language = this.firstFormGroup.value.language;
+        this.patentFormGroup.value.summary = this.firstFormGroup.value.summary;
+        console.log('p', this.patentFormGroup.value);
+      }
+
   }
 
   enviarFormulario(){
@@ -201,8 +213,10 @@ export class SolicitarPatenteComponent implements OnInit{
       })
     }
     else{
-      if (this.patentFormGroup.valid && this.firstFormGroup.valid) {
+      if (this.patentFormGroup.valid && this.firstFormGroup.valid && this.value.valid) {
         this.patentService.createPatents(this.patentFormGroup.value).subscribe(dta =>{
+          console.log(dta);
+
           try {
             if(dta['ERROR'] == "Patente existente"){
               Swal.fire({

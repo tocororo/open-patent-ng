@@ -1,14 +1,15 @@
 
 import { HttpParams } from "@angular/common/http";
-import { Component, HostListener, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { PageEvent } from "@angular/material/paginator";
 import { MatDrawer } from "@angular/material/sidenav";
 import { ActivatedRoute, NavigationExtras, Params, Router } from "@angular/router";
-
 import { AggregationsSelection, Organization, SearchResponse } from "toco-lib";
 import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from "../../services/patent.service";
 import { OrgService } from '../../org.service';
+import { Chart, registerables } from 'node_modules/chart.js'
+Chart.register(...registerables);
 
 
 /**
@@ -21,6 +22,7 @@ import { OrgService } from '../../org.service';
     styleUrls: ["./search.component.scss"],
 })
 export class SearchComponent implements OnInit {
+    @ViewChild('canvas') canvas: ElementRef;
     /**
      * Represents the `QueryParamKey` enum for internal use.
      */
@@ -38,14 +40,17 @@ export class SearchComponent implements OnInit {
      * By default, its value is `true`.
      */
     public aggrKeys: Array<any>;
+    chart: any;
 
 
+    search_type:Boolean = true;
     public pageSize: number;
     public pageIndex: number;
     public pageSizeOptions: number[];
 
     public query: string;
     public aggrsSelection: AggregationsSelection;
+    mode: string = ""
 
     /**
      * The search that was requested as an HTTP request/response body that represents serialized parameters.
@@ -75,7 +80,12 @@ export class SearchComponent implements OnInit {
     public ngOnInit(): void {
         this.aggrKeys = undefined;
         // this.currentChartType = this.chartType.polar;
-
+        if(window.innerWidth < 740){
+          this.mode = "over"
+        }
+        else{
+          this.mode = "side"
+        }
         this.pageSize = 5;
         this.pageIndex = 0;
         this.pageSizeOptions = [5, 15, 25, 50, 100];
@@ -128,8 +138,13 @@ export class SearchComponent implements OnInit {
 
             complete: () => { },
         });
+
     }
 
+    changeView(): void {
+      this.search_type = !this.search_type
+      this.renderChart();
+    }
 
     /**
      * Updates the `params` that will be used to fetch the search.
@@ -161,7 +176,7 @@ export class SearchComponent implements OnInit {
 
           this.aggrKeys = [
             { value: this.sr.aggregations.country, key: 'Pais' },
-            { value: this.sr.aggregations.language, key: 'Lenguaje' },
+            { value: this.sr.aggregations.language, key: 'Idioma' },
         ]
         },
 
@@ -220,15 +235,36 @@ export class SearchComponent implements OnInit {
         this.router.navigate(["."], this.navigationExtras);
     }
 
+    renderChart(){
+      this.chart = new Chart(this.canvas.nativeElement.getContext('2d'), {
+        type: 'pie',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
     //TODO: What does this code do?
     @HostListener('window:resize', ['$event'])
     public onResize(event: Event): void {
         // console.log("window:resize", window.innerWidth);
         if (window.innerWidth <= 740) {
-            this.drawer.opened = false;
+            this.mode = "over";
         }
         else {
-            this.drawer.opened = true;
+            this.mode = "side";
         }
     }
 }
