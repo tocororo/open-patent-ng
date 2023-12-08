@@ -9,14 +9,18 @@
     <div *ngIf="search_type; then search_list_button else search_charts_button"></div>
 
     <ng-template #search_list_button>
-      <button mat-button  matTooltip="Estadisticas" (click)="changeView()">
-        <mat-icon>insert_chart</mat-icon>
+      <button mat-button  matTooltip="{{ 'ESTADISTICAS' | translate }}" (click)="changeView()">
+        <span>
+          <mat-icon>insert_chart</mat-icon>
+        </span>
       </button>
     </ng-template>
 
     <ng-template #search_charts_button>
-      <button mat-button  matTooltip="Patentes" (click)="changeView()">
-        <mat-icon>list</mat-icon>
+      <button mat-button  matTooltip="{{ 'PATENTE' | translate }}" (click)="changeView()">
+        <span>
+          <mat-icon>list</mat-icon>
+        </span>
       </button>
     </ng-template>
 
@@ -70,11 +74,13 @@
             (click)="drawer.toggle()"
             matTooltip="Filtros avanzados"
           >
+          <span>
             <mat-icon>filter_list</mat-icon>
+          </span>
           </button>
         </div>
 
-        <canvas #canvas id="canvas">{{ chart }}</canvas>
+        <app-chart [data]="sr.aggregations"></app-chart>
       </div>
     </ng-template>
 

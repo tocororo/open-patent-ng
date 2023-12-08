@@ -6,8 +6,9 @@ import { PatentService } from '../../services/patent.service';
 import { Patent } from '../../interfaces/patent.entity';
 import { MatDialog } from '@angular/material/dialog';
 import { PdfViewerModalComponent } from './pdf-viewer-modal/pdf-viewer-modal.component';
-import { Hit, Links } from 'toco-lib';
+import { Hit, Links, StatusCode } from 'toco-lib';
 import { MatTableDataSource } from '@angular/material/table';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -39,12 +40,21 @@ export class OpenPatentDetailComponent implements OnInit{
   ngOnInit() {
     this.activatedRoute.params
       .pipe(
-        switchMap( ( {id} ) =>  this.patentService.getPatentById(id))
-      )
+        switchMap( ( {id} ) =>  this.patentService.getPatentById(id)))
       .subscribe( patent =>  {
         console.log(patent);
         this.patent = patent;
         this.dataSource.data = this.patent.metadata.identifiers;
+      }, err => {
+        Swal.fire({
+          html: `<h2>La patente que usted intenta visualizar no existe</h2>`,
+          width: 400,
+          showConfirmButton: false,
+          timer: 1500,
+          allowEscapeKey: true,
+          icon: "error"
+        });
+        this.router.navigate(['/']);
       });
   }
 

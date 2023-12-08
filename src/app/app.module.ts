@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -76,6 +76,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AddModalComponent } from './components/add-modal/add-modal.component';
 import { ExportPdfExcelComponent } from './components/export-pdf-excel/export-pdf-excel.component';
 import { HelpCComponent } from './pages/help-c/help-c.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { HttpErrorInterceptor } from "./interceptors/http-error.interceptor";
 export function storageFactory(): OAuthStorage {
   return localStorage;
 }
@@ -115,6 +117,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
         AddModalComponent,
         ExportPdfExcelComponent,
         HelpCComponent,
+        ChartComponent,
     ],
     imports: [
         BrowserModule,
@@ -180,6 +183,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
         OrgService,
         { provide: Environment, useValue: environment },
         { provide: OAuthStorage, useFactory: storageFactory },
+        { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     ],
     bootstrap: [AppComponent]
 })

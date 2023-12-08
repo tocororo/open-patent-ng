@@ -303,9 +303,15 @@ export class HeaderComponent implements OnInit {
     let request = JSON.parse(this.oauthStorage.getItem("user"));
     console.log(request);
     if (request) {
-      this.user = request;
-      const roles = request.roles.map((rol)=> rol.name);
-      localStorage.setItem("roles", roles);
+      if (request.roles) {
+        this.user = request;
+        const roles = request.roles.map((rol)=> rol.name);
+        localStorage.setItem("roles", roles);
+      }
+      else{
+        this.user = request.data.userprofile.user;
+      }
+
       this._menuOptions = [
         ...this.staticMenuOptions,
         {
@@ -328,8 +334,14 @@ export class HeaderComponent implements OnInit {
       this.authenticateService.authenticationSubjectObservable.subscribe(
         (request) => {
           if (request) {
-            this.user = request;
-
+            if (request.roles) {
+              this.user = request;
+              const roles = request.roles.map((rol)=> rol.name);
+              localStorage.setItem("roles", roles);
+            }
+            else{
+              this.user = request.data.userprofile.user;
+            }
 
           this._menuOptions = [
             ...this.staticMenuOptions,

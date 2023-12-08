@@ -265,10 +265,19 @@ export class ImportPatentsComponent implements OnInit{
   }
 
   createRegister(){
+    let user;
     let request = JSON.parse(this.oauthStorage.getItem("user"));
+    if (request) {
+      if (request.roles) {
+        user = request.email.split('@')[0]
+      }
+      else{
+        user = request.data.userprofile.user;
+      }
+    }
     let date = new Date();
     this.register = {
-      userEmail: request.email.split('@')[0],
+      userEmail: user.email.split('@')[0],
       patents: this.patents.length,
       date: date
     }

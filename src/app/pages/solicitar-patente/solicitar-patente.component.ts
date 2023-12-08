@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {StepperOrientation} from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { IdentifierSchemas, MessageHandler, StatusCode } from 'toco-lib';
 import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from '../../services/patent.service';
@@ -14,6 +14,7 @@ import { AddModalComponent } from 'src/app/components/add-modal/add-modal.compon
 import { allowedURLS } from '../../../environments/environment.prod';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2'
+import { error } from 'console';
 
 @Component({
   selector: 'app-solicitar-patente',
@@ -95,47 +96,57 @@ export class SolicitarPatenteComponent implements OnInit{
       this.activatedRoute.params
         .pipe(switchMap(({ id }) => this.patentService.getPatentById(id)))
         .subscribe((data) => {
-          /*Rellenando todos los campos del formulario con los valores enviados de la
-          patente creada previamente para editar*/
-          console.log('DATA',data);
+            /*Rellenando todos los campos del formulario con los valores enviados de la
+            patente creada previamente para editar*/
+            console.log('DATA',data);
 
-          this.edit = true;
-          this.value.disable();
-          this.id = data.metadata.id;
-          this.identifiers = data.metadata.identifiers;
-          console.log('IDENTIFIERS',this.identifiers);
+            this.edit = true;
+            this.value.disable();
+            this.id = data.metadata.id;
+            this.identifiers = data.metadata.identifiers;
+            console.log('IDENTIFIERS',this.identifiers);
 
-          this.value.patchValue(data.metadata.identifiers[0].value)
-          console.log('VALUE',this.value.value);
+            this.value.patchValue(data.metadata.identifiers[0].value)
+            console.log('VALUE',this.value.value);
 
-          if (data.metadata.country) {
-            this.country.value.name = data.metadata.country.name;
-            this.name.patchValue(data.metadata.country.name)
-          }
-          this.firstFormGroup.patchValue({
-            identifier: this.identifiers,
-            title: data.metadata.title,
-            country: data.metadata.country,
-            language: data.metadata.language,
-            summary: data.metadata.summary
-          })
-          console.log(this.firstFormGroup.value.title);
-          this.secondFormGroup.patchValue({
-            link: data.metadata.link,
-            classification: data.metadata.classification
-          })
-          // this.identifiers= [];
-          this.authors = data.metadata.authors;
-          this.affiliations = data.metadata.affiliations;
+            if (data.metadata.country) {
+              this.country.value.name = data.metadata.country.name;
+              this.name.patchValue(data.metadata.country.name)
+            }
+            this.firstFormGroup.patchValue({
+              identifier: this.identifiers,
+              title: data.metadata.title,
+              country: data.metadata.country,
+              language: data.metadata.language,
+              summary: data.metadata.summary
+            })
+            console.log(this.firstFormGroup.value.title);
+            this.secondFormGroup.patchValue({
+              link: data.metadata.link,
+              classification: data.metadata.classification
+            })
+            // this.identifiers= [];
+            this.authors = data.metadata.authors;
+            this.affiliations = data.metadata.affiliations;
 
-          this.patentFormGroup.patchValue({
-            link: data.metadata.link,
-            classification: data.metadata.classification,
-            authors: this.authors,
-            affiliations: this.affiliations
-          })
-          console.log('patentFormGroup',this.patentFormGroup.value);
-        });
+            this.patentFormGroup.patchValue({
+              link: data.metadata.link,
+              classification: data.metadata.classification,
+              authors: this.authors,
+              affiliations: this.affiliations
+            })
+            console.log('patentFormGroup',this.patentFormGroup.value);
+          }, err => {
+            Swal.fire({
+              html: `<h2>La patente que usted intenta editar no existe</h2>`,
+              width: 400,
+              showConfirmButton: false,
+              timer: 1500,
+              allowEscapeKey: true,
+              icon: "error"
+            });
+            this.router.navigate(['/']);
+          });
     }
   }
 

@@ -17,6 +17,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AdminPermissionService, CuratorPermissionService } from './permission.service';
 import { UserService } from './org.service';
 import { HelpCComponent } from './pages/help-c/help-c.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
 	// {
@@ -68,7 +69,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: ''
+        component: PageNotFoundComponent,
       },
     ],
   },

@@ -8,8 +8,7 @@ import { AggregationsSelection, Organization, SearchResponse } from "toco-lib";
 import { Patent } from '../../interfaces/patent.entity';
 import { PatentService } from "../../services/patent.service";
 import { OrgService } from '../../org.service';
-import { Chart, registerables } from 'node_modules/chart.js'
-Chart.register(...registerables);
+
 
 
 /**
@@ -22,7 +21,7 @@ Chart.register(...registerables);
     styleUrls: ["./search.component.scss"],
 })
 export class SearchComponent implements OnInit {
-    @ViewChild('canvas') canvas: ElementRef;
+    @ViewChild("canvas") canvas: ElementRef;
     /**
      * Represents the `QueryParamKey` enum for internal use.
      */
@@ -80,7 +79,7 @@ export class SearchComponent implements OnInit {
     public ngOnInit(): void {
         this.aggrKeys = undefined;
         // this.currentChartType = this.chartType.polar;
-        if(window.innerWidth < 740){
+        if(window.innerWidth <= 770){
           this.mode = "over"
         }
         else{
@@ -138,12 +137,11 @@ export class SearchComponent implements OnInit {
 
             complete: () => { },
         });
-
     }
 
     changeView(): void {
       this.search_type = !this.search_type
-      this.renderChart();
+
     }
 
     /**
@@ -235,32 +233,13 @@ export class SearchComponent implements OnInit {
         this.router.navigate(["."], this.navigationExtras);
     }
 
-    renderChart(){
-      this.chart = new Chart(this.canvas.nativeElement.getContext('2d'), {
-        type: 'pie',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    }
+
 
     //TODO: What does this code do?
     @HostListener('window:resize', ['$event'])
     public onResize(event: Event): void {
         // console.log("window:resize", window.innerWidth);
-        if (window.innerWidth <= 740) {
+        if (window.innerWidth <= 770) {
             this.mode = "over";
         }
         else {

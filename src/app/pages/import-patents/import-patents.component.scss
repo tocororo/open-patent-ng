@@ -1,18 +1,19 @@
+.header{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
 h3{
   margin-top: 30px;
   text-align: center;
 }
-section{
+.dropzone{
   padding-top: 50px;
   padding-left: 5%;
 }
 
 ngx-dropzone {
   width: 95%;
-}
-
-.swal2-styled .swal2-confirm{
-
 }
 
 .swal2-actions button{
